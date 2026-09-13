@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,9 +13,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-/* =========================
-   기본 설정
-========================= */
 
 * {
   box-sizing: border-box;
@@ -37,12 +35,196 @@ body {
 
 
 /* =========================
+   비밀번호 잠금 화면
+========================= */
+
+#lockScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      rgba(5, 10, 16, .60),
+      rgba(5, 10, 16, .88)
+    ),
+    url("https://images.unsplash.com/photo-1773334516631-80c428a411e2?auto=format&fit=crop&w=1800&q=90");
+
+  background-size: cover;
+  background-position: center;
+
+  transition:
+    opacity .8s ease,
+    visibility .8s ease;
+}
+
+#lockScreen.unlocked {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.lock-inner {
+  width: min(88%, 360px);
+  text-align: center;
+
+  padding: 40px 25px;
+
+  animation: lockAppear 1.2s ease both;
+}
+
+.lock-small {
+  font-size: 8px;
+  letter-spacing: .38em;
+  opacity: .55;
+  margin-bottom: 30px;
+}
+
+.lock-symbol {
+  font-size: 17px;
+  opacity: .7;
+  margin-bottom: 22px;
+}
+
+.lock-inner h1 {
+  font-family: "Noto Serif KR", serif;
+
+  font-size: 27px;
+  font-weight: 300;
+
+  letter-spacing: .14em;
+
+  margin-bottom: 20px;
+}
+
+.lock-inner p {
+  font-family: "Noto Serif KR", serif;
+
+  font-size: 10px;
+  line-height: 2;
+
+  letter-spacing: .08em;
+
+  opacity: .62;
+
+  margin-bottom: 30px;
+}
+
+.password-box {
+  display: flex;
+  width: 100%;
+
+  border-bottom:
+    1px solid rgba(255,255,255,.35);
+
+  margin-top: 10px;
+}
+
+.password-box input {
+  flex: 1;
+  min-width: 0;
+
+  padding: 13px 5px;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: white;
+
+  font-family: "Noto Sans KR", sans-serif;
+
+  font-size: 11px;
+
+  letter-spacing: .18em;
+
+  text-align: center;
+}
+
+.password-box input::placeholder {
+  color: rgba(255,255,255,.35);
+}
+
+.password-box button {
+  padding: 13px 8px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: rgba(255,255,255,.8);
+
+  font-family: "Noto Serif KR", serif;
+
+  font-size: 10px;
+
+  letter-spacing: .12em;
+
+  cursor: pointer;
+}
+
+.password-box button:active {
+  opacity: .5;
+}
+
+#wrongPassword {
+  height: 18px;
+
+  margin-top: 15px;
+
+  color: rgba(255,255,255,.65);
+
+  font-size: 8px;
+
+  letter-spacing: .08em;
+
+  opacity: 0;
+
+  transition: opacity .3s ease;
+}
+
+#wrongPassword.show {
+  opacity: 1;
+}
+
+.private-note {
+  margin-top: 55px;
+
+  font-size: 7px;
+
+  letter-spacing: .25em;
+
+  opacity: .35;
+}
+
+@keyframes lockAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================
    메인 화면
 ========================= */
 
 .home {
   position: fixed;
   inset: 0;
+
   width: 100%;
   height: 100svh;
 
@@ -56,6 +238,7 @@ body {
 
   background-size: cover;
   background-position: center;
+
   overflow: hidden;
 
   transition:
@@ -63,11 +246,9 @@ body {
     transform 1s cubic-bezier(.22,.61,.36,1);
 }
 
-
-/* 사진 가장자리 어둡게 */
-
 .home::after {
   content: "";
+
   position: absolute;
   inset: 0;
 
@@ -89,8 +270,10 @@ body {
 
 .top {
   position: absolute;
+
   top: 0;
   left: 0;
+
   width: 100%;
 
   padding:
@@ -107,14 +290,18 @@ body {
 
 .logo {
   font-family: "Noto Serif KR", serif;
+
   font-size: 15px;
   font-weight: 400;
+
   letter-spacing: 0.18em;
 }
 
 .issue {
   font-size: 9px;
+
   letter-spacing: 0.18em;
+
   opacity: 0.65;
 }
 
@@ -125,10 +312,12 @@ body {
 
 .intro {
   position: absolute;
+
   z-index: 5;
 
   left: 0;
   right: 0;
+
   top: 22%;
 
   text-align: center;
@@ -138,16 +327,23 @@ body {
 
 .small-title {
   font-size: 9px;
+
   letter-spacing: 0.38em;
+
   opacity: 0.72;
+
   margin-bottom: 18px;
 }
 
 .main-title {
   font-family: "Noto Serif KR", serif;
+
   font-size: clamp(30px, 9vw, 52px);
+
   font-weight: 300;
+
   letter-spacing: 0.13em;
+
   line-height: 1.35;
 
   text-shadow:
@@ -158,10 +354,13 @@ body {
   margin-top: 18px;
 
   font-family: "Noto Serif KR", serif;
+
   font-size: 11px;
+
   font-weight: 300;
 
   line-height: 2;
+
   letter-spacing: 0.08em;
 
   opacity: 0.72;
@@ -174,13 +373,16 @@ body {
 
 .menu {
   position: absolute;
+
   z-index: 10;
 
   left: 0;
   right: 0;
+
   bottom: 13%;
 
   display: flex;
+
   justify-content: center;
   align-items: flex-end;
 
@@ -191,13 +393,17 @@ body {
   width: 72px;
 
   background: none;
+
   border: 0;
+
   color: white;
 
   cursor: pointer;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
 
   gap: 13px;
@@ -233,9 +439,6 @@ body {
   transition: transform .45s ease;
 }
 
-
-/* 머리 */
-
 .head {
   position: absolute;
 
@@ -258,9 +461,6 @@ body {
   box-shadow:
     inset -4px -5px 7px rgba(70,80,80,.25);
 }
-
-
-/* 몸 */
 
 .body {
   position: absolute;
@@ -285,9 +485,6 @@ body {
     inset -6px -7px 10px rgba(50,60,60,.25);
 }
 
-
-/* 눈 */
-
 .eye {
   position: absolute;
 
@@ -297,6 +494,7 @@ body {
   top: 12px;
 
   background: #222;
+
   border-radius: 50%;
 }
 
@@ -307,9 +505,6 @@ body {
 .eye.right {
   left: 22px;
 }
-
-
-/* 코 */
 
 .nose {
   position: absolute;
@@ -327,9 +522,6 @@ body {
   transform: rotate(-3deg);
 }
 
-
-/* 모자 */
-
 .hat {
   position: absolute;
 
@@ -343,7 +535,8 @@ body {
 
   border-radius: 4px 4px 2px 2px;
 
-  box-shadow: 0 2px 3px rgba(0,0,0,.3);
+  box-shadow:
+    0 2px 3px rgba(0,0,0,.3);
 }
 
 .hat::after {
@@ -362,9 +555,6 @@ body {
   background: #11161b;
 }
 
-
-/* 목도리 */
-
 .scarf {
   position: absolute;
 
@@ -381,9 +571,6 @@ body {
   background: #596267;
 }
 
-
-/* 단추 */
-
 .button {
   position: absolute;
 
@@ -395,6 +582,7 @@ body {
   height: 3px;
 
   background: #303536;
+
   border-radius: 50%;
 }
 
@@ -406,18 +594,17 @@ body {
   top: 49px;
 }
 
-
-/* 메뉴 글자 */
-
 .menu-label {
   font-family: "Noto Serif KR", serif;
 
   font-size: 11px;
+
   font-weight: 400;
 
   letter-spacing: .16em;
 
-  text-shadow: 0 2px 8px rgba(0,0,0,.7);
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.7);
 }
 
 
@@ -432,11 +619,14 @@ body {
 
   left: 0;
   right: 0;
-  bottom: calc(28px + env(safe-area-inset-bottom));
+
+  bottom:
+    calc(28px + env(safe-area-inset-bottom));
 
   text-align: center;
 
   font-size: 8px;
+
   letter-spacing: .25em;
 
   opacity: .48;
@@ -449,6 +639,7 @@ body {
 
 .snow {
   position: absolute;
+
   inset: 0;
 
   z-index: 4;
@@ -464,11 +655,13 @@ body {
 
   border-radius: 50%;
 
-  background: rgba(255,255,255,.75);
+  background:
+    rgba(255,255,255,.75);
 
   filter: blur(.4px);
 
-  animation: snowfall linear infinite;
+  animation:
+    snowfall linear infinite;
 }
 
 @keyframes snowfall {
@@ -493,6 +686,7 @@ body {
 
 .page {
   position: fixed;
+
   inset: 0;
 
   z-index: 50;
@@ -507,6 +701,7 @@ body {
     );
 
   transform: translateY(100%);
+
   opacity: 0;
 
   transition:
@@ -516,23 +711,23 @@ body {
   pointer-events: none;
 
   overflow-y: auto;
+
   -webkit-overflow-scrolling: touch;
 }
 
 .page.active {
   transform: translateY(0);
+
   opacity: 1;
 
   pointer-events: auto;
 }
 
-
-/* 내부 배경 */
-
 .page::before {
   content: "";
 
   position: fixed;
+
   inset: 0;
 
   background-image:
@@ -543,6 +738,7 @@ body {
     url("https://images.unsplash.com/photo-1773334516631-80c428a411e2?auto=format&fit=crop&w=1800&q=70");
 
   background-size: cover;
+
   background-position: center;
 
   opacity: .42;
@@ -550,11 +746,9 @@ body {
   pointer-events: none;
 }
 
-
-/* 페이지 내용 */
-
 .page-content {
   position: relative;
+
   z-index: 2;
 
   min-height: 100%;
@@ -565,16 +759,15 @@ body {
     calc(45px + env(safe-area-inset-bottom));
 }
 
-
-/* 뒤로가기 */
-
 .back {
   border: 0;
+
   background: transparent;
 
   color: rgba(255,255,255,.7);
 
   font-size: 10px;
+
   letter-spacing: .15em;
 
   cursor: pointer;
@@ -582,16 +775,15 @@ body {
   padding: 8px 0;
 }
 
-
-/* 페이지 제목 */
-
 .page-header {
   margin-top: 70px;
+
   margin-bottom: 60px;
 }
 
 .page-number {
   font-size: 9px;
+
   letter-spacing: .3em;
 
   opacity: .45;
@@ -603,6 +795,7 @@ body {
   font-family: "Noto Serif KR", serif;
 
   font-size: 32px;
+
   font-weight: 300;
 
   letter-spacing: .12em;
@@ -614,6 +807,7 @@ body {
   font-family: "Noto Serif KR", serif;
 
   font-size: 11px;
+
   line-height: 2;
 
   opacity: .62;
@@ -627,7 +821,8 @@ body {
 .article {
   padding: 25px 0;
 
-  border-top: 1px solid rgba(255,255,255,.13);
+  border-top:
+    1px solid rgba(255,255,255,.13);
 
   cursor: pointer;
 
@@ -635,7 +830,8 @@ body {
 }
 
 .article:last-child {
-  border-bottom: 1px solid rgba(255,255,255,.13);
+  border-bottom:
+    1px solid rgba(255,255,255,.13);
 }
 
 .article:hover {
@@ -644,6 +840,7 @@ body {
 
 .article-info {
   font-size: 8px;
+
   letter-spacing: .15em;
 
   opacity: .4;
@@ -655,6 +852,7 @@ body {
   font-family: "Noto Serif KR", serif;
 
   font-size: 18px;
+
   font-weight: 400;
 
   line-height: 1.6;
@@ -666,6 +864,7 @@ body {
   font-family: "Noto Serif KR", serif;
 
   font-size: 10px;
+
   line-height: 1.8;
 
   opacity: .55;
@@ -700,7 +899,8 @@ body {
 
   object-fit: cover;
 
-  transition: transform .7s ease;
+  transition:
+    transform .7s ease;
 }
 
 .photo:hover img {
@@ -711,13 +911,15 @@ body {
   content: "";
 
   position: absolute;
+
   inset: 0;
 
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,.45),
-    transparent 45%
-  );
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,.45),
+      transparent 45%
+    );
 }
 
 
@@ -747,7 +949,8 @@ body {
 
   opacity: .7;
 
-  transition: transform .7s ease;
+  transition:
+    transform .7s ease;
 }
 
 .video-item:hover img {
@@ -765,11 +968,13 @@ body {
   width: 42px;
   height: 42px;
 
-  border: 1px solid rgba(255,255,255,.6);
+  border:
+    1px solid rgba(255,255,255,.6);
 
   border-radius: 50%;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -798,12 +1003,16 @@ body {
 
   from {
     opacity: 0;
-    transform: translateY(15px);
+
+    transform:
+      translateY(15px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+
+    transform:
+      translateY(0);
   }
 
 }
@@ -829,6 +1038,7 @@ body {
 
   .menu {
     bottom: 14%;
+
     gap: 27px;
   }
 
@@ -838,13 +1048,16 @@ body {
 
   .page-header {
     margin-top: 65px;
+
     margin-bottom: 45px;
   }
 
 }
 
 
-/* 아주 작은 화면 */
+/* =========================
+   아주 작은 화면
+========================= */
 
 @media (max-height: 700px) {
 
@@ -861,11 +1074,65 @@ body {
   }
 
 }
+
 </style>
 </head>
 
 
 <body>
+
+
+<!-- =========================
+     비밀번호 화면
+========================= -->
+
+<div id="lockScreen">
+
+  <div class="lock-inner">
+
+    <div class="lock-small">
+      PRIVATE WEBZINE
+    </div>
+
+    <div class="lock-symbol">
+      ✦
+    </div>
+
+    <h1>
+      탐라배 곱꽹대전
+    </h1>
+
+    <p>
+      비공개 웹진입니다.<br>
+      비밀번호를 입력해주세요.
+    </p>
+
+    <div class="password-box">
+
+      <input
+        type="password"
+        id="passwordInput"
+        placeholder="PASSWORD"
+        autocomplete="off"
+      >
+
+      <button onclick="checkPassword()">
+        입장
+      </button>
+
+    </div>
+
+    <div id="wrongPassword">
+      비밀번호가 올바르지 않습니다.
+    </div>
+
+    <div class="private-note">
+      PRIVATE · WINTER / 01
+    </div>
+
+  </div>
+
+</div>
 
 
 <!-- =========================
@@ -875,6 +1142,7 @@ body {
 <main class="home" id="home">
 
   <div class="top">
+
     <div class="logo">
       탐라배 곱꽹대전
     </div>
@@ -882,6 +1150,7 @@ body {
     <div class="issue">
       WINTER / 01
     </div>
+
   </div>
 
 
@@ -920,16 +1189,21 @@ body {
         <div class="hat"></div>
 
         <div class="head">
+
           <div class="eye left"></div>
           <div class="eye right"></div>
+
           <div class="nose"></div>
+
         </div>
 
         <div class="scarf"></div>
 
         <div class="body">
+
           <div class="button one"></div>
           <div class="button two"></div>
+
         </div>
 
       </div>
@@ -953,16 +1227,21 @@ body {
         <div class="hat"></div>
 
         <div class="head">
+
           <div class="eye left"></div>
           <div class="eye right"></div>
+
           <div class="nose"></div>
+
         </div>
 
         <div class="scarf"></div>
 
         <div class="body">
+
           <div class="button one"></div>
           <div class="button two"></div>
+
         </div>
 
       </div>
@@ -986,16 +1265,21 @@ body {
         <div class="hat"></div>
 
         <div class="head">
+
           <div class="eye left"></div>
           <div class="eye right"></div>
+
           <div class="nose"></div>
+
         </div>
 
         <div class="scarf"></div>
 
         <div class="body">
+
           <div class="button one"></div>
           <div class="button two"></div>
+
         </div>
 
       </div>
@@ -1005,7 +1289,6 @@ body {
       </span>
 
     </button>
-
 
   </nav>
 
@@ -1146,31 +1429,39 @@ body {
     <div class="photo-grid">
 
       <div class="photo">
+
         <img
           src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=700&q=80"
           alt="겨울 풍경"
         >
+
       </div>
 
       <div class="photo">
+
         <img
           src="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=700&q=80"
           alt="눈 내리는 풍경"
         >
+
       </div>
 
       <div class="photo">
+
         <img
           src="https://images.unsplash.com/photo-1453306458620-5bbef13a5bca?auto=format&fit=crop&w=700&q=80"
           alt="겨울 숲"
         >
+
       </div>
 
       <div class="photo">
+
         <img
           src="https://images.unsplash.com/photo-1483347756197-71ef80e95f73?auto=format&fit=crop&w=700&q=80"
           alt="겨울밤"
         >
+
       </div>
 
     </div>
@@ -1244,14 +1535,100 @@ body {
 <script>
 
 /* =========================
+   비밀번호
+========================= */
+
+const SECRET_PASSWORD = "ohmyps";
+
+
+function checkPassword() {
+
+  const input =
+    document.getElementById("passwordInput");
+
+  const wrong =
+    document.getElementById("wrongPassword");
+
+  const lockScreen =
+    document.getElementById("lockScreen");
+
+
+  if (input.value === SECRET_PASSWORD) {
+
+    lockScreen.classList.add("unlocked");
+
+    sessionStorage.setItem(
+      "webzineUnlocked",
+      "true"
+    );
+
+  }
+
+  else {
+
+    wrong.classList.add("show");
+
+    input.value = "";
+
+    setTimeout(() => {
+
+      wrong.classList.remove("show");
+
+    }, 2200);
+
+  }
+
+}
+
+
+/* =========================
+   엔터키로 입장
+========================= */
+
+document
+  .getElementById("passwordInput")
+  .addEventListener(
+    "keydown",
+    function(e) {
+
+      if (e.key === "Enter") {
+
+        checkPassword();
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   새로고침 시 로그인 유지
+========================= */
+
+if (
+  sessionStorage.getItem("webzineUnlocked")
+  === "true"
+) {
+
+  document
+    .getElementById("lockScreen")
+    .classList.add("unlocked");
+
+}
+
+
+/* =========================
    눈 생성
 ========================= */
 
-const snow = document.getElementById("snow");
+const snow =
+  document.getElementById("snow");
+
 
 for (let i = 0; i < 55; i++) {
 
-  const flake = document.createElement("span");
+  const flake =
+    document.createElement("span");
 
   flake.className = "flake";
 
@@ -1264,8 +1641,11 @@ for (let i = 0; i < 55; i++) {
   const size =
     Math.random() * 3 + 1;
 
-  flake.style.width = size + "px";
-  flake.style.height = size + "px";
+  flake.style.width =
+    size + "px";
+
+  flake.style.height =
+    size + "px";
 
   flake.style.animationDuration =
     Math.random() * 8 + 7 + "s";
@@ -1274,6 +1654,7 @@ for (let i = 0; i < 55; i++) {
     Math.random() * -15 + "s";
 
   snow.appendChild(flake);
+
 }
 
 
@@ -1283,11 +1664,13 @@ for (let i = 0; i < 55; i++) {
 
 function openPage(id) {
 
-  const page = document.getElementById(id);
+  const page =
+    document.getElementById(id);
 
   page.classList.add("active");
 
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow =
+    "hidden";
 
 }
 
@@ -1298,14 +1681,16 @@ function openPage(id) {
 
 function closePage() {
 
-  document.querySelectorAll(".page")
+  document
+    .querySelectorAll(".page")
     .forEach(page => {
 
       page.classList.remove("active");
 
     });
 
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow =
+    "hidden";
 
 }
 
@@ -1319,7 +1704,9 @@ document.addEventListener(
   function(e) {
 
     if (e.key === "Escape") {
+
       closePage();
+
     }
 
   }
@@ -1329,3 +1716,4 @@ document.addEventListener(
 
 </body>
 </html>
+```

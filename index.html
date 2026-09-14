@@ -24,7 +24,7 @@ html, body {
   color: #f4f1eb;
   font-family: "Noto Sans KR", sans-serif;
   user-select: none;
--webkit-user-select: none;
+  -webkit-user-select: none;
 }
 
 /* =========================
@@ -140,14 +140,6 @@ html, body {
   transform: scale(1);
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
-}
-
-/* 아늑한 주변 풍경 요소들 (나무, 집, 가로등 빛) */
-.scenery-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
 }
 
 /* 포근한 창문 불빛 효과 */
@@ -428,9 +420,9 @@ html, body {
   </div>
 </div>
 
-<!-- 배경음악 (MP3 연동 태그: src에 제작하신 캐롤 MP3 경로를 넣어주세요) -->
+<!-- 배경음악 (제공해주신 캐롤 MP3 링크 연동 완료) -->
 <audio id="bgmAudio" loop>
-  <source src="" type="audio/mpeg">
+  <source src="Https://raw.githubusercontent.com/f5dpg5b7vs-create/---/main/The%20BEST%20Christmas%20Songs%20on%20Piano%20-%20Rousseau%20(320k).mp3.download" type="audio/mpeg">
 </audio>
 
 <!-- 메인 거리 걷기 화면 (화면 아무 곳이나 톡톡 터치하여 전진) -->
@@ -560,7 +552,6 @@ function playStepSound() {
     if (ctx.state === 'suspended') ctx.resume();
     const now = ctx.currentTime;
     
-    // 노이즈 기반의 부드러운 눈 밟는 소리 생성
     const bufferSize = ctx.sampleRate * 0.12;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -591,7 +582,7 @@ function playStepSound() {
 /* =========================
    3. 거리 걷기 전진 인터랙션 (톡톡 터치할 때마다 앞으로 이동)
 ========================= */
-let currentWalkStep = 0; // 0: 초입(책), 1: 중턱(가로등), 2: 안쪽(창문)
+let currentWalkStep = 0;
 
 function stepForward() {
   playStepSound();
@@ -604,21 +595,18 @@ function stepForward() {
   const guide = document.getElementById("guideText");
 
   if (currentWalkStep === 1) {
-    // 1번(책) 지나서 2번(가로등)으로 전진
     scene.style.transform = "scale(1.25) translateY(5%)";
     obj1.classList.remove("active-step");
     obj1.classList.add("passed");
     obj2.classList.add("active-step");
     guide.textContent = "조금 더 걸어 가로등 아래에 다다랐습니다";
   } else if (currentWalkStep === 2) {
-    // 2번(가로등) 지나서 3번(창문)으로 전진
     scene.style.transform = "scale(1.55) translateY(12%)";
     obj2.classList.remove("active-step");
     obj2.classList.add("passed");
     obj3.classList.add("active-step");
     guide.textContent = "골목 안쪽 따뜻한 창가 앞에 도착했습니다";
   } else {
-    // 다시 처음으로 순환 혹은 유지
     currentWalkStep = 0;
     scene.style.transform = "scale(1)";
     obj3.classList.remove("active-step");
@@ -657,7 +645,7 @@ function toggleBGM() {
       btn.textContent = "캐롤 ON";
       btn.classList.add("active");
     }).catch(() => {
-      alert("audio 태그의 src 경로에 MP3 파일이 올바르게 지정되었는지 확인해 주세요.");
+      alert("브라우저 정책으로 인해 오디오 재생이 차단되었거나 링크를 확인해 주세요.");
     });
   } else {
     bgmAudio.pause();

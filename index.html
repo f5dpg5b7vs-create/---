@@ -2,8 +2,11 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+      content="width=device-width,
+               initial-scale=1.0,
+               viewport-fit=cover">
 
 <meta name="theme-color" content="#05070b">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">
+
 
 <style>
 
@@ -33,7 +37,7 @@ body{
     width:100%;
     height:100%;
     background:#05070b;
-    color:#f5f2ec;
+    color:#f4f1eb;
 }
 
 body{
@@ -41,74 +45,16 @@ body{
     font-family:"Noto Sans KR",sans-serif;
 }
 
-button,
-input{
-    font:inherit;
-}
-
 button{
+    font:inherit;
+    color:inherit;
     border:0;
     background:none;
-    color:inherit;
 }
 
 
 /* =====================================================
-   PHOTO
-===================================================== */
-
-.bg-photo{
-    position:absolute;
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-
-    /*
-      모바일에서 길이 너무 아래쪽으로
-      잘리지 않도록 살짝 위쪽
-    */
-    object-position:center center;
-
-    z-index:0;
-}
-
-.bg-dark{
-    position:absolute;
-    inset:0;
-    z-index:1;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(3,6,10,.52) 0%,
-            rgba(3,6,10,.12) 38%,
-            rgba(3,6,10,.18) 58%,
-            rgba(3,6,10,.72) 100%
-        );
-}
-
-.bg-vignette{
-    position:absolute;
-    inset:0;
-    z-index:2;
-
-    pointer-events:none;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 28%,
-            rgba(0,0,0,.12) 55%,
-            rgba(0,0,0,.62) 100%
-        );
-}
-
-
-/* =====================================================
-   PAGE
+   COMMON
 ===================================================== */
 
 .page{
@@ -123,6 +69,61 @@ button{
     background:#05070b;
 }
 
+.hidden{
+    display:none !important;
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.bg-photo{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    object-position:center center;
+
+    z-index:0;
+}
+
+.bg-dark{
+    position:absolute;
+    inset:0;
+
+    z-index:1;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(3,6,10,.54) 0%,
+            rgba(3,6,10,.16) 38%,
+            rgba(3,6,10,.19) 60%,
+            rgba(3,6,10,.76) 100%
+        );
+}
+
+.bg-vignette{
+    position:absolute;
+    inset:0;
+
+    z-index:2;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 25%,
+            rgba(0,0,0,.12) 55%,
+            rgba(0,0,0,.65) 100%
+        );
+}
+
 
 /* =====================================================
    SNOW
@@ -134,9 +135,8 @@ button{
 
     z-index:3;
 
-    pointer-events:none;
-
     overflow:hidden;
+    pointer-events:none;
 }
 
 .snowflake{
@@ -149,7 +149,8 @@ button{
 
     border-radius:50%;
 
-    background:rgba(255,255,255,.72);
+    background:
+        rgba(255,255,255,.68);
 
     animation:
         snowFall linear infinite;
@@ -176,7 +177,6 @@ button{
 
 #passwordPage{
     display:flex;
-
     align-items:center;
     justify-content:center;
 }
@@ -199,10 +199,10 @@ button{
     font-size:9px;
 
     letter-spacing:.45em;
-
     margin-left:.45em;
 
-    color:rgba(255,255,255,.64);
+    color:
+        rgba(255,255,255,.64);
 
     margin-bottom:20px;
 }
@@ -223,7 +223,7 @@ button{
     letter-spacing:-.08em;
 
     text-shadow:
-        0 3px 25px rgba(0,0,0,.8);
+        0 4px 25px rgba(0,0,0,.82);
 }
 
 .password-desc{
@@ -236,13 +236,13 @@ button{
 
     line-height:1.9;
 
-    color:rgba(255,255,255,.72);
+    color:
+        rgba(255,255,255,.72);
 }
 
 .password-divider{
 
     width:1px;
-
     height:45px;
 
     background:
@@ -254,7 +254,6 @@ button{
 .password-input{
 
     width:100%;
-
     height:50px;
 
     padding:0 15px;
@@ -264,7 +263,7 @@ button{
     color:white;
 
     background:
-        rgba(0,0,0,.27);
+        rgba(0,0,0,.28);
 
     border:
         1px solid
@@ -277,12 +276,13 @@ button{
     letter-spacing:.25em;
 
     backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
 }
 
 .password-input::placeholder{
 
     color:
-        rgba(255,255,255,.43);
+        rgba(255,255,255,.42);
 }
 
 .password-input:focus{
@@ -294,29 +294,29 @@ button{
 .enter-button{
 
     width:100%;
-
     height:50px;
 
     margin-top:10px;
 
     border:
         1px solid
-        rgba(255,255,255,.45);
+        rgba(255,255,255,.43);
 
     background:
-        rgba(255,255,255,.06);
+        rgba(255,255,255,.055);
 
     font-size:10px;
 
     letter-spacing:.32em;
-
     padding-left:.32em;
+
+    transition:.25s;
 }
 
 .enter-button:active{
 
     background:
-        rgba(255,255,255,.18);
+        rgba(255,255,255,.15);
 
     transform:scale(.985);
 }
@@ -335,17 +335,12 @@ button{
 
 
 /* =====================================================
-   HOME
+   HOME HEADER
 ===================================================== */
 
 #homePage{
     display:none;
 }
-
-
-/* =====================================================
-   HEADER
-===================================================== */
 
 .home-header{
 
@@ -373,11 +368,10 @@ button{
     font-size:8px;
 
     letter-spacing:.48em;
-
     margin-left:.48em;
 
     color:
-        rgba(255,255,255,.67);
+        rgba(255,255,255,.66);
 
     margin-bottom:17px;
 }
@@ -399,7 +393,7 @@ button{
 
     text-shadow:
         0 4px 25px
-        rgba(0,0,0,.8);
+        rgba(0,0,0,.82);
 }
 
 .home-desc{
@@ -413,7 +407,7 @@ button{
     line-height:1.9;
 
     color:
-        rgba(255,255,255,.7);
+        rgba(255,255,255,.68);
 }
 
 
@@ -425,7 +419,7 @@ button{
 
     position:absolute;
 
-    z-index:12;
+    z-index:20;
 
     right:18px;
 
@@ -452,7 +446,6 @@ button{
     display:block;
 
     width:100%;
-
     height:1px;
 
     margin-top:4px;
@@ -463,152 +456,253 @@ button{
 
 
 /* =====================================================
-   INVISIBLE PHOTO HOTSPOTS
+   DISCOVERY SYSTEM
 ===================================================== */
 
 /*
-    이게 이번 핵심.
+   사진을 3개의 공간으로 나눈다.
 
-    사진 위에 버튼처럼 보이는 요소가 없음.
-    실제 사진의 세 영역을 직접 누르면 이동.
+   왼쪽  : 01
+   중앙  : 02
+   오른쪽: 03
 
-    왼쪽  = 글
-    중앙  = 사진
-    오른쪽 = 영상
+   평소에는 아무것도 보이지 않는다.
 */
 
-.hotspot{
+
+.discovery{
 
     position:absolute;
 
-    z-index:9;
+    z-index:12;
 
-    border:0;
+    cursor:pointer;
 
     background:transparent;
 
-    cursor:pointer;
+    border:0;
+
+    transition:
+        background .45s ease;
 }
 
 
-/* 왼쪽 골목 */
+/* 영역 */
 
-.hotspot-left{
+.discovery-left{
 
     left:0;
-
-    top:37%;
+    top:36%;
 
     width:35%;
-
-    height:48%;
+    height:51%;
 }
 
-
-/* 중앙 길 */
-
-.hotspot-center{
+.discovery-center{
 
     left:30%;
-
-    top:38%;
+    top:37%;
 
     width:40%;
-
-    height:49%;
+    height:51%;
 }
 
-
-/* 오른쪽 건물 / 빛 */
-
-.hotspot-right{
+.discovery-right{
 
     right:0;
-
     top:35%;
 
     width:35%;
-
-    height:51%;
+    height:52%;
 }
 
 
 /* =====================================================
-   VERY SUBTLE LABELS
+   DISCOVERY MARK
 ===================================================== */
 
-.area-label{
+.discovery-mark{
 
     position:absolute;
 
-    z-index:10;
+    left:50%;
+    top:50%;
 
-    pointer-events:none;
+    transform:
+        translate(-50%,-50%)
+        scale(.86);
+
+    width:54px;
+    height:54px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.48);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    opacity:0;
+
+    background:
+        rgba(8,11,16,.09);
+
+    backdrop-filter:
+        blur(2px);
+
+    -webkit-backdrop-filter:
+        blur(2px);
+
+    transition:
+        opacity .4s ease,
+        transform .5s ease,
+        background .4s ease;
+}
+
+
+/*
+   손가락이 닿았을 때만
+   아주 은은하게 나타남
+*/
+
+.discovery:active .discovery-mark,
+.discovery.discovered .discovery-mark{
+
+    opacity:.9;
+
+    transform:
+        translate(-50%,-50%)
+        scale(1);
+
+    background:
+        rgba(8,11,16,.22);
+}
+
+
+/* =====================================================
+   NUMBER
+===================================================== */
+
+.discovery-number{
 
     font-family:"Noto Serif KR",serif;
 
-    font-size:11px;
+    font-size:12px;
 
-    letter-spacing:.16em;
+    letter-spacing:.1em;
 
     color:
-        rgba(255,255,255,.68);
+        rgba(255,255,255,.86);
+}
+
+
+/* =====================================================
+   HIDDEN NAME
+===================================================== */
+
+.discovery-name{
+
+    position:absolute;
+
+    left:50%;
+    top:calc(50% + 42px);
+
+    transform:
+        translateX(-50%)
+        translateY(5px);
+
+    white-space:nowrap;
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:10px;
+
+    letter-spacing:.18em;
+
+    color:
+        rgba(255,255,255,.82);
 
     text-shadow:
         0 2px 12px rgba(0,0,0,.9);
 
-    opacity:.72;
+    opacity:0;
 
-    transition:.35s;
+    transition:
+        opacity .4s ease,
+        transform .4s ease;
 }
 
-.label-left{
+.discovery:active .discovery-name,
+.discovery.discovered .discovery-name{
 
-    left:11%;
+    opacity:.9;
 
-    top:68%;
+    transform:
+        translateX(-50%)
+        translateY(0);
 }
 
-.label-center{
+
+/* =====================================================
+   DISCOVERY GLOW
+===================================================== */
+
+.discovery::after{
+
+    content:"";
+
+    position:absolute;
 
     left:50%;
+    top:50%;
 
-    top:72%;
+    width:100px;
+    height:100px;
 
-    transform:translateX(-50%);
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.08),
+            transparent 68%
+        );
+
+    opacity:0;
+
+    transition:
+        opacity .5s ease;
 }
 
-.label-right{
-
-    right:10%;
-
-    top:67%;
-}
-
-.hotspot:active ~ .label-left,
-.hotspot:active ~ .label-center,
-.hotspot:active ~ .label-right{
+.discovery:active::after,
+.discovery.discovered::after{
 
     opacity:1;
 }
 
 
 /* =====================================================
-   BOTTOM
+   GUIDE TEXT
 ===================================================== */
 
-.home-bottom{
+.explore-guide{
 
     position:absolute;
 
-    z-index:8;
+    z-index:9;
 
     left:0;
-
     bottom:
         max(
-            25px,
-            env(safe-area-inset-bottom) + 18px
+            30px,
+            env(safe-area-inset-bottom) + 22px
         );
 
     width:100%;
@@ -616,28 +710,49 @@ button{
     text-align:center;
 
     pointer-events:none;
+
+    transition:
+        opacity 1s ease;
 }
 
-.bottom-line{
+.explore-guide-line{
 
-    width:34px;
+    width:1px;
+    height:23px;
 
-    height:1px;
-
-    margin:0 auto 11px;
+    margin:0 auto 9px;
 
     background:
-        rgba(255,255,255,.42);
+        rgba(255,255,255,.4);
+
+    animation:
+        guidePulse 3s ease-in-out infinite;
 }
 
-.home-bottom p{
+.explore-guide p{
 
     font-size:8px;
 
-    letter-spacing:.3em;
+    letter-spacing:.27em;
 
     color:
-        rgba(255,255,255,.47);
+        rgba(255,255,255,.48);
+}
+
+@keyframes guidePulse{
+
+    0%,
+    100%{
+        opacity:.25;
+    }
+
+    50%{
+        opacity:.7;
+    }
+}
+
+.explore-guide.hidden-guide{
+    opacity:0;
 }
 
 
@@ -658,10 +773,6 @@ button{
     overflow-y:auto;
 
     -webkit-overflow-scrolling:touch;
-}
-
-.hidden{
-    display:none !important;
 }
 
 .sub-inner{
@@ -729,7 +840,6 @@ button{
 .sub-line{
 
     width:35px;
-
     height:1px;
 
     background:
@@ -814,7 +924,8 @@ button{
 
     display:grid;
 
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
     gap:8px;
 }
@@ -838,7 +949,6 @@ button{
 .photo-card img{
 
     width:100%;
-
     height:100%;
 
     object-fit:cover;
@@ -874,7 +984,6 @@ button{
 .video-card img{
 
     width:100%;
-
     height:100%;
 
     object-fit:cover;
@@ -883,7 +992,6 @@ button{
 .video-dark{
 
     position:absolute;
-
     inset:0;
 
     background:
@@ -899,14 +1007,13 @@ button{
     position:absolute;
 
     left:50%;
-
     top:50%;
 
     width:55px;
-
     height:55px;
 
-    transform:translate(-50%,-50%);
+    transform:
+        translate(-50%,-50%);
 
     border:
         1px solid
@@ -917,7 +1024,6 @@ button{
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     font-size:14px;
@@ -930,7 +1036,6 @@ button{
     position:absolute;
 
     left:15px;
-
     bottom:14px;
 
     font-family:"Noto Serif KR",serif;
@@ -1042,7 +1147,6 @@ button{
 .credit-line{
 
     width:35px;
-
     height:1px;
 
     background:
@@ -1116,20 +1220,20 @@ button{
 
 @media(min-width:700px){
 
-    .home-title{
+    .home-header{
         top:10%;
     }
 
-    .hotspot-left{
+    .discovery-left{
         width:32%;
     }
 
-    .hotspot-center{
-        width:36%;
+    .discovery-center{
         left:32%;
+        width:36%;
     }
 
-    .hotspot-right{
+    .discovery-right{
         width:32%;
     }
 
@@ -1143,7 +1247,7 @@ button{
 
 
 <!-- =====================================================
-     PASSWORD PAGE
+     PASSWORD
 ===================================================== -->
 
 <section
@@ -1161,8 +1265,8 @@ button{
     <div class="bg-vignette"></div>
 
     <div
-        class="snow"
         id="passwordSnow"
+        class="snow"
     ></div>
 
 
@@ -1221,15 +1325,16 @@ button{
     <img
         class="bg-photo"
         src="https://images.unsplash.com/photo-1765749420162-4e12f3798d84?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=85&w=2400"
-        alt="눈 내리는 겨울밤의 골목"
+        alt="눈 내리는 겨울밤 거리"
     >
 
     <div class="bg-dark"></div>
     <div class="bg-vignette"></div>
 
+
     <div
-        class="snow"
         id="homeSnow"
+        class="snow"
     ></div>
 
 
@@ -1263,49 +1368,83 @@ button{
 
 
     <!-- =================================================
-         INVISIBLE HOTSPOTS
+         HIDDEN DISCOVERY AREAS
     ================================================= -->
 
     <button
-        id="storyButton"
-        class="hotspot hotspot-left"
-        aria-label="글"
-    ></button>
+        id="discoveryLeft"
+        class="discovery discovery-left"
+        aria-label="숨겨진 첫 번째 공간"
+    >
+
+        <span class="discovery-mark">
+
+            <span class="discovery-number">
+                01
+            </span>
+
+        </span>
+
+        <span class="discovery-name">
+            남겨진 이야기
+        </span>
+
+    </button>
+
 
     <button
-        id="photoButton"
-        class="hotspot hotspot-center"
-        aria-label="사진"
-    ></button>
+        id="discoveryCenter"
+        class="discovery discovery-center"
+        aria-label="숨겨진 두 번째 공간"
+    >
+
+        <span class="discovery-mark">
+
+            <span class="discovery-number">
+                02
+            </span>
+
+        </span>
+
+        <span class="discovery-name">
+            밤의 장면
+        </span>
+
+    </button>
+
 
     <button
-        id="videoButton"
-        class="hotspot hotspot-right"
-        aria-label="영상"
-    ></button>
+        id="discoveryRight"
+        class="discovery discovery-right"
+        aria-label="숨겨진 세 번째 공간"
+    >
+
+        <span class="discovery-mark">
+
+            <span class="discovery-number">
+                03
+            </span>
+
+        </span>
+
+        <span class="discovery-name">
+            움직이는 기억
+        </span>
+
+    </button>
 
 
-    <!-- 아주 작게만 표시되는 안내 -->
+    <!-- GUIDE -->
 
-    <div class="area-label label-left">
-        글
-    </div>
+    <div
+        id="exploreGuide"
+        class="explore-guide"
+    >
 
-    <div class="area-label label-center">
-        사진
-    </div>
-
-    <div class="area-label label-right">
-        영상
-    </div>
-
-
-    <div class="home-bottom">
-
-        <div class="bottom-line"></div>
+        <div class="explore-guide-line"></div>
 
         <p>
-            WINTER · 2026
+            천천히 둘러보세요
         </p>
 
     </div>
@@ -1820,10 +1959,15 @@ button{
             <div class="credit-list">
 
                 <div class="credit-item">
-                    <span class="credit-name">—</span>
+
+                    <span class="credit-name">
+                        —
+                    </span>
+
                     <span class="credit-work">
                         준비 중
                     </span>
+
                 </div>
 
             </div>
@@ -1842,12 +1986,15 @@ button{
             <div class="credit-list">
 
                 <div class="credit-item">
+
                     <span class="credit-name">
                         사부
                     </span>
+
                     <span class="credit-work">
                         한훈 · 미정
                     </span>
+
                 </div>
 
             </div>
@@ -1881,7 +2028,6 @@ button{
 
 const PASSWORD = "ohmyps";
 
-
 const passwordPage =
     document.getElementById("passwordPage");
 
@@ -1899,86 +2045,173 @@ const passwordError =
 
 
 /* =====================================================
-   AUDIO
+   NEW QUIET SOUND SYSTEM
 ===================================================== */
+
+/*
+    예전의 높은 삑 소리를 완전히 제거.
+
+    발견:
+    아주 낮고 짧은 "톡"
+
+    이동:
+    조금 더 묵직한 "툭"
+*/
 
 let audioContext = null;
 
-function clickSound(){
+
+function getAudio(){
+
+    if(!audioContext){
+
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+    if(
+        audioContext.state ===
+        "suspended"
+    ){
+
+        audioContext.resume();
+
+    }
+
+    return audioContext;
+}
+
+
+/* 발견 소리 */
+
+function discoverSound(){
 
     try{
 
-        if(!audioContext){
+        const ctx =
+            getAudio();
 
-            audioContext =
-                new (
-                    window.AudioContext ||
-                    window.webkitAudioContext
-                )();
-
-        }
-
-        if(
-            audioContext.state ===
-            "suspended"
-        ){
-
-            audioContext.resume();
-
-        }
-
-
-        const oscillator =
-            audioContext.createOscillator();
+        const osc =
+            ctx.createOscillator();
 
         const gain =
-            audioContext.createGain();
+            ctx.createGain();
 
 
-        oscillator.type = "sine";
+        osc.type = "sine";
 
 
-        oscillator.frequency.setValueAtTime(
-            1100,
-            audioContext.currentTime
+        /*
+           높은 음이 아니라
+           아주 낮은 음.
+        */
+
+        osc.frequency.setValueAtTime(
+            260,
+            ctx.currentTime
         );
 
-
-        oscillator.frequency.exponentialRampToValueAtTime(
-            520,
-            audioContext.currentTime + .05
+        osc.frequency.exponentialRampToValueAtTime(
+            170,
+            ctx.currentTime + .07
         );
 
 
         gain.gain.setValueAtTime(
             .0001,
-            audioContext.currentTime
+            ctx.currentTime
         );
-
 
         gain.gain.exponentialRampToValueAtTime(
-            .05,
-            audioContext.currentTime + .006
+            .025,
+            ctx.currentTime + .008
         );
-
 
         gain.gain.exponentialRampToValueAtTime(
             .0001,
-            audioContext.currentTime + .06
+            ctx.currentTime + .085
         );
 
 
-        oscillator.connect(gain);
+        osc.connect(gain);
 
         gain.connect(
-            audioContext.destination
+            ctx.destination
         );
 
 
-        oscillator.start();
+        osc.start();
 
-        oscillator.stop(
-            audioContext.currentTime + .065
+        osc.stop(
+            ctx.currentTime + .09
+        );
+
+    }catch(e){}
+
+}
+
+
+/* 페이지 이동 소리 */
+
+function openSound(){
+
+    try{
+
+        const ctx =
+            getAudio();
+
+        const osc =
+            ctx.createOscillator();
+
+        const gain =
+            ctx.createGain();
+
+
+        osc.type = "triangle";
+
+
+        osc.frequency.setValueAtTime(
+            145,
+            ctx.currentTime
+        );
+
+        osc.frequency.exponentialRampToValueAtTime(
+            92,
+            ctx.currentTime + .12
+        );
+
+
+        gain.gain.setValueAtTime(
+            .0001,
+            ctx.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .035,
+            ctx.currentTime + .012
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            ctx.currentTime + .14
+        );
+
+
+        osc.connect(gain);
+
+        gain.connect(
+            ctx.destination
+        );
+
+
+        osc.start();
+
+        osc.stop(
+            ctx.currentTime + .15
         );
 
     }catch(e){}
@@ -2010,13 +2243,12 @@ function createSnow(
         const flake =
             document.createElement("span");
 
-
         flake.className =
             "snowflake";
 
 
         const size =
-            Math.random() * 2.8 + .8;
+            Math.random() * 2.8 + .7;
 
 
         flake.style.width =
@@ -2031,15 +2263,15 @@ function createSnow(
 
 
         flake.style.opacity =
-            Math.random() * .6 + .15;
+            Math.random() * .55 + .15;
 
 
         flake.style.animationDuration =
-            Math.random() * 8 + 8 + "s";
+            Math.random() * 9 + 8 + "s";
 
 
         flake.style.animationDelay =
-            Math.random() * -15 + "s";
+            Math.random() * -16 + "s";
 
 
         flake.style.setProperty(
@@ -2050,7 +2282,9 @@ function createSnow(
         );
 
 
-        container.appendChild(flake);
+        container.appendChild(
+            flake
+        );
 
     }
 
@@ -2064,18 +2298,17 @@ createSnow(
 
 createSnow(
     "homeSnow",
-    90
+    85
 );
 
 
 /* =====================================================
-   LOGIN
+   PASSWORD
 ===================================================== */
 
 function enterSite(){
 
-    clickSound();
-
+    getAudio();
 
     const value =
         passwordInput.value.trim();
@@ -2084,6 +2317,9 @@ function enterSite(){
     if(
         value === PASSWORD
     ){
+
+        openSound();
+
 
         sessionStorage.setItem(
             "tamrabae_access",
@@ -2094,14 +2330,12 @@ function enterSite(){
         passwordPage.style.display =
             "none";
 
-
         homePage.style.display =
             "block";
 
 
         passwordError.textContent =
             "";
-
 
     }else{
 
@@ -2158,17 +2392,141 @@ if(
 
 
 /* =====================================================
-   PAGES
+   DISCOVERY
+===================================================== */
+
+const discoveries = [
+
+    {
+        element:
+            document.getElementById(
+                "discoveryLeft"
+            ),
+
+        page:
+            "story",
+
+        soundPlayed:false
+    },
+
+    {
+        element:
+            document.getElementById(
+                "discoveryCenter"
+            ),
+
+        page:
+            "photo",
+
+        soundPlayed:false
+    },
+
+    {
+        element:
+            document.getElementById(
+                "discoveryRight"
+            ),
+
+        page:
+            "video",
+
+        soundPlayed:false
+    }
+
+];
+
+
+/*
+   사용자가 해당 영역을 처음 건드리면
+   "발견" 상태가 된다.
+
+   바로 페이지가 열리지 않는다.
+*/
+
+discoveries.forEach(
+    function(item){
+
+        item.element.addEventListener(
+            "pointerdown",
+            function(){
+
+                if(
+                    !item.element.classList.contains(
+                        "discovered"
+                    )
+                ){
+
+                    item.element.classList.add(
+                        "discovered"
+                    );
+
+                    discoverSound();
+
+                    item.soundPlayed =
+                        true;
+
+
+                    /*
+                       안내문을 조금씩 숨긴다.
+                    */
+
+                    document
+                        .getElementById(
+                            "exploreGuide"
+                        )
+                        .classList.add(
+                            "hidden-guide"
+                        );
+
+                }
+
+            }
+        );
+
+
+        /*
+           두 번째 클릭 = 실제 이동
+        */
+
+        item.element.addEventListener(
+            "click",
+            function(){
+
+                if(
+                    item.soundPlayed
+                ){
+
+                    openDiscoveredPage(
+                        item.page
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   PAGE ELEMENTS
 ===================================================== */
 
 const storyPage =
-    document.getElementById("storyPage");
+    document.getElementById(
+        "storyPage"
+    );
 
 const photoPage =
-    document.getElementById("photoPage");
+    document.getElementById(
+        "photoPage"
+    );
 
 const videoPage =
-    document.getElementById("videoPage");
+    document.getElementById(
+        "videoPage"
+    );
 
 
 function closeSubPages(){
@@ -2188,27 +2546,60 @@ function closeSubPages(){
 }
 
 
-function openPage(page){
+function openDiscoveredPage(
+    type
+){
 
-    clickSound();
+    openSound();
+
+    closeSubPages();
 
     homePage.style.display =
         "none";
 
-    closeSubPages();
 
-    page.classList.remove(
-        "hidden"
-    );
+    if(type === "story"){
 
-    page.scrollTop = 0;
+        storyPage.classList.remove(
+            "hidden"
+        );
+
+        storyPage.scrollTop = 0;
+
+    }
+
+
+    if(type === "photo"){
+
+        photoPage.classList.remove(
+            "hidden"
+        );
+
+        photoPage.scrollTop = 0;
+
+    }
+
+
+    if(type === "video"){
+
+        videoPage.classList.remove(
+            "hidden"
+        );
+
+        videoPage.scrollTop = 0;
+
+    }
 
 }
 
 
+/* =====================================================
+   HOME
+===================================================== */
+
 function goHome(){
 
-    clickSound();
+    openSound();
 
     closeSubPages();
 
@@ -2216,52 +2607,6 @@ function goHome(){
         "block";
 
 }
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-document
-    .getElementById("storyButton")
-    .addEventListener(
-        "click",
-        function(){
-
-            openPage(
-                storyPage
-            );
-
-        }
-    );
-
-
-document
-    .getElementById("photoButton")
-    .addEventListener(
-        "click",
-        function(){
-
-            openPage(
-                photoPage
-            );
-
-        }
-    );
-
-
-document
-    .getElementById("videoButton")
-    .addEventListener(
-        "click",
-        function(){
-
-            openPage(
-                videoPage
-            );
-
-        }
-    );
 
 
 /* =====================================================
@@ -2275,12 +2620,14 @@ const creditsPage =
 
 
 document
-    .getElementById("creditsOpen")
+    .getElementById(
+        "creditsOpen"
+    )
     .addEventListener(
         "click",
         function(){
 
-            clickSound();
+            openSound();
 
             creditsPage.style.display =
                 "block";
@@ -2293,12 +2640,14 @@ document
 
 
 document
-    .getElementById("creditsClose")
+    .getElementById(
+        "creditsClose"
+    )
     .addEventListener(
         "click",
         function(){
 
-            clickSound();
+            openSound();
 
             creditsPage.style.display =
                 "none";
@@ -2313,7 +2662,7 @@ document
 
 function fakeVideo(){
 
-    clickSound();
+    openSound();
 
     alert(
         "영상은 준비 중입니다.\n\n조금만 기다려주세요."

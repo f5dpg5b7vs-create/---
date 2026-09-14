@@ -20,7 +20,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #03060a;
+  background: #010306;
   color: #f4f1eb;
   font-family: "Noto Sans KR", sans-serif;
   user-select: none;
@@ -35,7 +35,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(3, 6, 10, .88), rgba(3, 6, 10, .97)), url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1800&q=90");
+  background: linear-gradient(rgba(1, 3, 6, .92), rgba(1, 3, 6, .99)), url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1800&q=90");
   background-size: cover;
   background-position: center;
   transition: opacity .8s ease, visibility .8s ease;
@@ -116,7 +116,7 @@ html, body {
 #wrongPassword.show { opacity: 1; }
 
 
-/* 겨울밤 거리의 3D 패럴랙스 월 */
+/* 입체 패럴랙스 월 (양옆 풍경이 정교하게 스쳐 지나가는 공간) */
 .home {
   position: fixed;
   inset: 0;
@@ -130,40 +130,66 @@ html, body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 320%;
+  height: 400%;
   background: linear-gradient(to bottom, 
-    #04070c 0%, 
-    #091019 33%, 
-    #111925 66%, 
-    #05080d 100%
+    #010306 0%, 
+    #050a12 20%, 
+    #0b121c 40%, 
+    #121b28 60%, 
+    #091018 80%, 
+    #020407 100%
   );
   transform: translateY(0%);
-  transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 1.1s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
 }
 
-.alley-bg-art {
+/* 양옆 풍경 레이어 및 깊이감 효과 */
+.scenery-layer {
   position: absolute;
   inset: 0;
   background-image: 
-    radial-gradient(circle at 50% 16%, rgba(255,185,110,0.18) 0%, transparent 38%),
-    radial-gradient(circle at 28% 48%, rgba(255,160,80,0.12) 0%, transparent 45%),
-    radial-gradient(circle at 72% 78%, rgba(255,190,120,0.14) 0%, transparent 42%);
+    radial-gradient(circle at 15% 20%, rgba(255,180,100,0.14) 0%, transparent 28%),
+    radial-gradient(circle at 85% 50%, rgba(255,160,80,0.12) 0%, transparent 32%),
+    radial-gradient(circle at 20% 75%, rgba(255,190,120,0.15) 0%, transparent 30%),
+    radial-gradient(circle at 80% 90%, rgba(255,170,90,0.13) 0%, transparent 28%);
   background-repeat: no-repeat;
   pointer-events: none;
 }
 
-.alley-walls {
+/* 대거 확장된 양옆 스쳐 지나가는 소품 카드들 (나무, 통나무집, 돌담, 설경) */
+.side-props {
   position: absolute;
   inset: 0;
-  background: 
-    linear-gradient(90deg, rgba(2,3,5,0.9) 0%, transparent 18%, transparent 82%, rgba(2,3,5,0.9) 100%),
-    repeating-linear-gradient(0deg, transparent, transparent 180px, rgba(255,255,255,0.012) 180px, rgba(255,255,255,0.012) 182px);
   pointer-events: none;
 }
 
+.prop-item {
+  position: absolute;
+  width: 120px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 0.4;
+  filter: brightness(0.55) contrast(1.25);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
+.prop-item img {
+  width: 100%; height: 100%; object-fit: cover;
+}
 
-/* 그림 중심의 오브젝트 스타일 (글자 덩어리가 아니라 일러스트 카드 형태로 구현) */
+/* 좌우측 교차 배치로 진짜 길을 걷는 듯한 공간감 부여 */
+.sp-1 { top: 10%; left: 2%; }
+.sp-2 { top: 22%; right: 2%; }
+.sp-3 { top: 35%; left: 3%; }
+.sp-4 { top: 48%; right: 3%; }
+.sp-5 { top: 60%; left: 2%; }
+.sp-6 { top: 73%; right: 2%; }
+.sp-7 { top: 85%; left: 3%; }
+
+
+/* 순수 인터랙션 오브젝트 (텍스트 글자 일체 없음) */
 .objects-container {
   position: absolute;
   inset: 0;
@@ -172,98 +198,74 @@ html, body {
 
 .walk-object {
   position: absolute;
-  background: rgba(10, 15, 22, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 12px;
-  color: #f4f1eb;
+  background: rgba(6, 10, 16, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 16px;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px;
-  width: 140px;
+  overflow: hidden;
   pointer-events: auto;
   transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-  opacity: 0.25;
-  transform: scale(0.75);
-  backdrop-filter: blur(8px);
+  opacity: 0.2;
+  transform: scale(0.68);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.85);
 }
 
 .walk-object.active-step {
   opacity: 1;
   transform: scale(1.08);
-  border-color: rgba(255,210,140,0.6);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255,190,120,0.25);
+  border-color: rgba(255,210,140,0.75);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.95), 0 0 30px rgba(255,190,120,0.35);
 }
 
 .walk-object.passed {
-  opacity: 0.1;
-  transform: scale(0.7) translateY(-40px);
+  opacity: 0.06;
+  transform: scale(0.6) translateY(-60px);
   pointer-events: none;
 }
 
-/* 오브젝트 내부 그림 영역 */
-.obj-art-frame {
-  width: 100%;
-  height: 90px;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 10px;
-  background: #141b24;
-  position: relative;
-}
-
-.obj-art-frame img {
+.walk-object img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.85;
+  display: block;
+  opacity: 0.9;
   transition: transform 0.5s ease;
 }
 
-.walk-object:hover .obj-art-frame img {
+.walk-object:hover img {
   transform: scale(1.08);
 }
 
-.obj-title {
-  font-family: "Noto Serif KR", serif;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  margin-bottom: 3px;
-  text-align: center;
-}
-
-.obj-sub {
-  font-size: 8px;
-  letter-spacing: 0.15em;
-  opacity: 0.5;
-  text-align: center;
-}
-
-/* 1단계: 벤치 위의 책 */
+/* 1단계: 벤치와 책 */
 .obj-book {
-  top: 19%;
-  left: 28%;
+  top: 16%;
+  left: 30%;
+  width: 135px;
+  height: 135px;
 }
 
 /* 2단계: 가로등 불빛 */
 .obj-lamp {
-  top: 49%;
+  top: 44%;
   right: 28%;
+  width: 135px;
+  height: 135px;
 }
 
-/* 3단계: 따뜻한 창문 */
+/* 3단계: 통나무집 창문 */
 .obj-window {
-  top: 79%;
+  top: 72%;
   left: 50%;
-  transform: translateX(-50%) scale(0.75);
+  transform: translateX(-50%) scale(0.68);
+  width: 145px;
+  height: 135px;
 }
 .obj-window.active-step {
   transform: translateX(-50%) scale(1.08);
 }
 
 
-/* 상단 & 하단 UI */
+/* 상단 UI */
 .top-bar {
   position: absolute;
   top: 0; left: 0; width: 100%;
@@ -309,7 +311,7 @@ html, body {
   background: rgba(255,255,255,0.25);
 }
 
-/* 하단 걷기 가이드 */
+/* 하단 걷기 안내 */
 .walk-guide-box {
   position: absolute;
   bottom: 8%;
@@ -322,14 +324,14 @@ html, body {
   font-family: "Noto Serif KR", serif;
   font-size: 10px;
   letter-spacing: 0.25em;
-  opacity: 0.55;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+  opacity: 0.5;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.9);
   animation: guideBlink 2s ease-in-out infinite alternate;
 }
 
 @keyframes guideBlink {
-  0% { opacity: 0.3; }
-  100% { opacity: 0.8; }
+  0% { opacity: 0.25; }
+  100% { opacity: 0.75; }
 }
 
 
@@ -357,7 +359,7 @@ html, body {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: linear-gradient(rgba(5,9,14,0.97), rgba(9,14,20,0.99));
+  background: linear-gradient(rgba(3,6,10,0.98), rgba(7,11,17,0.99));
   transform: translateY(100%);
   opacity: 0;
   transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.4s ease;
@@ -436,45 +438,38 @@ html, body {
   </div>
 </div>
 
-<!-- 배경음악 (MP3 파일 링크 연동) -->
-<audio id="bgmAudio" loop preload="auto">
-  <source src="https://raw.githubusercontent.com/f5dpg5b7vs-create/---/main/The%20BEST%20Christmas%20Songs%20on%20Piano%20-%20Rousseau%20(320k).mp3.download" type="audio/mpeg">
-</audio>
-
-<!-- 메인 거리 걷기 화면 -->
+<!-- 메인 거리 걷기 화면 (터치할 때마다 양옆 풍경이 역동적으로 스쳐 지나감) -->
 <main class="home" onclick="stepForward()">
   <div class="alley-world" id="alleyWorld">
-    <div class="alley-bg-art"></div>
-    <div class="alley-walls"></div>
+    <div class="scenery-layer"></div>
 
-    <!-- 오브젝트들: 진짜 그림 카드로 구성 [1: 벤치와 책 -> 2: 가로등 불빛 -> 3: 따뜻한 창문] -->
+    <!-- 양옆으로 촘촘히 배치되어 스쳐 지나가는 풍경 소품들 -->
+    <div class="side-props">
+      <div class="prop-item sp-1"><img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=400&q=80" alt="겨울 나무"></div>
+      <div class="prop-item sp-2"><img src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=400&q=80" alt="통나무집"></div>
+      <div class="prop-item sp-3"><img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=400&q=80" alt="겨울 숲"></div>
+      <div class="prop-item sp-4"><img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=400&q=80" alt="설경 가옥"></div>
+      <div class="prop-item sp-5"><img src="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=400&q=80" alt="자작나무"></div>
+      <div class="prop-item sp-6"><img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=400&q=80" alt="겨울 밤"></div>
+      <div class="prop-item sp-7"><img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=400&q=80" alt="눈 쌓인 풍경"></div>
+    </div>
+
+    <!-- 순수 이미지 오브젝트 (텍스트 일체 없음) -->
     <div class="objects-container">
       
-      <!-- 1단계: 벤치 위의 책 (그림 카드) -->
+      <!-- 1단계: 벤치와 책 -->
       <button class="walk-object obj-book active-step" id="obj1" onclick="event.stopPropagation(); openContent('storyPage')">
-        <div class="obj-art-frame">
-          <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80" alt="벤치 위의 책">
-        </div>
-        <div class="obj-title">벤치 위의 책</div>
-        <div class="obj-sub">01 · STORIES</div>
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=500&q=80" alt="벤치 위의 책">
       </button>
 
-      <!-- 2단계: 가로등 불빛 (그림 카드) -->
+      <!-- 2단계: 가로등 불빛 -->
       <button class="walk-object obj-lamp" id="obj2" onclick="event.stopPropagation(); openContent('photoPage')">
-        <div class="obj-art-frame">
-          <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=600&q=80" alt="가로등 불빛">
-        </div>
-        <div class="obj-title">가로등 불빛</div>
-        <div class="obj-sub">02 · PHOTOGRAPHS</div>
+        <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=500&q=80" alt="가로등 아래">
       </button>
 
-      <!-- 3단계: 따뜻한 창문 (그림 카드) -->
+      <!-- 3단계: 통나무집 창문 -->
       <button class="walk-object obj-window" id="obj3" onclick="event.stopPropagation(); openContent('videoPage')">
-        <div class="obj-art-frame">
-          <img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=600&q=80" alt="따뜻한 창문">
-        </div>
-        <div class="obj-title">따뜻한 창문</div>
-        <div class="obj-sub">03 · MOVIES</div>
+        <img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=500&q=80" alt="창문">
       </button>
 
     </div>
@@ -493,7 +488,7 @@ html, body {
 
   <!-- 하단 안내 -->
   <div class="walk-guide-box">
-    <div class="walk-guide-text" id="guideText">화면을 톡톡 터치해 골목 안으로 걸어 들어가세요</div>
+    <div class="walk-guide-text" id="guideText">화면을 가볍게 터치해 겨울밤 길을 한 걸음씩 내딛으세요</div>
   </div>
 
   <div class="snow-container" id="snowBox"></div>
@@ -502,20 +497,20 @@ html, body {
 
 <!-- 1. 글 페이지 -->
 <section class="page" id="storyPage">
-  <button class="back-btn" onclick="closeContent('storyPage')">← 골목길로 돌아가기</button>
+  <button class="back-btn" onclick="closeContent('storyPage')">← 겨울밤길로 돌아가기</button>
   <div class="page-header">
     <div class="page-step-num">01 / STORIES</div>
     <h2 class="page-heading">벤치 위의 책</h2>
   </div>
   <div class="content-body">
-    눈이 하얗게 쌓인 벤치 위, 누군가 두고 간 작은 책장을 펼칩니다.<br><br>
+    눈이 하얗게 쌓인 벤치 위, 누군가 두고 간 작은 책장을 조심스레 펼칩니다.<br><br>
     차가운 겨울 밤공기 속에서도 가로등 불빛 아래 적어 내려간 다정한 문장들이 고요하게 마음을 적십니다. 아무에게도 꺼내놓지 않았던 우리들의 이야기가 이곳에 머물러 있습니다.
   </div>
 </section>
 
 <!-- 2. 그림 페이지 -->
 <section class="page" id="photoPage">
-  <button class="back-btn" onclick="closeContent('photoPage')">← 골목길로 돌아가기</button>
+  <button class="back-btn" onclick="closeContent('photoPage')">← 겨울밤길로 돌아가기</button>
   <div class="page-header">
     <div class="page-step-num">02 / PHOTOGRAPHS</div>
     <h2 class="page-heading">가로등 아래의 그림</h2>
@@ -524,13 +519,13 @@ html, body {
     골목 어귀를 밝히는 가로등 밑, 흩날리는 눈송이와 함께 비치는 일러스트 풍경.
   </div>
   <div class="content-image-box">
-    <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=1000&q=80" alt="겨울 일러스트 풍경">
+    <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=1000&q=80" alt="겨울 풍경">
   </div>
 </section>
 
 <!-- 3. 영상 페이지 -->
 <section class="page" id="videoPage">
-  <button class="back-btn" onclick="closeContent('videoPage')">← 골목길로 돌아가기</button>
+  <button class="back-btn" onclick="closeContent('videoPage')">← 겨울밤길로 돌아가기</button>
   <div class="page-header">
     <div class="page-step-num">03 / MOVIES</div>
     <h2 class="page-heading">따뜻한 불빛의 창문</h2>
@@ -539,13 +534,13 @@ html, body {
     안쪽 깊은 곳, 노란 불빛이 새어 나오는 창문 너머의 움직이는 겨울 기록들.
   </div>
   <div class="content-image-box" style="aspect-ratio: 16/10;">
-    <img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=1000&q=80" alt="겨울 영상 스틸컷">
+    <img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=1000&q=80" alt="겨울 스틸컷">
   </div>
 </section>
 
 
 <script>
-/* 1. 나무 상자 닫히는 사운드 */
+/* 1. 나무 상자 닫히는 차분한 사운드 */
 function playWoodSound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -568,7 +563,7 @@ function playWoodSound() {
   } catch (e) {}
 }
 
-/* 2. 눈 밟는 발걸음 소리 */
+/* 2. 사각사각 눈 밟는 발걸음 사운드 */
 function playStepSound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -602,7 +597,7 @@ function playStepSound() {
   } catch (e) {}
 }
 
-/* 3. 골목길 전진 인터랙션 */
+/* 3. 진짜 한 걸음씩 내디디며 양옆 풍경이 역동적으로 밀려나는 전진 인터랙션 */
 let currentWalkStep = 0;
 
 function stepForward() {
@@ -616,17 +611,17 @@ function stepForward() {
   const guide = document.getElementById("guideText");
 
   if (currentWalkStep === 1) {
-    world.style.transform = "translateY(-31%)";
+    world.style.transform = "translateY(-30%)";
     obj1.classList.remove("active-step");
     obj1.classList.add("passed");
     obj2.classList.add("active-step");
-    guide.textContent = "사각사각 눈길을 걸어 가로등 아래에 다다랐습니다";
+    guide.textContent = "눈길을 걸어 가로등 불빛이 비치는 곳에 다다랐습니다";
   } else if (currentWalkStep === 2) {
-    world.style.transform = "translateY(-63%)";
+    world.style.transform = "translateY(-62%)";
     obj2.classList.remove("active-step");
     obj2.classList.add("passed");
     obj3.classList.add("active-step");
-    guide.textContent = "골목 안쪽 불빛이 새어 나오는 창가에 도착했습니다";
+    guide.textContent = "불빛이 포근하게 새어 나오는 창가 앞에 도착했습니다";
   } else {
     currentWalkStep = 0;
     world.style.transform = "translateY(0%)";
@@ -634,7 +629,7 @@ function stepForward() {
     obj1.classList.remove("passed");
     obj2.classList.remove("passed");
     obj1.classList.add("active-step");
-    guide.textContent = "화면을 톡톡 터치해 골목 안으로 걸어 들어가세요";
+    guide.textContent = "화면을 가볍게 터치해 겨울밤 길을 한 걸음씩 내딛으세요";
   }
 }
 
@@ -649,23 +644,55 @@ function closeContent(pageId) {
   document.getElementById(pageId).classList.remove("active");
 }
 
-/* 5. MP3 캐롤 오디오 제어 */
-const bgmAudio = document.getElementById("bgmAudio");
+/* 5. 안정적인 웹 오디오 캐롤 연주 엔진 */
+let audioCtx = null;
+let carolInterval = null;
 let isBgmOn = false;
+
+const carolNotes = [
+  523.25, 523.25, 587.33, 523.25, 659.25, 698.46,
+  523.25, 523.25, 587.33, 523.25, 783.99, 659.25,
+  659.25, 698.46, 783.99, 698.46, 659.25, 587.33
+];
+let noteIndex = 0;
+
+function playCarolNote() {
+  if (!audioCtx) return;
+  try {
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(carolNotes[noteIndex], now);
+    noteIndex = (noteIndex + 1) % carolNotes.length;
+
+    gain.gain.setValueAtTime(0.07, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.65);
+  } catch (e) {}
+}
 
 function toggleBGM() {
   const btn = document.getElementById("bgmBtn");
   if (!isBgmOn) {
-    bgmAudio.play().then(() => {
-      isBgmOn = true;
-      btn.textContent = "캐롤 ON";
-      btn.classList.add("active");
-    }).catch((err) => {
-      console.log("오디오 재생 오류:", err);
-      alert("브라우저 정책으로 인해 오디오 재생이 차단되었거나 링크를 확인해 주세요.");
-    });
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    isBgmOn = true;
+    btn.textContent = "캐롤 ON";
+    btn.classList.add("active");
+    
+    carolInterval = setInterval(playCarolNote, 380);
   } else {
-    bgmAudio.pause();
+    clearInterval(carolInterval);
     isBgmOn = false;
     btn.textContent = "캐롤 OFF";
     btn.classList.remove("active");

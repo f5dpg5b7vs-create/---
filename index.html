@@ -20,7 +20,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #020408;
+  background: #010306;
   color: #f4f1eb;
   font-family: "Noto Sans KR", sans-serif;
   user-select: none;
@@ -35,7 +35,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(2, 4, 8, .92), rgba(2, 4, 8, .99)), url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1800&q=90");
+  background: linear-gradient(rgba(1, 3, 6, .94), rgba(1, 3, 6, .99)), url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1800&q=90");
   background-size: cover;
   background-position: center;
   transition: opacity .8s ease, visibility .8s ease;
@@ -116,14 +116,13 @@ html, body {
 #wrongPassword.show { opacity: 1; }
 
 
-/* 진짜 겨울 거리 월 (이미지 조각 없이 CSS로 구성한 3D 시야 공간) */
+/* 실제 설치된 조형물 구조물들이 세워져 있는 거리 월 */
 .home {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100svh;
   overflow: hidden;
-  perspective: 1000px;
 }
 
 .street-world {
@@ -133,201 +132,90 @@ html, body {
   width: 100%;
   height: 350%;
   background: linear-gradient(to bottom, 
-    #030710 0%, 
-    #070f1c 25%, 
-    #0d1726 50%, 
-    #111d2e 75%, 
-    #040810 100%
+    #020408 0%, 
+    #060a12 25%, 
+    #0b121c 50%, 
+    #0f1722 75%, 
+    #030508 100%
   );
   transform: translateY(0%);
   transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   will-change: transform;
 }
 
-/* 양옆을 채우는 가로수, 통나무집, 가로등 구조물들 */
-.street-side-left, .street-side-right {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 25%;
-  pointer-events: none;
-}
-.street-side-left { left: 0; }
-.street-side-right { right: 0; }
-
-/* 겨울 가로수 오브젝트 (CSS 도형으로 렌더링) */
-.tree {
-  position: absolute;
-  width: 40px;
-  height: 90px;
-  background: #0d121b;
-  border-radius: 20px 20px 5px 5px;
-  box-shadow: inset 0 -10px 0 rgba(255,255,255,0.25);
-}
-.tree::before {
-  content: '';
-  position: absolute;
-  top: -15px; left: -10px; right: -10px;
-  height: 60px;
-  background: #141c2c;
-  border-radius: 50%;
-  box-shadow: inset 0 -12px 0 rgba(255,255,255,0.3);
-}
-
-/* 통나무집 오브젝트 */
-.cabin {
-  position: absolute;
-  width: 90px;
-  height: 70px;
-  background: #191410;
-  border-top: 3px solid #fff;
-  border-radius: 4px;
-}
-.cabin::after {
-  content: '';
-  position: absolute;
-  top: 15px; left: 15px;
-  width: 20px; height: 20px;
-  background: #ffb753;
-  box-shadow: 0 0 15px #ffb753;
-}
-
-/* 가로등 오브젝트 */
-.lamp-pole {
-  position: absolute;
-  width: 4px;
-  height: 140px;
-  background: #25334a;
-}
-.lamp-pole::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -12px;
-  width: 28px; height: 16px;
-  background: #ffb356;
-  border-radius: 50% 50% 0 0;
-  box-shadow: 0 0 25px 8px rgba(255,179,86,0.4);
-}
-
-/* 위치 배치 */
-.t1 { top: 10%; left: 20px; }
-.c1 { top: 22%; right: 15px; }
-.l1 { top: 38%; left: 25px; }
-.t2 { top: 52%; right: 20px; }
-.c2 { top: 68%; left: 15px; }
-.l2 { top: 82%; right: 25px; }
-
-
-/* 실제 옆에 놓여 있는 인터랙션 대상 (벤치+책, 가로등 밑, 창문) */
-.interactive-objects {
+/* 거리에 고정 설치된 구조물(오브젝트)들 */
+.street-structures {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.inter-item {
+.structure-item {
   position: absolute;
-  background: rgba(10, 16, 26, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  cursor: pointer;
+  background: rgba(12, 18, 28, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  overflow: hidden;
   pointer-events: auto;
-  padding: 15px;
-  transition: all 0.5s ease;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+  transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
   opacity: 0.25;
-  transform: scale(0.8);
+  transform: scale(0.75);
 }
 
-.inter-item.active-step {
+.structure-item.active-step {
   opacity: 1;
-  transform: scale(1.05);
-  border-color: rgba(255,200,120,0.6);
-  box-shadow: 0 0 30px rgba(255,180,100,0.25);
+  transform: scale(1.08);
+  border-color: rgba(255, 205, 130, 0.85);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.95), 0 0 40px rgba(255,180,100,0.3);
 }
 
-.inter-item.passed {
+.structure-item.passed {
   opacity: 0.05;
-  transform: scale(0.7) translateY(-40px);
+  transform: scale(0.65) translateY(-60px);
   pointer-events: none;
 }
 
-/* 1단계: 내 옆에 있는 벤치와 그 위의 책 */
-.bench-book-box {
-  top: 15%;
-  left: 32%;
-  width: 140px;
-  height: 90px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-.bench-shape {
-  width: 100px;
-  height: 12px;
-  background: #36281e;
-  border-radius: 3px;
-  position: relative;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.4);
-}
-.bench-shape::before {
-  content: '';
-  position: absolute;
-  top: -10px; left: 10px;
-  width: 18px; height: 14px;
-  background: #f4f1eb;
-  border-radius: 2px;
-  box-shadow: 0 0 8px rgba(255,255,255,0.6);
+.structure-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.75) contrast(1.1);
+  transition: transform 0.5s ease;
 }
 
-/* 2단계: 가로등 불빛 아래 */
-.lamp-glow-box {
+.structure-item:hover img {
+  transform: scale(1.05);
+}
+
+/* 1단계 설치물: 벤치와 책 (좌측에 고정 설치) */
+.struct-bench {
+  top: 16%;
+  left: 28%;
+  width: 150px;
+  height: 140px;
+}
+
+/* 2단계 설치물: 가로등 불빛 구조물 (우측에 고정 설치) */
+.struct-lamp {
   top: 48%;
   right: 28%;
-  width: 120px;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.glow-circle {
-  width: 55px; height: 55px;
-  background: radial-gradient(circle, rgba(255,180,100,0.9) 0%, rgba(255,140,50,0.2) 70%, transparent 100%);
-  border-radius: 50%;
-  animation: pulseGlow 2s ease-in-out infinite alternate;
-}
-@keyframes pulseGlow {
-  0% { transform: scale(0.9); opacity: 0.7; }
-  100% { transform: scale(1.15); opacity: 1; }
+  width: 150px;
+  height: 140px;
 }
 
-/* 3단계: 통나무집 창문 */
-.cabin-window-box {
+/* 3단계 설치물: 통나무집 창문 구조물 (중앙에 고정 설치) */
+.struct-window {
   top: 78%;
   left: 50%;
-  transform: translateX(-50%) scale(0.8);
-  width: 130px;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  transform: translateX(-50%) scale(0.75);
+  width: 160px;
+  height: 140px;
 }
-.cabin-window-box.active-step {
-  transform: translateX(-50%) scale(1.05);
-}
-.window-shape {
-  width: 45px; height: 45px;
-  background: #ffe396;
-  border: 4px solid #1a120b;
-  border-radius: 6px;
-  box-shadow: 0 0 25px #ffcc66;
-  position: relative;
-}
-.window-shape::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 0; right: 0; height: 3px; background: #1a120b;
+.struct-window.active-step {
+  transform: translateX(-50%) scale(1.08);
 }
 
 
@@ -416,7 +304,7 @@ html, body {
 }
 @keyframes snowfall {
   from { transform: translateY(-10vh) translateX(0); }
-  to { transform: translateY(110vh) translateX(20px); }
+  to { transform: translateY(110vh) translateX(25px); }
 }
 
 
@@ -425,7 +313,7 @@ html, body {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: linear-gradient(rgba(3,6,10,0.98), rgba(7,11,17,0.99));
+  background: linear-gradient(rgba(2,4,8,0.98), rgba(6,10,16,0.99));
   transform: translateY(100%);
   opacity: 0;
   transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.4s ease;
@@ -472,6 +360,19 @@ html, body {
   opacity: 0.75;
   letter-spacing: 0.05em;
 }
+
+.content-image-box {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: #121820;
+  margin-top: 20px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.content-image-box img {
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.85;
+}
 </style>
 </head>
 
@@ -491,38 +392,26 @@ html, body {
   </div>
 </div>
 
-<!-- 메인 거리 화면 (화면을 누르면 양옆 풍경이 스쳐 지나감) -->
+<!-- 메인 거리 화면 (화면 터치 시 거리가 전진하며 고정된 구조물들이 지나감) -->
 <main class="home" onclick="stepForward()">
   <div class="street-world" id="streetWorld">
     
-    <!-- 양옆 풍경 구조물 (나무, 통나무집, 가로등) -->
-    <div class="street-side-left">
-      <div class="tree t1"></div>
-      <div class="lamp-pole l1"></div>
-      <div class="cabin c2" style="top: 70%; left: 10px;"></div>
-    </div>
-    <div class="street-side-right">
-      <div class="cabin c1"></div>
-      <div class="tree t2"></div>
-      <div class="lamp-pole l2" style="top: 80%; right: 20px;"></div>
-    </div>
-
-    <!-- 순수 인터랙션 오브젝트 (벤치, 가로등불, 창문) -->
-    <div class="interactive-objects">
+    <!-- 거리에 고정 설치된 구조물 오브젝트들 -->
+    <div class="street-structures">
       
-      <!-- 1단계: 벤치와 책 -->
-      <button class="inter-item bench-book-box active-step" id="obj1" onclick="event.stopPropagation(); openContent('storyPage')">
-        <div class="bench-shape"></div>
+      <!-- 1단계: 벤치와 책 구조물 -->
+      <button class="structure-item struct-bench active-step" id="struct1" onclick="event.stopPropagation(); openContent('storyPage')">
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=500&q=80" alt="벤치 구조물">
       </button>
 
-      <!-- 2단계: 가로등 불빛 -->
-      <button class="inter-item lamp-glow-box" id="obj2" onclick="event.stopPropagation(); openContent('photoPage')">
-        <div class="glow-circle"></div>
+      <!-- 2단계: 가로등 불빛 구조물 -->
+      <button class="structure-item struct-lamp" id="struct2" onclick="event.stopPropagation(); openContent('photoPage')">
+        <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=500&q=80" alt="가로등 구조물">
       </button>
 
-      <!-- 3단계: 통나무집 창문 -->
-      <button class="inter-item cabin-window-box" id="obj3" onclick="event.stopPropagation(); openContent('videoPage')">
-        <div class="window-shape"></div>
+      <!-- 3단계: 통나무집 창문 구조물 -->
+      <button class="structure-item struct-window" id="struct3" onclick="event.stopPropagation(); openContent('videoPage')">
+        <img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=500&q=80" alt="창문 구조물">
       </button>
 
     </div>
@@ -566,10 +455,13 @@ html, body {
   <button class="back-btn" onclick="closeContent('photoPage')">← 겨울밤길로 돌아가기</button>
   <div class="page-header">
     <div class="page-step-num">02 / PHOTOGRAPHS</div>
-    <h2 class="page-heading">가로등 아래의 불빛</h2>
+    <h2 class="page-heading">가로등 아래의 풍경</h2>
   </div>
   <div class="content-body">
-    골목 어귀를 포근하게 밝히는 가로등 밑, 흩날리는 눈송이와 함께 비치는 겨울의 풍경.
+    골목 어귀를 포근하게 밝히는 가로등 밑, 흩날리는 눈송이와 함께 비치는 겨울의 기록.
+  </div>
+  <div class="content-image-box">
+    <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=1000&q=80" alt="겨울 풍경">
   </div>
 </section>
 
@@ -581,32 +473,36 @@ html, body {
     <h2 class="page-heading">따뜻한 불빛의 창문</h2>
   </div>
   <div class="content-body">
-    안쪽 깊은 곳, 노란 불빛이 새어 나오는 창문 너머의 고요한 기록들.
+    안쪽 깊은 곳, 노란 불빛이 새어 나오는 창문 너머의 고요한 겨울 스케치.
+  </div>
+  <div class="content-image-box" style="aspect-ratio: 16/10;">
+    <img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=1000&q=80" alt="겨울 스틸컷">
   </div>
 </section>
 
 
 <script>
-/* 1. 나무 상자 닫히는 차분한 사운드 */
-function playWoodSound() {
+/* 1. 우편함이 닫히는 듯한 묵직한 사운드 */
+function playMailboxSound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     if (ctx.state === 'suspended') ctx.resume();
     const now = ctx.currentTime;
+    
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(110, now);
-    osc.frequency.exponentialRampToValueAtTime(30, now + 0.15);
+    osc.frequency.setValueAtTime(90, now);
+    osc.frequency.exponentialRampToValueAtTime(25, now + 0.18);
 
-    gain.gain.setValueAtTime(0.3, now);
-    gain.gain.linearRampToValueAtTime(0.001, now + 0.15);
+    gain.gain.setValueAtTime(0.4, now);
+    gain.gain.linearRampToValueAtTime(0.001, now + 0.18);
 
     osc.connect(gain);
     gain.connect(ctx.destination);
     osc.start(now);
-    osc.stop(now + 0.15);
+    osc.stop(now + 0.18);
   } catch (e) {}
 }
 
@@ -629,11 +525,11 @@ function playStepSound() {
 
     const filter = ctx.createBiquadFilter();
     filter.type = 'bandpass';
-    filter.frequency.value = 900;
+    filter.frequency.value = 850;
     filter.Q.value = 1.5;
 
     const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.setValueAtTime(0.18, now);
     gain.gain.linearRampToValueAtTime(0.001, now + 0.14);
 
     noise.connect(filter);
@@ -644,7 +540,7 @@ function playStepSound() {
   } catch (e) {}
 }
 
-/* 3. 진짜 전진하는 걷기 인터랙션 */
+/* 3. 거리가 전진하며 고정된 구조물들이 스쳐 지나가는 인터랙션 */
 let currentWalkStep = 0;
 
 function stepForward() {
@@ -652,42 +548,42 @@ function stepForward() {
   currentWalkStep++;
 
   const world = document.getElementById("streetWorld");
-  const obj1 = document.getElementById("obj1");
-  const obj2 = document.getElementById("obj2");
-  const obj3 = document.getElementById("obj3");
+  const struct1 = document.getElementById("struct1");
+  const struct2 = document.getElementById("struct2");
+  const struct3 = document.getElementById("struct3");
   const guide = document.getElementById("guideText");
 
   if (currentWalkStep === 1) {
     world.style.transform = "translateY(-32%)";
-    obj1.classList.remove("active-step");
-    obj1.classList.add("passed");
-    obj2.classList.add("active-step");
-    guide.textContent = "눈길을 걸어 가로등 불빛이 비치는 곳에 다다랐습니다";
+    struct1.classList.remove("active-step");
+    struct1.classList.add("passed");
+    struct2.classList.add("active-step");
+    guide.textContent = "눈길을 걸어 가로등 불빛 구조물 앞에 다다랐습니다";
   } else if (currentWalkStep === 2) {
     world.style.transform = "translateY(-65%)";
-    obj2.classList.remove("active-step");
-    obj2.classList.add("passed");
-    obj3.classList.add("active-step");
-    guide.textContent = "불빛이 포근하게 새어 나오는 창가 앞에 도착했습니다";
+    struct2.classList.remove("active-step");
+    struct2.classList.add("passed");
+    struct3.classList.add("active-step");
+    guide.textContent = "불빛이 포근하게 새어 나오는 통나무집 창가 구조물에 도착했습니다";
   } else {
     currentWalkStep = 0;
     world.style.transform = "translateY(0%)";
-    obj3.classList.remove("active-step");
-    obj1.classList.remove("passed");
-    obj2.classList.remove("passed");
-    obj1.classList.add("active-step");
+    struct3.classList.remove("active-step");
+    struct1.classList.remove("passed");
+    struct2.classList.remove("passed");
+    struct1.classList.add("active-step");
     guide.textContent = "화면을 가볍게 터치해 겨울밤 길을 한 걸음씩 내딛으세요";
   }
 }
 
 /* 4. 컨텐츠 열기/닫기 */
 function openContent(pageId) {
-  playWoodSound();
+  playMailboxSound();
   document.getElementById(pageId).classList.add("active");
 }
 
 function closeContent(pageId) {
-  playWoodSound();
+  playMailboxSound();
   document.getElementById(pageId).classList.remove("active");
 }
 
@@ -755,7 +651,7 @@ function checkPassword() {
   const lock = document.getElementById("lockScreen");
 
   if (input.value === SECRET_PW) {
-    playWoodSound();
+    playMailboxSound();
     lock.classList.add("unlocked");
     sessionStorage.setItem("alleyUnlocked", "true");
   } else {

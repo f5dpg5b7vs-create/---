@@ -3,42 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>탐라배 곱꽹대전</title>
+<meta name="theme-color" content="#05080d">
+
+<title>탐라배 곱꽹대전 — Winter Night</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #010306;
-  color: #f4f1eb;
+  background: #030507;
+  color: #f5f1e9;
+}
+
+body {
   font-family: "Noto Sans KR", sans-serif;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* 비밀번호 잠금 화면 */
+button,
+input {
+  font: inherit;
+}
+
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+  --night: #05080d;
+  --blue: #0a1622;
+  --ice: #dfeaf0;
+  --warm: #f1c486;
+  --warm2: #ffdc9c;
+  --muted: rgba(255,255,255,.48);
+  --line: rgba(255,255,255,.14);
+}
+
+
+/* =========================================================
+   LOCK SCREEN
+========================================================= */
+
 #lockScreen {
   position: fixed;
   inset: 0;
-  z-index: 99999;
+  z-index: 9999;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(1, 3, 6, .95), rgba(1, 3, 6, .99)), url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1800&q=90");
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(35,61,79,.35),
+      transparent 45%
+    ),
+    linear-gradient(
+      rgba(2,5,9,.72),
+      rgba(2,4,7,.98)
+    ),
+    url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=2000&q=90");
+
   background-size: cover;
   background-position: center;
-  transition: opacity .8s ease, visibility .8s ease;
+
+  transition:
+    opacity 1s cubic-bezier(.22,.8,.2,1),
+    visibility 1s;
+}
+
+#lockScreen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 15%,
+      rgba(0,0,0,.7) 100%
+    );
+
+  pointer-events: none;
 }
 
 #lockScreen.unlocked {
@@ -48,646 +114,2450 @@ html, body {
 }
 
 .lock-inner {
-  width: min(88%, 360px);
+  position: relative;
+  z-index: 2;
+
+  width: min(88%, 390px);
+
   text-align: center;
-  padding: 40px 25px;
+
+  padding: 45px 28px;
 }
 
 .lock-small {
+  margin-bottom: 30px;
+
+  color: rgba(255,255,255,.45);
+
   font-size: 8px;
-  letter-spacing: .4em;
-  opacity: .4;
-  margin-bottom: 25px;
+  letter-spacing: .42em;
 }
 
 .lock-inner h1 {
   font-family: "Noto Serif KR", serif;
-  font-size: 24px;
   font-weight: 300;
-  letter-spacing: .15em;
-  margin-bottom: 15px;
+
+  font-size: clamp(25px, 7vw, 36px);
+  letter-spacing: .17em;
+
+  margin-left: .17em;
 }
 
-.lock-inner p {
+.lock-inner .subtitle {
+  margin-top: 17px;
+
+  color: rgba(255,255,255,.52);
+
   font-family: "Noto Serif KR", serif;
   font-size: 10px;
-  line-height: 2.2;
+  line-height: 2.1;
   letter-spacing: .08em;
-  opacity: .55;
-  margin-bottom: 30px;
+}
+
+.lock-line {
+  width: 45px;
+  height: 1px;
+
+  margin: 30px auto;
+
+  background: rgba(255,255,255,.3);
 }
 
 .password-box {
+  position: relative;
+
   display: flex;
+  align-items: center;
+
   width: 100%;
-  border-bottom: 1px solid rgba(255,255,255,.25);
+
+  border-bottom: 1px solid rgba(255,255,255,.3);
 }
 
 .password-box input {
-  flex: 1;
-  padding: 12px 5px;
+  width: 100%;
+
+  padding: 15px 45px 15px 8px;
+
   border: 0;
-  outline: 0;
+  outline: none;
+
   background: transparent;
+
   color: white;
-  font-size: 11px;
-  letter-spacing: .2em;
+
   text-align: center;
+
+  font-size: 11px;
+  letter-spacing: .25em;
+}
+
+.password-box input::placeholder {
+  color: rgba(255,255,255,.25);
 }
 
 .password-box button {
-  padding: 12px 10px;
+  position: absolute;
+  right: 0;
+
+  padding: 12px 5px;
+
   border: 0;
+
   background: transparent;
-  color: rgba(255,255,255,0.75);
+
+  color: rgba(255,255,255,.7);
+
   font-family: "Noto Serif KR", serif;
   font-size: 10px;
+
   cursor: pointer;
+}
+
+.password-box button:hover {
+  color: white;
 }
 
 #wrongPassword {
-  height: 18px;
-  margin-top: 15px;
-  color: rgba(255,255,255,0.5);
-  font-size: 8px;
-  letter-spacing: .1em;
+  min-height: 25px;
+
+  margin-top: 17px;
+
+  color: rgba(255,190,160,.8);
+
+  font-size: 9px;
+  letter-spacing: .08em;
+
   opacity: 0;
+
   transition: opacity .3s;
 }
-#wrongPassword.show { opacity: 1; }
+
+#wrongPassword.show {
+  opacity: 1;
+}
 
 
-/* 메인 거리 월 (실제 밤거리 공간 및 구조물 트랙) */
+/* =========================================================
+   MAIN WORLD
+========================================================= */
+
 .home {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100svh;
+
   overflow: hidden;
+
+  background: #05080d;
 }
 
-.street-world {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 400%;
-  background: linear-gradient(to bottom, 
-    #012030 0%, 
-    #040a12 15%, 
-    #08121f 40%, 
-    #0c1827 70%, 
-    #020407 100%
-  );
-  transform: translateY(0%);
-  transition: transform 1.3s cubic-bezier(0.18, 0.85, 0.22, 1);
-  will-change: transform;
-}
 
-/* 길가에 설치된 조형물 구조물들 */
-.street-structures {
+/* 하늘 */
+
+.sky {
   position: absolute;
   inset: 0;
-  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 28%,
+      rgba(55,83,105,.42),
+      transparent 38%
+    ),
+    linear-gradient(
+      to bottom,
+      #081522 0%,
+      #07111c 35%,
+      #03070c 76%,
+      #010203 100%
+    );
 }
 
-.structure-item {
+
+/* 달 */
+
+.moon {
   position: absolute;
-  background: rgba(8, 14, 24, 0.95);
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  overflow: hidden;
-  pointer-events: auto;
-  cursor: pointer;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.95);
-  transition: all 0.7s cubic-bezier(0.18, 0.85, 0.22, 1);
-  opacity: 0.2;
-  transform: scale(0.7);
+
+  top: 15%;
+  left: 50%;
+
+  width: 58px;
+  height: 58px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 36% 34%,
+      #fffdf0,
+      #e9e5d7 60%,
+      #a9adb0 100%
+    );
+
+  box-shadow:
+    0 0 25px rgba(235,240,236,.2),
+    0 0 80px rgba(190,215,235,.08);
+
+  opacity: .82;
 }
 
-.structure-item.active-step {
-  opacity: 1;
-  transform: scale(1.05);
-  border-color: rgba(255, 210, 140, 0.85);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.98), 0 0 45px rgba(255,185,110,0.35);
+
+/* =========================================================
+   DISTANT CITY
+========================================================= */
+
+.city {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 34%;
+
+  height: 22%;
+
+  opacity: .72;
 }
 
-.structure-item.passed {
-  opacity: 0.04;
-  transform: scale(0.6) translateY(-80px);
+.building {
+  position: absolute;
+  bottom: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #071019,
+      #020407
+    );
+
+  border-top: 1px solid rgba(255,255,255,.04);
+}
+
+.building::before {
+  content: "";
+
+  position: absolute;
+  inset: 10px;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 18px,
+      rgba(244,190,100,.08) 19px 21px
+    );
+}
+
+.b1 {
+  left: 0;
+  width: 17%;
+  height: 65%;
+}
+
+.b2 {
+  left: 14%;
+  width: 20%;
+  height: 85%;
+}
+
+.b3 {
+  left: 32%;
+  width: 17%;
+  height: 58%;
+}
+
+.b4 {
+  right: 27%;
+  width: 20%;
+  height: 78%;
+}
+
+.b5 {
+  right: 10%;
+  width: 18%;
+  height: 61%;
+}
+
+.b6 {
+  right: -3%;
+  width: 18%;
+  height: 90%;
+}
+
+
+/* =========================================================
+   STREET
+========================================================= */
+
+.street {
+  position: absolute;
+  left: 50%;
+  bottom: -18%;
+
+  width: 190%;
+  height: 78%;
+
+  transform:
+    translateX(-50%)
+    perspective(500px)
+    rotateX(58deg);
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(14,23,32,.35),
+      #070b10 55%,
+      #020305 100%
+    );
+
+  clip-path: polygon(
+    42% 0,
+    58% 0,
+    100% 100%,
+    0 100%
+  );
+
+  box-shadow:
+    inset 0 60px 80px rgba(255,255,255,.015);
+}
+
+
+/* 길 중앙 희미한 눈길 */
+
+.street::before {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  top: 0;
+
+  width: 2px;
+  height: 100%;
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,.05),
+      transparent 50%
+    );
+}
+
+
+/* =========================================================
+   SIDE BUILDINGS / WALLS
+========================================================= */
+
+.wall {
+  position: absolute;
+
+  bottom: 0;
+
+  width: 37%;
+  height: 55%;
+
+  background:
+    linear-gradient(
+      90deg,
+      #030507,
+      #081019
+    );
+
+  opacity: .92;
+}
+
+.wall.left {
+  left: -7%;
+
+  transform:
+    perspective(500px)
+    rotateY(18deg)
+    skewY(-5deg);
+}
+
+.wall.right {
+  right: -7%;
+
+  transform:
+    perspective(500px)
+    rotateY(-18deg)
+    skewY(5deg);
+
+  background:
+    linear-gradient(
+      -90deg,
+      #030507,
+      #081019
+    );
+}
+
+.wall::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 47px,
+      rgba(255,255,255,.025) 48px,
+      transparent 49px
+    );
+}
+
+
+/* =========================================================
+   LAMP LIGHT
+========================================================= */
+
+.lamp-glow {
+  position: absolute;
+
+  top: 29%;
+  left: 50%;
+
+  width: 190px;
+  height: 260px;
+
+  transform: translateX(-50%);
+
+  background:
+    radial-gradient(
+      ellipse at 50% 15%,
+      rgba(255,202,120,.34),
+      rgba(255,178,83,.12) 25%,
+      transparent 68%
+    );
+
+  filter: blur(7px);
+
+  opacity: .65;
+
   pointer-events: none;
 }
 
-.structure-item img {
+
+/* =========================================================
+   LAMP POSTS
+========================================================= */
+
+.lamp {
+  position: absolute;
+
+  bottom: 23%;
+
+  width: 2px;
+  height: 35%;
+
+  background:
+    linear-gradient(
+      to top,
+      #050607,
+      #151b20
+    );
+
+  box-shadow:
+    3px 0 8px rgba(0,0,0,.6);
+}
+
+.lamp::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 16px;
+  height: 7px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background: #ffd99a;
+
+  box-shadow:
+    0 0 8px #ffd99a,
+    0 0 25px rgba(255,205,130,.65),
+    0 0 70px rgba(255,181,90,.35);
+}
+
+.lamp.left {
+  left: 21%;
+}
+
+.lamp.right {
+  right: 21%;
+}
+
+
+/* =========================================================
+   INTERACTIVE DESTINATIONS
+========================================================= */
+
+.destination {
+  position: absolute;
+
+  z-index: 10;
+
+  border: 0;
+
+  background: transparent;
+
+  color: white;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    opacity .8s ease,
+    transform 1s cubic-bezier(.18,.85,.22,1);
+}
+
+.destination.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.destination-card {
+  position: relative;
+
+  width: 130px;
+  height: 165px;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(255,255,255,.16);
+
+  border-radius: 4px;
+
+  background: #0a0e13;
+
+  box-shadow:
+    0 20px 70px rgba(0,0,0,.85),
+    0 0 50px rgba(255,192,105,.06);
+
+  transition:
+    transform .6s ease,
+    border-color .4s ease,
+    box-shadow .6s ease;
+}
+
+.destination:hover .destination-card {
+  transform: scale(1.035);
+
+  border-color:
+    rgba(255,213,153,.55);
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.9),
+    0 0 55px rgba(255,190,100,.16);
+}
+
+.destination-card img {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
-  display: block;
-  filter: brightness(0.7) contrast(1.15);
-  transition: transform 0.6s ease;
+
+  filter:
+    brightness(.57)
+    contrast(1.1)
+    saturate(.75);
+
+  transition:
+    transform .8s ease,
+    filter .8s ease;
 }
 
-.structure-item:hover img {
+.destination:hover img {
   transform: scale(1.06);
+
+  filter:
+    brightness(.68)
+    contrast(1.05)
+    saturate(.85);
 }
 
-/* 1단계 설치물: 벤치와 책 (좌측 길가에 고정 설치) */
-.struct-bench {
-  top: 15%;
-  left: 26%;
-  width: 160px;
-  height: 150px;
-}
+.destination-card::after {
+  content: "";
 
-/* 2단계 설치물: 가로등 불빛 조형물 (우측 길가에 고정 설치) */
-.struct-lamp {
-  top: 45%;
-  right: 26%;
-  width: 160px;
-  height: 150px;
-}
-
-/* 3단계 설치물: 통나무집 창문 구조물 (정면 깊숙한 곳에 고정 설치) */
-.struct-window {
-  top: 75%;
-  left: 50%;
-  transform: translateX(-50%) scale(0.7);
-  width: 170px;
-  height: 150px;
-}
-.struct-window.active-step {
-  transform: translateX(-50%) scale(1.05);
-}
-
-
-/* 상단 UI */
-.top-bar {
   position: absolute;
-  top: 0; left: 0; width: 100%;
-  padding: calc(24px + env(safe-area-inset-top)) 24px 0;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 35%,
+      rgba(0,0,0,.85) 100%
+    );
+}
+
+.destination-info {
+  position: absolute;
+
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+
+  z-index: 2;
+
+  text-align: left;
+}
+
+.destination-number {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: rgba(255,255,255,.45);
+
+  font-size: 7px;
+  letter-spacing: .25em;
+}
+
+.destination-title {
+  font-family: "Noto Serif KR", serif;
+
+  font-size: 13px;
+  font-weight: 300;
+
+  letter-spacing: .08em;
+}
+
+.destination-hint {
+  display: block;
+
+  margin-top: 5px;
+
+  color: rgba(255,255,255,.45);
+
+  font-size: 7px;
+  letter-spacing: .12em;
+}
+
+
+/* 위치 */
+
+.destination.one {
+  left: 17%;
+  bottom: 35%;
+
+  transform:
+    perspective(700px)
+    rotate(-2deg)
+    scale(.9);
+}
+
+.destination.two {
+  right: 13%;
+  bottom: 40%;
+
+  transform:
+    perspective(700px)
+    rotate(2deg)
+    scale(.72);
+}
+
+.destination.three {
+  left: 50%;
+  bottom: 48%;
+
+  transform:
+    translateX(-50%)
+    scale(.48);
+}
+
+.destination.one.visible {
+  transform:
+    perspective(700px)
+    rotate(-2deg)
+    scale(1);
+}
+
+.destination.two.visible {
+  transform:
+    perspective(700px)
+    rotate(2deg)
+    scale(.78);
+}
+
+.destination.three.visible {
+  transform:
+    translateX(-50%)
+    scale(.52);
+}
+
+
+/* =========================================================
+   TOP UI
+========================================================= */
+
+.top-ui {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 100;
+
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  z-index: 20;
+
+  padding:
+    calc(25px + env(safe-area-inset-top))
+    24px
+    0;
+
   pointer-events: none;
 }
-.top-bar > * { pointer-events: auto; }
 
-.title-group .main-title {
-  font-family: "Noto Serif KR", serif;
-  font-size: 14px;
-  letter-spacing: 0.18em;
-}
-.title-group .sub-issue {
-  font-size: 8px;
-  letter-spacing: 0.2em;
-  opacity: 0.45;
-  margin-top: 3px;
-}
-
-.controls-group {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.btn-ctrl {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.18);
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 8px;
-  letter-spacing: 0.12em;
-  cursor: pointer;
-  backdrop-filter: blur(6px);
-  transition: background .3s;
-}
-.btn-ctrl.active {
-  background: rgba(255,255,255,0.25);
-}
-
-/* 하단 걷기 안내 */
-.walk-guide-box {
-  position: absolute;
-  bottom: 8%;
-  left: 0; right: 0;
-  text-align: center;
-  z-index: 20;
-  pointer-events: none;
-}
-.walk-guide-text {
-  font-family: "Noto Serif KR", serif;
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  opacity: 0.45;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.95);
-  animation: guideBlink 2.2s ease-in-out infinite alternate;
-}
-
-@keyframes guideBlink {
-  0% { opacity: 0.2; }
-  100% { opacity: 0.7; }
-}
-
-
-/* 눈 내리는 입자 효과 */
-.snow-container {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-.snowflake {
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-  animation: snowfall linear infinite;
-}
-@keyframes snowfall {
-  from { transform: translateY(-10vh) translateX(0); }
-  to { transform: translateY(115vh) translateX(30px); }
-}
-
-
-/* 상세 컨텐츠 페이지 */
-.page {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: linear-gradient(rgba(2,4,8,0.98), rgba(5,9,15,0.99));
-  transform: translateY(100%);
-  opacity: 0;
-  transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
-  pointer-events: none;
-  overflow-y: auto;
-  padding: calc(35px + env(safe-area-inset-top)) 28px calc(60px + env(safe-area-inset-bottom));
-}
-.page.active {
-  transform: translateY(0);
-  opacity: 1;
+.top-ui > * {
   pointer-events: auto;
 }
 
-.back-btn {
-  background: transparent;
-  border: 0;
-  color: rgba(255,255,255,0.55);
-  font-size: 9px;
-  letter-spacing: 0.22em;
+.brand {
+  text-shadow:
+    0 2px 15px rgba(0,0,0,.8);
+}
+
+.brand-main {
+  font-family: "Noto Serif KR", serif;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  letter-spacing: .18em;
+}
+
+.brand-sub {
+  margin-top: 5px;
+
+  color: rgba(255,255,255,.38);
+
+  font-size: 7px;
+  letter-spacing: .25em;
+}
+
+.sound-button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 9px 12px;
+
+  border:
+    1px solid rgba(255,255,255,.15);
+
+  border-radius: 100px;
+
+  background:
+    rgba(5,8,12,.38);
+
+  backdrop-filter: blur(12px);
+
+  color: rgba(255,255,255,.6);
+
+  font-size: 7px;
+  letter-spacing: .14em;
+
   cursor: pointer;
-  margin-bottom: 35px;
-  transition: color .3s;
-}
-.back-btn:hover { color: white; }
 
-.page-header {
-  margin-bottom: 35px;
-}
-.page-step-num {
-  font-size: 8px;
-  letter-spacing: 0.35em;
-  opacity: 0.35;
-  margin-bottom: 12px;
-}
-.page-heading {
-  font-family: "Noto Serif KR", serif;
-  font-size: 26px;
-  font-weight: 300;
-  letter-spacing: 0.12em;
+  transition:
+    background .3s,
+    color .3s,
+    border-color .3s;
 }
 
-.content-body {
-  font-family: "Noto Serif KR", serif;
-  font-size: 11px;
-  line-height: 2.3;
-  opacity: 0.75;
-  letter-spacing: 0.06em;
+.sound-button:hover,
+.sound-button.on {
+  color: white;
+
+  background:
+    rgba(255,196,120,.12);
+
+  border-color:
+    rgba(255,210,150,.4);
 }
 
-.content-image-box {
+.sound-icon {
+  position: relative;
+
+  width: 11px;
+  height: 10px;
+}
+
+.sound-icon::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 3px;
+
+  width: 4px;
+  height: 4px;
+
+  background: currentColor;
+}
+
+.sound-icon::after {
+  content: "";
+
+  position: absolute;
+
+  left: 3px;
+  top: 1px;
+
+  width: 7px;
+  height: 8px;
+
+  border-right: 1px solid currentColor;
+
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   WALK INDICATOR
+========================================================= */
+
+.walk-ui {
+  position: absolute;
+
+  left: 50%;
+  bottom: calc(7% + env(safe-area-inset-bottom));
+
+  z-index: 100;
+
   width: 100%;
-  aspect-ratio: 4/5;
-  background: #101620;
-  margin-top: 25px;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.08);
+
+  transform: translateX(-50%);
+
+  text-align: center;
+
+  pointer-events: none;
 }
-.content-image-box img {
-  width: 100%; height: 100%; object-fit: cover;
-  opacity: 0.85;
+
+.step-count {
+  margin-bottom: 11px;
+
+  color: rgba(255,255,255,.3);
+
+  font-size: 7px;
+  letter-spacing: .4em;
+}
+
+.walk-message {
+  font-family: "Noto Serif KR", serif;
+
+  color: rgba(255,255,255,.62);
+
+  font-size: 10px;
+  letter-spacing: .18em;
+
+  text-shadow:
+    0 3px 15px #000;
+
+  animation:
+    breathe 2.8s ease-in-out infinite;
+}
+
+.walk-line {
+  position: relative;
+
+  width: 45px;
+  height: 1px;
+
+  margin: 15px auto 0;
+
+  background: rgba(255,255,255,.22);
+}
+
+.walk-line::after {
+  content: "";
+
+  position: absolute;
+
+  top: -2px;
+  right: 0;
+
+  width: 5px;
+  height: 5px;
+
+  border-top: 1px solid rgba(255,255,255,.5);
+  border-right: 1px solid rgba(255,255,255,.5);
+
+  transform: rotate(45deg);
+}
+
+@keyframes breathe {
+  0%,100% {
+    opacity: .4;
+  }
+
+  50% {
+    opacity: .9;
+  }
+}
+
+
+/* =========================================================
+   SNOW
+========================================================= */
+
+.snow-layer {
+  position: absolute;
+  inset: 0;
+
+  z-index: 50;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.snow {
+  position: absolute;
+
+  top: -10px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  box-shadow:
+    0 0 5px rgba(255,255,255,.5);
+
+  animation:
+    snowFall linear infinite;
+}
+
+@keyframes snowFall {
+  0% {
+    transform:
+      translate3d(0,-10vh,0)
+      rotate(0);
+  }
+
+  50% {
+    transform:
+      translate3d(25px,50vh,0)
+      rotate(180deg);
+  }
+
+  100% {
+    transform:
+      translate3d(-15px,115vh,0)
+      rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   GRAIN / VIGNETTE
+========================================================= */
+
+.grain {
+  position: absolute;
+  inset: 0;
+
+  z-index: 80;
+
+  pointer-events: none;
+
+  opacity: .08;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+
+  mix-blend-mode: soft-light;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+
+  z-index: 81;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 35%,
+      rgba(0,0,0,.25) 65%,
+      rgba(0,0,0,.78) 100%
+    );
+}
+
+
+/* =========================================================
+   CAMERA MOVE
+========================================================= */
+
+.home.camera-forward .sky {
+  transform: scale(1.04);
+}
+
+.home.camera-forward .street {
+  transform:
+    translateX(-50%)
+    perspective(500px)
+    rotateX(58deg)
+    scale(1.12);
+}
+
+.home.camera-forward .city {
+  transform: scale(1.07);
+}
+
+.home.camera-forward .wall.left {
+  transform:
+    perspective(500px)
+    rotateY(18deg)
+    skewY(-5deg)
+    scale(1.08);
+}
+
+.home.camera-forward .wall.right {
+  transform:
+    perspective(500px)
+    rotateY(-18deg)
+    skewY(5deg)
+    scale(1.08);
+}
+
+.home .sky,
+.home .street,
+.home .city,
+.home .wall {
+  transition:
+    transform 1.25s cubic-bezier(.16,.85,.2,1);
+}
+
+
+/* =========================================================
+   CONTENT MODAL
+========================================================= */
+
+.content-screen {
+  position: fixed;
+  inset: 0;
+
+  z-index: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    calc(25px + env(safe-area-inset-top))
+    20px
+    calc(25px + env(safe-area-inset-bottom));
+
+  background:
+    rgba(2,4,7,.78);
+
+  backdrop-filter: blur(18px);
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition:
+    opacity .55s ease,
+    visibility .55s ease;
+}
+
+.content-screen.open {
+  opacity: 1;
+  visibility: visible;
+
+  pointer-events: auto;
+}
+
+.content-panel {
+  position: relative;
+
+  width: min(92vw, 570px);
+  max-height: 88vh;
+
+  overflow-y: auto;
+
+  padding: 34px 27px 40px;
+
+  border:
+    1px solid rgba(255,255,255,.12);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(16,23,31,.97),
+      rgba(5,8,12,.98)
+    );
+
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.8);
+
+  transform:
+    translateY(35px)
+    scale(.97);
+
+  transition:
+    transform .65s cubic-bezier(.2,.8,.2,1);
+}
+
+.content-screen.open .content-panel {
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.close-content {
+  position: absolute;
+
+  top: 18px;
+  right: 19px;
+
+  width: 30px;
+  height: 30px;
+
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.03);
+
+  color: rgba(255,255,255,.65);
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.content-number {
+  color: rgba(255,202,130,.65);
+
+  font-size: 7px;
+  letter-spacing: .35em;
+}
+
+.content-title {
+  margin-top: 12px;
+
+  font-family: "Noto Serif KR", serif;
+
+  font-size: clamp(24px, 7vw, 35px);
+  font-weight: 300;
+
+  letter-spacing: .08em;
+}
+
+.content-line {
+  width: 40px;
+  height: 1px;
+
+  margin: 23px 0;
+
+  background:
+    rgba(255,205,143,.5);
+}
+
+.content-text {
+  color: rgba(255,255,255,.68);
+
+  font-family: "Noto Serif KR", serif;
+
+  font-size: 11px;
+  line-height: 2.25;
+
+  letter-spacing: .05em;
+}
+
+.content-image {
+  width: 100%;
+
+  margin-top: 27px;
+
+  aspect-ratio: 4 / 3;
+
+  overflow: hidden;
+
+  background: #080c11;
+}
+
+.content-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  filter:
+    brightness(.72)
+    contrast(1.05)
+    saturate(.7);
+}
+
+
+/* =========================================================
+   TRANSITION
+========================================================= */
+
+.screen-flash {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1000;
+
+  background: #fff;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+.screen-flash.active {
+  animation:
+    flash .7s ease;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: .08;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .moon {
+    top: 14%;
+    width: 43px;
+    height: 43px;
+  }
+
+  .lamp-glow {
+    top: 27%;
+    width: 150px;
+    height: 230px;
+  }
+
+  .destination-card {
+    width: 108px;
+    height: 142px;
+  }
+
+  .destination.one {
+    left: 8%;
+    bottom: 32%;
+  }
+
+  .destination.two {
+    right: 7%;
+    bottom: 37%;
+  }
+
+  .destination.three {
+    bottom: 47%;
+  }
+
+  .destination-title {
+    font-size: 11px;
+  }
+
+  .destination-hint {
+    font-size: 6px;
+  }
+
+  .walk-message {
+    font-size: 9px;
+    letter-spacing: .13em;
+  }
+
+  .content-panel {
+    padding: 30px 22px 32px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
 }
 </style>
 </head>
 
+
 <body>
 
-<!-- 비밀번호 잠금 화면 -->
+<!-- =======================================================
+     AUDIO
+======================================================= -->
+
+<audio id="bgm" loop preload="auto">
+  <source src="./music/winter-piano.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- =======================================================
+     LOCK SCREEN
+======================================================= -->
+
 <div id="lockScreen">
+
   <div class="lock-inner">
-    <div class="lock-small">PRIVATE WINTER WEBZINE</div>
-    <h1>탐라배 곱꽹대전</h1>
-    <p>겨울밤 골목길 공간으로 들어서기 위해<br>비밀번호를 입력해주세요.</p>
-    <div class="password-box">
-      <input type="password" id="passwordInput" placeholder="PASSWORD" autocomplete="off">
-      <button onclick="checkPassword()">입장</button>
+
+    <div class="lock-small">
+      PRIVATE WINTER WEBZINE
     </div>
-    <div id="wrongPassword">비밀번호가 올바르지 않습니다.</div>
+
+    <h1>
+      탐라배 곱꽹대전
+    </h1>
+
+    <div class="subtitle">
+      아주 조용한 겨울밤,<br>
+      골목 끝까지 걸어 들어오세요.
+    </div>
+
+    <div class="lock-line"></div>
+
+    <div class="password-box">
+
+      <input
+        id="passwordInput"
+        type="password"
+        placeholder="PASSWORD"
+        autocomplete="off"
+      >
+
+      <button id="enterButton">
+        ENTER
+      </button>
+
+    </div>
+
+    <div id="wrongPassword">
+      비밀번호가 올바르지 않습니다.
+    </div>
+
   </div>
+
 </div>
 
-<!-- 메인 거리 걷기 공간 (화면 터치 시 전진하며 고정된 조형물들이 스쳐 지나감) -->
-<main class="home" onclick="stepForward()">
-  <div class="street-world" id="streetWorld">
-    
-    <!-- 거리에 고정 설치된 조형물 구조물들 -->
-    <div class="street-structures">
-      
-      <!-- 1단계: 벤치와 책 구조물 -->
-      <button class="structure-item struct-bench active-step" id="struct1" onclick="event.stopPropagation(); openContent('storyPage')">
-        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=500&q=80" alt="벤치와 책 조형물">
-      </button>
 
-      <!-- 2단계: 가로등 불빛 구조물 -->
-      <button class="structure-item struct-lamp" id="struct2" onclick="event.stopPropagation(); openContent('photoPage')">
-        <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=500&q=80" alt="가로등 불빛 조형물">
-      </button>
+<!-- =======================================================
+     MAIN WORLD
+======================================================= -->
 
-      <!-- 3단계: 통나무집 창문 구조물 -->
-      <button class="structure-item struct-window" id="struct3" onclick="event.stopPropagation(); openContent('videoPage')">
-        <img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=500&q=80" alt="통나무집 창문 조형물">
-      </button>
+<main class="home" id="home">
 
-    </div>
+  <div class="sky"></div>
+
+  <div class="moon"></div>
+
+  <div class="city">
+    <div class="building b1"></div>
+    <div class="building b2"></div>
+    <div class="building b3"></div>
+    <div class="building b4"></div>
+    <div class="building b5"></div>
+    <div class="building b6"></div>
   </div>
 
-  <!-- 상단 메뉴 -->
-  <div class="top-bar">
-    <div class="title-group">
-      <div class="main-title">탐라배 곱꽹대전</div>
-      <div class="sub-issue">WINTER NIGHT ALLEY</div>
+  <div class="wall left"></div>
+  <div class="wall right"></div>
+
+  <div class="street"></div>
+
+  <div class="lamp-glow"></div>
+
+  <div class="lamp left"></div>
+  <div class="lamp right"></div>
+
+
+  <!-- =====================================================
+       DESTINATION 01
+  ====================================================== -->
+
+  <button
+    class="destination one visible"
+    id="destination1"
+    type="button"
+  >
+
+    <div class="destination-card">
+
+      <img
+        src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=85"
+        alt="책과 겨울밤"
+      >
+
+      <div class="destination-info">
+
+        <span class="destination-number">
+          01 / STORIES
+        </span>
+
+        <div class="destination-title">
+          벤치 위의 책
+        </div>
+
+        <span class="destination-hint">
+          가까이 다가가기
+        </span>
+
+      </div>
+
     </div>
-    <div class="controls-group">
-      <button class="btn-ctrl" id="bgmBtn" onclick="event.stopPropagation(); toggleBGM()">캐롤 OFF</button>
+
+  </button>
+
+
+  <!-- =====================================================
+       DESTINATION 02
+  ====================================================== -->
+
+  <button
+    class="destination two"
+    id="destination2"
+    type="button"
+  >
+
+    <div class="destination-card">
+
+      <img
+        src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=800&q=85"
+        alt="겨울밤 가로등"
+      >
+
+      <div class="destination-info">
+
+        <span class="destination-number">
+          02 / PHOTOGRAPHS
+        </span>
+
+        <div class="destination-title">
+          가로등 아래
+        </div>
+
+        <span class="destination-hint">
+          가까이 다가가기
+        </span>
+
+      </div>
+
     </div>
+
+  </button>
+
+
+  <!-- =====================================================
+       DESTINATION 03
+  ====================================================== -->
+
+  <button
+    class="destination three"
+    id="destination3"
+    type="button"
+  >
+
+    <div class="destination-card">
+
+      <img
+        src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=800&q=85"
+        alt="따뜻한 창문"
+      >
+
+      <div class="destination-info">
+
+        <span class="destination-number">
+          03 / MOVIES
+        </span>
+
+        <div class="destination-title">
+          따뜻한 창문
+        </div>
+
+        <span class="destination-hint">
+          가까이 다가가기
+        </span>
+
+      </div>
+
+    </div>
+
+  </button>
+
+
+  <!-- =====================================================
+       TOP UI
+  ====================================================== -->
+
+  <header class="top-ui">
+
+    <div class="brand">
+
+      <div class="brand-main">
+        탐라배 곱꽹대전
+      </div>
+
+      <div class="brand-sub">
+        WINTER NIGHT / 2026
+      </div>
+
+    </div>
+
+
+    <button
+      class="sound-button"
+      id="soundButton"
+      type="button"
+    >
+
+      <span class="sound-icon"></span>
+
+      <span id="soundText">
+        SOUND OFF
+      </span>
+
+    </button>
+
+  </header>
+
+
+  <!-- =====================================================
+       WALK UI
+  ====================================================== -->
+
+  <div class="walk-ui">
+
+    <div class="step-count" id="stepCount">
+      01 / 03
+    </div>
+
+    <div class="walk-message" id="walkMessage">
+      화면을 가볍게 터치해<br>
+      겨울밤 안쪽으로 걸어가세요
+    </div>
+
+    <div class="walk-line"></div>
+
   </div>
 
-  <!-- 하단 안내 -->
-  <div class="walk-guide-box">
-    <div class="walk-guide-text" id="guideText">화면을 가볍게 터치해 겨울밤 길을 한 걸음씩 내딛으세요</div>
-  </div>
 
-  <div class="snow-container" id="snowBox"></div>
+  <!-- =====================================================
+       SNOW
+  ====================================================== -->
+
+  <div
+    class="snow-layer"
+    id="snowLayer"
+  ></div>
+
+
+  <div class="grain"></div>
+  <div class="vignette"></div>
+
 </main>
 
 
-<!-- 1. 글 페이지 -->
-<section class="page" id="storyPage">
-  <button class="back-btn" onclick="closeContent('storyPage')">← 겨울밤길로 돌아가기</button>
-  <div class="page-header">
-    <div class="page-step-num">01 / STORIES</div>
-    <h2 class="page-heading">벤치 위의 책</h2>
-  </div>
-  <div class="content-body">
-    눈이 하얗게 쌓인 벤치 위, 누군가 두고 간 작은 책장을 조심스레 펼칩니다.<br><br>
-    차가운 겨울 밤공기 속에서도 가로등 불빛 아래 적어 내려간 다정한 문장들이 고요하게 마음을 적십니다. 아무에게도 꺼내놓지 않았던 우리들의 이야기가 이곳에 머물러 있습니다.
-  </div>
-</section>
+<!-- =======================================================
+     CONTENT SCREEN
+======================================================= -->
 
-<!-- 2. 그림 페이지 -->
-<section class="page" id="photoPage">
-  <button class="back-btn" onclick="closeContent('photoPage')">← 겨울밤길로 돌아가기</button>
-  <div class="page-header">
-    <div class="page-step-num">02 / PHOTOGRAPHS</div>
-    <h2 class="page-heading">가로등 아래의 풍경</h2>
-  </div>
-  <div class="content-body">
-    골목 어귀를 포근하게 밝히는 가로등 밑, 흩날리는 눈송이와 함께 비치는 겨울의 기록.
-  </div>
-  <div class="content-image-box">
-    <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=1000&q=80" alt="겨울 풍경">
-  </div>
-</section>
+<div
+  class="content-screen"
+  id="contentScreen"
+>
 
-<!-- 3. 영상 페이지 -->
-<section class="page" id="videoPage">
-  <button class="back-btn" onclick="closeContent('videoPage')">← 겨울밤길로 돌아가기</button>
-  <div class="page-header">
-    <div class="page-step-num">03 / MOVIES</div>
-    <h2 class="page-heading">따뜻한 불빛의 창문</h2>
-  </div>
-  <div class="content-body">
-    안쪽 깊은 곳, 노란 불빛이 새어 나오는 창문 너머의 고요한 겨울 스케치.
-  </div>
-  <div class="content-image-box" style="aspect-ratio: 16/10;">
-    <img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=1000&q=80" alt="겨울 스틸컷">
-  </div>
-</section>
+  <article class="content-panel">
+
+    <button
+      class="close-content"
+      id="closeContent"
+      type="button"
+      aria-label="닫기"
+    >
+      ×
+    </button>
+
+    <div
+      class="content-number"
+      id="contentNumber"
+    >
+      01 / STORIES
+    </div>
+
+    <h2
+      class="content-title"
+      id="contentTitle"
+    >
+      벤치 위의 책
+    </h2>
+
+    <div class="content-line"></div>
+
+    <div
+      class="content-text"
+      id="contentText"
+    ></div>
+
+    <div
+      class="content-image"
+      id="contentImage"
+    >
+      <img
+        src=""
+        alt=""
+      >
+    </div>
+
+  </article>
+
+</div>
+
+
+<div
+  class="screen-flash"
+  id="screenFlash"
+></div>
 
 
 <script>
-/* 1. 우편함이 닫히는 듯한 묵직하고 차분한 오디오 피드백 */
-function playMailboxSound() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume();
-    const now = ctx.currentTime;
-    
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(85, now);
-    osc.frequency.exponentialRampToValueAtTime(22, now + 0.2);
+const home = document.getElementById("home");
 
-    gain.gain.setValueAtTime(0.45, now);
-    gain.gain.linearRampToValueAtTime(0.001, now + 0.2);
+const lockScreen = document.getElementById("lockScreen");
+const passwordInput = document.getElementById("passwordInput");
+const enterButton = document.getElementById("enterButton");
+const wrongPassword = document.getElementById("wrongPassword");
 
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.2);
-  } catch (e) {}
-}
+const bgm = document.getElementById("bgm");
+const soundButton = document.getElementById("soundButton");
+const soundText = document.getElementById("soundText");
 
-/* 2. 사각사각 눈 밟는 발걸음 사운드 */
-function playStepSound() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume();
-    const now = ctx.currentTime;
-    
-    const bufferSize = ctx.sampleRate * 0.15;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = Math.random() * 2 - 1;
-    }
+const destination1 = document.getElementById("destination1");
+const destination2 = document.getElementById("destination2");
+const destination3 = document.getElementById("destination3");
 
-    const noise = ctx.createBufferSource();
-    noise.buffer = buffer;
+const stepCount = document.getElementById("stepCount");
+const walkMessage = document.getElementById("walkMessage");
 
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'bandpass';
-    filter.frequency.value = 800;
-    filter.Q.value = 1.4;
+const contentScreen = document.getElementById("contentScreen");
+const closeContent = document.getElementById("closeContent");
 
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.linearRampToValueAtTime(0.001, now + 0.15);
+const contentNumber = document.getElementById("contentNumber");
+const contentTitle = document.getElementById("contentTitle");
+const contentText = document.getElementById("contentText");
+const contentImage = document.querySelector("#contentImage img");
 
-    noise.connect(filter);
-    filter.connect(gain);
-    gain.connect(ctx.destination);
+const screenFlash = document.getElementById("screenFlash");
 
-    noise.start(now);
-  } catch (e) {}
-}
 
-/* 3. 거리가 전진하며 고정된 조형물 구조물들이 시야 옆으로 스쳐 지나가는 인터랙션 */
-let currentWalkStep = 0;
+/* =========================================================
+   PASSWORD
+========================================================= */
 
-function stepForward() {
-  playStepSound();
-  currentWalkStep++;
-
-  const world = document.getElementById("streetWorld");
-  const struct1 = document.getElementById("struct1");
-  const struct2 = document.getElementById("struct2");
-  const struct3 = document.getElementById("struct3");
-  const guide = document.getElementById("guideText");
-
-  if (currentWalkStep === 1) {
-    world.style.transform = "translateY(-30%)";
-    struct1.classList.remove("active-step");
-    struct1.classList.add("passed");
-    struct2.classList.add("active-step");
-    guide.textContent = "눈길을 걸어 가로등 불빛 조형물 앞에 다다랐습니다";
-  } else if (currentWalkStep === 2) {
-    world.style.transform = "translateY(-62%)";
-    struct2.classList.remove("active-step");
-    struct2.classList.add("passed");
-    struct3.classList.add("active-step");
-    guide.textContent = "불빛이 포근하게 새어 나오는 통나무집 창문 조형물에 도착했습니다";
-  } else {
-    currentWalkStep = 0;
-    world.style.transform = "translateY(0%)";
-    struct3.classList.remove("active-step");
-    struct1.classList.remove("passed");
-    struct2.classList.remove("passed");
-    struct1.classList.add("active-step");
-    guide.textContent = "화면을 가볍게 터치해 겨울밤 길을 한 걸음씩 내딛으세요";
-  }
-}
-
-/* 4. 컨텐츠 열기/닫기 */
-function openContent(pageId) {
-  playMailboxSound();
-  document.getElementById(pageId).classList.add("active");
-}
-
-function closeContent(pageId) {
-  playMailboxSound();
-  document.getElementById(pageId).classList.remove("active");
-}
-
-/* 5. 안정적인 웹 오디오 캐롤 연주 엔진 */
-let audioCtx = null;
-let carolInterval = null;
-let isBgmOn = false;
-
-const carolNotes = [
-  523.25, 523.25, 587.33, 523.25, 659.25, 698.46,
-  523.25, 523.25, 587.33, 523.25, 783.99, 659.25,
-  659.25, 698.46, 783.99, 698.46, 659.25, 587.33
-];
-let noteIndex = 0;
-
-function playCarolNote() {
-  if (!audioCtx) return;
-  try {
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(carolNotes[noteIndex], now);
-    noteIndex = (noteIndex + 1) % carolNotes.length;
-
-    gain.gain.setValueAtTime(0.06, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start(now);
-    osc.stop(now + 0.7);
-  } catch (e) {}
-}
-
-function toggleBGM() {
-  const btn = document.getElementById("bgmBtn");
-  if (!isBgmOn) {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    isBgmOn = true;
-    btn.textContent = "캐롤 ON";
-    btn.classList.add("active");
-    
-    carolInterval = setInterval(playCarolNote, 400);
-  } else {
-    clearInterval(carolInterval);
-    isBgmOn = false;
-    btn.textContent = "캐롤 OFF";
-    btn.classList.remove("active");
-  }
-}
-
-/* 6. 비밀번호 인증 */
 const SECRET_PW = "ohmyps";
 
 function checkPassword() {
-  const input = document.getElementById("passwordInput");
-  const wrong = document.getElementById("wrongPassword");
-  const lock = document.getElementById("lockScreen");
 
-  if (input.value === SECRET_PW) {
-    playMailboxSound();
-    lock.classList.add("unlocked");
-    sessionStorage.setItem("alleyUnlocked", "true");
+  if (passwordInput.value === SECRET_PW) {
+
+    lockScreen.classList.add("unlocked");
+
+    sessionStorage.setItem(
+      "alleyUnlocked",
+      "true"
+    );
+
+    startAmbientSound();
+
   } else {
-    wrong.classList.add("show");
-    input.value = "";
-    setTimeout(() => wrong.classList.remove("show"), 2000);
+
+    wrongPassword.classList.add("show");
+
+    passwordInput.value = "";
+
+    setTimeout(() => {
+      wrongPassword.classList.remove("show");
+    }, 2200);
+
   }
 }
 
-document.getElementById("passwordInput").addEventListener("keydown", (e) => {
-  if (e.key === "Enter") checkPassword();
-});
+enterButton.addEventListener(
+  "click",
+  checkPassword
+);
 
-if (sessionStorage.getItem("alleyUnlocked") === "true") {
-  document.getElementById("lockScreen").classList.add("unlocked");
+passwordInput.addEventListener(
+  "keydown",
+  event => {
+
+    if (event.key === "Enter") {
+      checkPassword();
+    }
+
+  }
+);
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+let audioStarted = false;
+
+bgm.volume = 0;
+
+function fadeVolume(target, duration = 1200) {
+
+  const start = bgm.volume;
+
+  const startTime = performance.now();
+
+  function animate(now) {
+
+    const progress = Math.min(
+      1,
+      (now - startTime) / duration
+    );
+
+    const eased =
+      1 - Math.pow(1 - progress, 3);
+
+    bgm.volume =
+      start +
+      (target - start) * eased;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+
+  }
+
+  requestAnimationFrame(animate);
 }
 
-/* 7. 겨울 눈 내리는 효과 */
-const snowBox = document.getElementById("snowBox");
-for (let i = 0; i < 40; i++) {
-  const flake = document.createElement("div");
-  flake.className = "snowflake";
-  const size = Math.random() * 3 + 1.5 + "px";
-  flake.style.width = size;
-  flake.style.height = size;
-  flake.style.left = Math.random() * 100 + "%";
-  flake.style.opacity = Math.random() * 0.7 + 0.3;
-  flake.style.animationDuration = Math.random() * 6 + 6 + "s";
-  flake.style.animationDelay = Math.random() * -10 + "s";
-  snowBox.appendChild(flake);
+
+async function startAmbientSound() {
+
+  if (audioStarted) return;
+
+  try {
+
+    await bgm.play();
+
+    audioStarted = true;
+
+    fadeVolume(.32, 1800);
+
+    soundButton.classList.add("on");
+
+    soundText.textContent = "SOUND ON";
+
+  } catch (error) {
+
+    console.log(
+      "브라우저가 자동재생을 막았습니다.",
+      error
+    );
+
+  }
+
 }
+
+
+async function toggleSound() {
+
+  if (bgm.paused) {
+
+    try {
+
+      await bgm.play();
+
+      audioStarted = true;
+
+      fadeVolume(.32, 900);
+
+      soundButton.classList.add("on");
+
+      soundText.textContent = "SOUND ON";
+
+    } catch (error) {
+
+      console.error(
+        "음악을 재생할 수 없습니다.",
+        error
+      );
+
+    }
+
+  } else {
+
+    fadeVolume(0, 500);
+
+    setTimeout(() => {
+      bgm.pause();
+    }, 520);
+
+    soundButton.classList.remove("on");
+
+    soundText.textContent = "SOUND OFF";
+
+  }
+
+}
+
+soundButton.addEventListener(
+  "click",
+  event => {
+
+    event.stopPropagation();
+
+    toggleSound();
+
+  }
+);
+
+
+/* =========================================================
+   STEP SOUND
+========================================================= */
+
+let audioContext = null;
+
+function getAudioContext() {
+
+  if (!audioContext) {
+
+    audioContext =
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
+
+  }
+
+  if (
+    audioContext.state === "suspended"
+  ) {
+
+    audioContext.resume();
+
+  }
+
+  return audioContext;
+}
+
+
+function playStepSound() {
+
+  try {
+
+    const ctx =
+      getAudioContext();
+
+    const duration = .16;
+
+    const buffer =
+      ctx.createBuffer(
+        1,
+        ctx.sampleRate * duration,
+        ctx.sampleRate
+      );
+
+    const data =
+      buffer.getChannelData(0);
+
+    for (
+      let i = 0;
+      i < data.length;
+      i++
+    ) {
+
+      const envelope =
+        1 - i / data.length;
+
+      data[i] =
+        (Math.random() * 2 - 1) *
+        envelope;
+
+    }
+
+    const source =
+      ctx.createBufferSource();
+
+    source.buffer = buffer;
+
+    const filter =
+      ctx.createBiquadFilter();
+
+    filter.type = "lowpass";
+    filter.frequency.value = 1300;
+
+    const gain =
+      ctx.createGain();
+
+    gain.gain.setValueAtTime(
+      .11,
+      ctx.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      ctx.currentTime + duration
+    );
+
+    source
+      .connect(filter)
+      .connect(gain)
+      .connect(ctx.destination);
+
+    source.start();
+
+  } catch (error) {}
+
+}
+
+
+/* =========================================================
+   WALKING
+========================================================= */
+
+let currentStep = 0;
+
+const messages = [
+
+  {
+    count: "01 / 03",
+    text:
+      "화면을 가볍게 터치해<br>겨울밤 안쪽으로 걸어가세요"
+  },
+
+  {
+    count: "02 / 03",
+    text:
+      "조금 더 안쪽으로<br>가로등 불빛을 따라가세요"
+  },
+
+  {
+    count: "03 / 03",
+    text:
+      "골목 끝에서<br>따뜻한 불빛을 발견했습니다"
+  }
+
+];
+
+
+function updateWorld() {
+
+  const destinations = [
+    destination1,
+    destination2,
+    destination3
+  ];
+
+  destinations.forEach(
+    destination => {
+
+      destination.classList.remove(
+        "visible"
+      );
+
+    }
+  );
+
+
+  if (currentStep === 0) {
+
+    destination1.classList.add(
+      "visible"
+    );
+
+  }
+
+  if (currentStep === 1) {
+
+    destination2.classList.add(
+      "visible"
+    );
+
+  }
+
+  if (currentStep === 2) {
+
+    destination3.classList.add(
+      "visible"
+    );
+
+  }
+
+
+  const message =
+    messages[currentStep];
+
+  stepCount.textContent =
+    message.count;
+
+  walkMessage.innerHTML =
+    message.text;
+
+
+  home.classList.add(
+    "camera-forward"
+  );
+
+  setTimeout(() => {
+
+    home.classList.remove(
+      "camera-forward"
+    );
+
+  }, 1250);
+
+}
+
+
+function stepForward() {
+
+  playStepSound();
+
+  currentStep++;
+
+  if (currentStep > 2) {
+    currentStep = 0;
+  }
+
+  updateWorld();
+
+}
+
+
+/* 화면 터치로 걷기 */
+
+home.addEventListener(
+  "click",
+  event => {
+
+    if (
+      event.target.closest(
+        ".destination"
+      ) ||
+      event.target.closest(
+        ".sound-button"
+      )
+    ) {
+      return;
+    }
+
+    stepForward();
+
+  }
+);
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+const contents = {
+
+  story: {
+
+    number:
+      "01 / STORIES",
+
+    title:
+      "벤치 위의 책",
+
+    text:
+      `눈이 하얗게 내려앉은 벤치 위에
+누군가 작은 책 한 권을 두고 갔습니다.
+
+차가운 밤공기와 가로등의 희미한 빛.
+페이지를 한 장 넘기자 오래전부터
+마음속에 묻어두었던 이야기들이
+조용히 모습을 드러냅니다.
+
+아무에게도 꺼내놓지 않았던 문장들.
+그 겨울밤의 이야기는
+아직 이 골목 어딘가에 머물러 있습니다.`,
+
+    image:
+      "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1000&q=85"
+
+  },
+
+  photo: {
+
+    number:
+      "02 / PHOTOGRAPHS",
+
+    title:
+      "가로등 아래",
+
+    text:
+      `골목 어귀를 밝히는 작은 가로등.
+
+눈송이는 불빛을 지나갈 때마다
+잠깐씩 반짝이고,
+발자국은 아무도 걷지 않은
+하얀 길 위에 천천히 쌓입니다.
+
+누군가에게는 평범한 겨울밤이지만
+사진 속에서는 이상할 만큼
+오래 기억될 장면이 됩니다.`,
+
+    image:
+      "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=1000&q=85"
+
+  },
+
+  movie: {
+
+    number:
+      "03 / MOVIES",
+
+    title:
+      "따뜻한 창문",
+
+    text:
+      `골목 가장 안쪽.
+
+멀리서부터 작은 노란 불빛 하나가
+눈 위에 번지고 있습니다.
+
+창문 너머에는 누군가의 겨울이 있고,
+우리는 그 모습을 잠시 바라보다가
+다시 천천히 길을 걸어갑니다.
+
+어쩌면 겨울밤이 따뜻하게 느껴지는 건
+이런 작은 불빛 때문인지도 모릅니다.`,
+
+    image:
+      "https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=1000&q=85"
+
+  }
+
+};
+
+
+function openContent(type) {
+
+  const data =
+    contents[type];
+
+  contentNumber.textContent =
+    data.number;
+
+  contentTitle.textContent =
+    data.title;
+
+  contentText.innerHTML =
+    data.text.replace(
+      /\n/g,
+      "<br>"
+    );
+
+  contentImage.src =
+    data.image;
+
+  contentImage.alt =
+    data.title;
+
+  contentScreen.classList.add(
+    "open"
+  );
+
+  screenFlash.classList.remove(
+    "active"
+  );
+
+  void screenFlash.offsetWidth;
+
+  screenFlash.classList.add(
+    "active"
+  );
+
+}
+
+
+function closeContentScreen() {
+
+  contentScreen.classList.remove(
+    "open"
+  );
+
+}
+
+
+closeContent.addEventListener(
+  "click",
+  closeContentScreen
+);
+
+
+contentScreen.addEventListener(
+  "click",
+  event => {
+
+    if (
+      event.target === contentScreen
+    ) {
+
+      closeContentScreen();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   DESTINATION EVENTS
+========================================================= */
+
+destination1.addEventListener(
+  "click",
+  event => {
+
+    event.stopPropagation();
+
+    openContent("story");
+
+  }
+);
+
+destination2.addEventListener(
+  "click",
+  event => {
+
+    event.stopPropagation();
+
+    openContent("photo");
+
+  }
+);
+
+destination3.addEventListener(
+  "click",
+  event => {
+
+    event.stopPropagation();
+
+    openContent("movie");
+
+  }
+);
+
+
+/* =========================================================
+   SNOW GENERATOR
+========================================================= */
+
+const snowLayer =
+  document.getElementById(
+    "snowLayer"
+  );
+
+
+function createSnow(
+  count,
+  minSize,
+  maxSize,
+  minDuration,
+  maxDuration,
+  opacityMin,
+  opacityMax
+) {
+
+  for (
+    let i = 0;
+    i < count;
+    i++
+  ) {
+
+    const flake =
+      document.createElement("div");
+
+    flake.className =
+      "snow";
+
+    const size =
+      Math.random() *
+      (maxSize - minSize) +
+      minSize;
+
+    flake.style.width =
+      size + "px";
+
+    flake.style.height =
+      size + "px";
+
+    flake.style.left =
+      Math.random() * 100 + "%";
+
+    flake.style.opacity =
+      Math.random() *
+      (opacityMax - opacityMin) +
+      opacityMin;
+
+    flake.style.animationDuration =
+      Math.random() *
+      (maxDuration - minDuration) +
+      minDuration +
+      "s";
+
+    flake.style.animationDelay =
+      Math.random() * -15 + "s";
+
+    snowLayer.appendChild(
+      flake
+    );
+
+  }
+
+}
+
+
+/* 뒤쪽 눈 */
+
+createSnow(
+  35,
+  1,
+  2,
+  12,
+  20,
+  .15,
+  .35
+);
+
+
+/* 중간 눈 */
+
+createSnow(
+  30,
+  2,
+  3.5,
+  8,
+  14,
+  .3,
+  .6
+);
+
+
+/* 앞쪽 눈 */
+
+createSnow(
+  12,
+  4,
+  6,
+  5,
+  9,
+  .45,
+  .8
+);
+
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
+
+if (
+  sessionStorage.getItem(
+    "alleyUnlocked"
+  ) === "true"
+) {
+
+  lockScreen.classList.add(
+    "unlocked"
+  );
+
+}
+
+
+/* =========================================================
+   FIRST USER INTERACTION
+   모바일 브라우저 자동재생 대응
+========================================================= */
+
+document.addEventListener(
+  "pointerdown",
+  () => {
+
+    if (
+      !audioStarted &&
+      lockScreen.classList.contains(
+        "unlocked"
+      )
+    ) {
+
+      startAmbientSound();
+
+    }
+
+  },
+  {
+    once: true
+  }
+);
+
+
+/* =========================================================
+   ESC CLOSE
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      closeContentScreen();
+
+    }
+
+  }
+);
+
 </script>
 
 </body>

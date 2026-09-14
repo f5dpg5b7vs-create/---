@@ -20,16 +20,14 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #04080c;
+  background: #03060a;
   color: #f4f1eb;
   font-family: "Noto Sans KR", sans-serif;
   user-select: none;
   -webkit-user-select: none;
 }
 
-/* =========================
-   비밀번호 잠금 화면
-========================= */
+/* 비밀번호 잠금 화면 */
 #lockScreen {
   position: fixed;
   inset: 0;
@@ -37,7 +35,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(4, 8, 12, .8), rgba(4, 8, 12, .95)), url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1800&q=90");
+  background: linear-gradient(rgba(3, 6, 10, .88), rgba(3, 6, 10, .97)), url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1800&q=90");
   background-size: cover;
   background-position: center;
   transition: opacity .8s ease, visibility .8s ease;
@@ -118,9 +116,7 @@ html, body {
 #wrongPassword.show { opacity: 1; }
 
 
-/* =========================
-   메인 거리 걷기 캔버스 / 씬
-========================= */
+/* 겨울밤 거리의 3D 패럴랙스 월 */
 .home {
   position: fixed;
   inset: 0;
@@ -129,43 +125,45 @@ html, body {
   overflow: hidden;
 }
 
-/* 골목길 전체 배경 레이어 (전진할수록 줌인 & 깊이감 변화) */
-.street-scene {
+.alley-world {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 40%, rgba(20, 32, 48, 0.9) 0%, rgba(3, 6, 10, 0.98) 80%),
-              url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=2000&q=90");
-  background-size: cover;
-  background-position: center;
-  transform: scale(1);
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 320%;
+  background: linear-gradient(to bottom, 
+    #04070c 0%, 
+    #091019 33%, 
+    #111925 66%, 
+    #05080d 100%
+  );
+  transform: translateY(0%);
+  transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
 }
 
-/* 포근한 창문 불빛 효과 */
-.warm-glow {
+.alley-bg-art {
   position: absolute;
-  top: 30%;
-  left: 20%;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(255,180,90,0.35) 0%, transparent 70%);
-  border-radius: 50%;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 50% 16%, rgba(255,185,110,0.18) 0%, transparent 38%),
+    radial-gradient(circle at 28% 48%, rgba(255,160,80,0.12) 0%, transparent 45%),
+    radial-gradient(circle at 72% 78%, rgba(255,190,120,0.14) 0%, transparent 42%);
+  background-repeat: no-repeat;
+  pointer-events: none;
 }
 
-.warm-glow-2 {
+.alley-walls {
   position: absolute;
-  top: 25%;
-  right: 22%;
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(255,160,70,0.3) 0%, transparent 70%);
-  border-radius: 50%;
+  inset: 0;
+  background: 
+    linear-gradient(90deg, rgba(2,3,5,0.9) 0%, transparent 18%, transparent 82%, rgba(2,3,5,0.9) 100%),
+    repeating-linear-gradient(0deg, transparent, transparent 180px, rgba(255,255,255,0.012) 180px, rgba(255,255,255,0.012) 182px);
+  pointer-events: none;
 }
 
-/* =========================
-   오브젝트 배치 (글 ➔ 그림 ➔ 영상 순서)
-========================= */
+
+/* 그림 중심의 오브젝트 스타일 (글자 덩어리가 아니라 일러스트 카드 형태로 구현) */
 .objects-container {
   position: absolute;
   inset: 0;
@@ -174,77 +172,98 @@ html, body {
 
 .walk-object {
   position: absolute;
-  background: none;
-  border: 0;
+  background: rgba(10, 15, 22, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
   color: #f4f1eb;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  padding: 12px;
+  width: 140px;
   pointer-events: auto;
-  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-  opacity: 0.3;
-  transform: scale(0.7);
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  opacity: 0.25;
+  transform: scale(0.75);
+  backdrop-filter: blur(8px);
 }
 
-/* 단계별 활성화 상태 */
 .walk-object.active-step {
   opacity: 1;
-  transform: scale(1);
-  filter: drop-shadow(0 0 12px rgba(255,200,120,0.4));
+  transform: scale(1.08);
+  border-color: rgba(255,210,140,0.6);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255,190,120,0.25);
 }
 
 .walk-object.passed {
-  opacity: 0.15;
-  transform: scale(1.3) translateY(20px);
+  opacity: 0.1;
+  transform: scale(0.7) translateY(-40px);
   pointer-events: none;
 }
 
-/* 1단계: 벤치 위의 책 (글) - 초입 */
-.obj-book {
-  bottom: 28%;
-  left: 35%;
+/* 오브젝트 내부 그림 영역 */
+.obj-art-frame {
+  width: 100%;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: #141b24;
+  position: relative;
 }
 
-/* 2단계: 가로등 (그림) - 중턱 */
+.obj-art-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: transform 0.5s ease;
+}
+
+.walk-object:hover .obj-art-frame img {
+  transform: scale(1.08);
+}
+
+.obj-title {
+  font-family: "Noto Serif KR", serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  margin-bottom: 3px;
+  text-align: center;
+}
+
+.obj-sub {
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  opacity: 0.5;
+  text-align: center;
+}
+
+/* 1단계: 벤치 위의 책 */
+.obj-book {
+  top: 19%;
+  left: 28%;
+}
+
+/* 2단계: 가로등 불빛 */
 .obj-lamp {
-  bottom: 42%;
+  top: 49%;
   right: 28%;
 }
 
-/* 3단계: 창문 (영상) - 안쪽 깊은 곳 */
+/* 3단계: 따뜻한 창문 */
 .obj-window {
-  bottom: 58%;
+  top: 79%;
   left: 50%;
-  transform: translateX(-50%) scale(0.5);
+  transform: translateX(-50%) scale(0.75);
 }
 .obj-window.active-step {
-  transform: translateX(-50%) scale(1.1);
-}
-
-.obj-graphic {
-  font-family: "Noto Serif KR", serif;
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  padding: 8px 14px;
-  background: rgba(12, 18, 26, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 8px;
-  backdrop-filter: blur(4px);
-}
-
-.obj-label {
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  opacity: 0.7;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+  transform: translateX(-50%) scale(1.08);
 }
 
 
-/* =========================
-   상단 & 하단 UI
-========================= */
+/* 상단 & 하단 UI */
 .top-bar {
   position: absolute;
   top: 0; left: 0; width: 100%;
@@ -290,7 +309,7 @@ html, body {
   background: rgba(255,255,255,0.25);
 }
 
-/* 터치 유도 가이드 메시지 */
+/* 하단 걷기 가이드 */
 .walk-guide-box {
   position: absolute;
   bottom: 8%;
@@ -314,9 +333,7 @@ html, body {
 }
 
 
-/* =========================
-   눈 내리는 효과
-========================= */
+/* 눈 내리는 효과 */
 .snow-container {
   position: absolute;
   inset: 0;
@@ -335,9 +352,7 @@ html, body {
 }
 
 
-/* =========================
-   상세 컨텐츠 페이지 (글 / 그림 / 영상)
-========================= */
+/* 상세 컨텐츠 페이지 */
 .page {
   position: fixed;
   inset: 0;
@@ -396,6 +411,7 @@ html, body {
   background: #121820;
   margin-top: 20px;
   overflow: hidden;
+  border-radius: 10px;
 }
 .content-image-box img {
   width: 100%; height: 100%; object-fit: cover;
@@ -420,37 +436,48 @@ html, body {
   </div>
 </div>
 
-<!-- 배경음악 (제공해주신 캐롤 MP3 링크 연동 완료) -->
-<audio id="bgmAudio" loop>
-  <source src="Https://raw.githubusercontent.com/f5dpg5b7vs-create/---/main/The%20BEST%20Christmas%20Songs%20on%20Piano%20-%20Rousseau%20(320k).mp3.download" type="audio/mpeg">
+<!-- 배경음악 (MP3 파일 링크 연동) -->
+<audio id="bgmAudio" loop preload="auto">
+  <source src="https://raw.githubusercontent.com/f5dpg5b7vs-create/---/main/The%20BEST%20Christmas%20Songs%20on%20Piano%20-%20Rousseau%20(320k).mp3.download" type="audio/mpeg">
 </audio>
 
-<!-- 메인 거리 걷기 화면 (화면 아무 곳이나 톡톡 터치하여 전진) -->
+<!-- 메인 거리 걷기 화면 -->
 <main class="home" onclick="stepForward()">
-  <div class="street-scene" id="streetScene">
-    <div class="warm-glow"></div>
-    <div class="warm-glow-2"></div>
-  </div>
+  <div class="alley-world" id="alleyWorld">
+    <div class="alley-bg-art"></div>
+    <div class="alley-walls"></div>
 
-  <!-- 오브젝트들: 순서대로 [1: 벤치/책(글) -> 2: 가로등(그림) -> 3: 창문(영상)] -->
-  <div class="objects-container">
-    <!-- 1단계: 벤치 위의 책 (글) -->
-    <button class="walk-object obj-book active-step" id="obj1" onclick="event.stopPropagation(); openContent('storyPage')">
-      <div class="obj-graphic">📖 벤치 위의 책</div>
-      <span class="obj-label">01 · 글의 기록</span>
-    </button>
+    <!-- 오브젝트들: 진짜 그림 카드로 구성 [1: 벤치와 책 -> 2: 가로등 불빛 -> 3: 따뜻한 창문] -->
+    <div class="objects-container">
+      
+      <!-- 1단계: 벤치 위의 책 (그림 카드) -->
+      <button class="walk-object obj-book active-step" id="obj1" onclick="event.stopPropagation(); openContent('storyPage')">
+        <div class="obj-art-frame">
+          <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80" alt="벤치 위의 책">
+        </div>
+        <div class="obj-title">벤치 위의 책</div>
+        <div class="obj-sub">01 · STORIES</div>
+      </button>
 
-    <!-- 2단계: 가로등 (그림) -->
-    <button class="walk-object obj-lamp" id="obj2" onclick="event.stopPropagation(); openContent('photoPage')">
-      <div class="obj-graphic">🏮 가로등 불빛 아래</div>
-      <span class="obj-label">02 · 그림과 풍경</span>
-    </button>
+      <!-- 2단계: 가로등 불빛 (그림 카드) -->
+      <button class="walk-object obj-lamp" id="obj2" onclick="event.stopPropagation(); openContent('photoPage')">
+        <div class="obj-art-frame">
+          <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=600&q=80" alt="가로등 불빛">
+        </div>
+        <div class="obj-title">가로등 불빛</div>
+        <div class="obj-sub">02 · PHOTOGRAPHS</div>
+      </button>
 
-    <!-- 3단계: 창문 (영상) -->
-    <button class="walk-object obj-window" id="obj3" onclick="event.stopPropagation(); openContent('videoPage')">
-      <div class="obj-graphic">🪟 따뜻한 창문</div>
-      <span class="obj-label">03 · 영상 아카이브</span>
-    </button>
+      <!-- 3단계: 따뜻한 창문 (그림 카드) -->
+      <button class="walk-object obj-window" id="obj3" onclick="event.stopPropagation(); openContent('videoPage')">
+        <div class="obj-art-frame">
+          <img src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=600&q=80" alt="따뜻한 창문">
+        </div>
+        <div class="obj-title">따뜻한 창문</div>
+        <div class="obj-sub">03 · MOVIES</div>
+      </button>
+
+    </div>
   </div>
 
   <!-- 상단 메뉴 -->
@@ -473,7 +500,7 @@ html, body {
 </main>
 
 
-<!-- 1. 글 페이지 (벤치 위의 책) -->
+<!-- 1. 글 페이지 -->
 <section class="page" id="storyPage">
   <button class="back-btn" onclick="closeContent('storyPage')">← 골목길로 돌아가기</button>
   <div class="page-header">
@@ -486,7 +513,7 @@ html, body {
   </div>
 </section>
 
-<!-- 2. 그림 페이지 (가로등) -->
+<!-- 2. 그림 페이지 -->
 <section class="page" id="photoPage">
   <button class="back-btn" onclick="closeContent('photoPage')">← 골목길로 돌아가기</button>
   <div class="page-header">
@@ -501,7 +528,7 @@ html, body {
   </div>
 </section>
 
-<!-- 3. 영상 페이지 (창문) -->
+<!-- 3. 영상 페이지 -->
 <section class="page" id="videoPage">
   <button class="back-btn" onclick="closeContent('videoPage')">← 골목길로 돌아가기</button>
   <div class="page-header">
@@ -518,10 +545,8 @@ html, body {
 
 
 <script>
-/* =========================
-   1. 묵직한 아날로그 우편함 철컥 사운드 (효과음 통일)
-========================= */
-function playIronSound() {
+/* 1. 나무 상자 닫히는 사운드 */
+function playWoodSound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     if (ctx.state === 'suspended') ctx.resume();
@@ -529,30 +554,28 @@ function playIronSound() {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(140, now);
-    osc.frequency.exponentialRampToValueAtTime(35, now + 0.14);
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(110, now);
+    osc.frequency.exponentialRampToValueAtTime(30, now + 0.15);
 
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.linearRampToValueAtTime(0.001, now + 0.14);
+    gain.gain.setValueAtTime(0.3, now);
+    gain.gain.linearRampToValueAtTime(0.001, now + 0.15);
 
     osc.connect(gain);
     gain.connect(ctx.destination);
     osc.start(now);
-    osc.stop(now + 0.14);
+    osc.stop(now + 0.15);
   } catch (e) {}
 }
 
-/* =========================
-   2. 사각사각 눈 밟는 발걸음 소리
-========================= */
+/* 2. 눈 밟는 발걸음 소리 */
 function playStepSound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     if (ctx.state === 'suspended') ctx.resume();
     const now = ctx.currentTime;
     
-    const bufferSize = ctx.sampleRate * 0.12;
+    const bufferSize = ctx.sampleRate * 0.14;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
@@ -564,12 +587,12 @@ function playStepSound() {
 
     const filter = ctx.createBiquadFilter();
     filter.type = 'bandpass';
-    filter.frequency.value = 1000;
-    filter.Q.value = 1.2;
+    filter.frequency.value = 900;
+    filter.Q.value = 1.5;
 
     const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0.12, now);
-    gain.gain.linearRampToValueAtTime(0.001, now + 0.12);
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.linearRampToValueAtTime(0.001, now + 0.14);
 
     noise.connect(filter);
     filter.connect(gain);
@@ -579,36 +602,34 @@ function playStepSound() {
   } catch (e) {}
 }
 
-/* =========================
-   3. 거리 걷기 전진 인터랙션 (톡톡 터치할 때마다 앞으로 이동)
-========================= */
+/* 3. 골목길 전진 인터랙션 */
 let currentWalkStep = 0;
 
 function stepForward() {
   playStepSound();
   currentWalkStep++;
 
-  const scene = document.getElementById("streetScene");
+  const world = document.getElementById("alleyWorld");
   const obj1 = document.getElementById("obj1");
   const obj2 = document.getElementById("obj2");
   const obj3 = document.getElementById("obj3");
   const guide = document.getElementById("guideText");
 
   if (currentWalkStep === 1) {
-    scene.style.transform = "scale(1.25) translateY(5%)";
+    world.style.transform = "translateY(-31%)";
     obj1.classList.remove("active-step");
     obj1.classList.add("passed");
     obj2.classList.add("active-step");
-    guide.textContent = "조금 더 걸어 가로등 아래에 다다랐습니다";
+    guide.textContent = "사각사각 눈길을 걸어 가로등 아래에 다다랐습니다";
   } else if (currentWalkStep === 2) {
-    scene.style.transform = "scale(1.55) translateY(12%)";
+    world.style.transform = "translateY(-63%)";
     obj2.classList.remove("active-step");
     obj2.classList.add("passed");
     obj3.classList.add("active-step");
-    guide.textContent = "골목 안쪽 따뜻한 창가 앞에 도착했습니다";
+    guide.textContent = "골목 안쪽 불빛이 새어 나오는 창가에 도착했습니다";
   } else {
     currentWalkStep = 0;
-    scene.style.transform = "scale(1)";
+    world.style.transform = "translateY(0%)";
     obj3.classList.remove("active-step");
     obj1.classList.remove("passed");
     obj2.classList.remove("passed");
@@ -617,25 +638,20 @@ function stepForward() {
   }
 }
 
-/* =========================
-   4. 컨텐츠 페이지 열기/닫기 (우편함 철컥 소리 연동)
-========================= */
+/* 4. 컨텐츠 페이지 열기/닫기 */
 function openContent(pageId) {
-  playIronSound();
+  playWoodSound();
   document.getElementById(pageId).classList.add("active");
 }
 
 function closeContent(pageId) {
-  playIronSound();
+  playWoodSound();
   document.getElementById(pageId).classList.remove("active");
 }
 
-
-/* =========================
-   5. BGM(캐롤) 재생 제어
-========================= */
-let isBgmOn = false;
+/* 5. MP3 캐롤 오디오 제어 */
 const bgmAudio = document.getElementById("bgmAudio");
+let isBgmOn = false;
 
 function toggleBGM() {
   const btn = document.getElementById("bgmBtn");
@@ -644,7 +660,8 @@ function toggleBGM() {
       isBgmOn = true;
       btn.textContent = "캐롤 ON";
       btn.classList.add("active");
-    }).catch(() => {
+    }).catch((err) => {
+      console.log("오디오 재생 오류:", err);
       alert("브라우저 정책으로 인해 오디오 재생이 차단되었거나 링크를 확인해 주세요.");
     });
   } else {
@@ -655,10 +672,7 @@ function toggleBGM() {
   }
 }
 
-
-/* =========================
-   6. 비밀번호 인증
-========================= */
+/* 6. 비밀번호 인증 */
 const SECRET_PW = "ohmyps";
 
 function checkPassword() {
@@ -667,7 +681,7 @@ function checkPassword() {
   const lock = document.getElementById("lockScreen");
 
   if (input.value === SECRET_PW) {
-    playIronSound();
+    playWoodSound();
     lock.classList.add("unlocked");
     sessionStorage.setItem("alleyUnlocked", "true");
   } else {
@@ -685,12 +699,9 @@ if (sessionStorage.getItem("alleyUnlocked") === "true") {
   document.getElementById("lockScreen").classList.add("unlocked");
 }
 
-
-/* =========================
-   7. 겨울 눈 내리는 효과 생성
-========================= */
+/* 7. 겨울 눈 내리는 효과 */
 const snowBox = document.getElementById("snowBox");
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 35; i++) {
   const flake = document.createElement("div");
   flake.className = "snowflake";
   const size = Math.random() * 3 + 1.5 + "px";

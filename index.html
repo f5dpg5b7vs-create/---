@@ -3,2359 +3,1413 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#05080d">
-<title>탐라배 곱꽹대전 — Winter Night</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
+<title>탐라배 곱꽹대전</title>
+
 <style>
-/* =========================================================
-   RESET
-========================================================= */
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
+
 html,
-body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#020407;
-  color:#f5f1e9;
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #080b10;
+  color: #f5f0e7;
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
 }
-body{
-  font-family:"Noto Sans KR",sans-serif;
-  user-select:none;
-  -webkit-user-select:none;
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
+
+button {
+  font: inherit;
+  border: 0;
+  color: inherit;
 }
-button,
-input{
-  font:inherit;
-}
-/* =========================================================
-   VARIABLES
-========================================================= */
-:root{
-  --night:#05080d;
-  --ice:#dfeaf0;
-  --warm:#f1c486;
-  --warm2:#ffdc9c;
-}
-/* =========================================================
-   LOCK
-========================================================= */
-#lockScreen{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+
+#lock {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
   background:
     linear-gradient(
-      rgba(2,5,9,.58),
-      rgba(2,4,7,.97)
+      rgba(4,7,12,.48),
+      rgba(4,7,12,.82)
     ),
-    url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=2000&q=90");
-  background-size:cover;
-  background-position:center;
-  transition:
-    opacity 1s cubic-bezier(.22,.8,.2,1),
-    visibility 1s;
+    radial-gradient(
+      circle at 50% 35%,
+      #39495b 0%,
+      #17212d 38%,
+      #080b10 75%
+    );
 }
-#lockScreen::after{
-  content:"";
-  position:absolute;
-  inset:0;
+
+.lock-box {
+  width: min(90vw, 380px);
+  padding: 38px 25px;
+
+  text-align: center;
+
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 22px;
+
+  background: rgba(8,12,18,.55);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.lock-mini {
+  font-size: 9px;
+  letter-spacing: .3em;
+  color: rgba(255,255,255,.42);
+  margin-bottom: 17px;
+}
+
+.lock-title {
+  font-family: Georgia, "Noto Serif KR", serif;
+  font-size: 31px;
+  font-weight: 400;
+  letter-spacing: -.08em;
+}
+
+.lock-text {
+  margin: 18px 0 25px;
+
+  font-size: 11px;
+  line-height: 1.9;
+
+  color: rgba(255,255,255,.55);
+}
+
+#password {
+  width: 100%;
+  height: 48px;
+
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 11px;
+
+  outline: none;
+
+  text-align: center;
+
+  color: white;
+  background: rgba(255,255,255,.06);
+}
+
+#password::placeholder {
+  color: rgba(255,255,255,.3);
+}
+
+#enter {
+  width: 100%;
+  height: 48px;
+
+  margin-top: 10px;
+
+  border-radius: 11px;
+
+  color: #111;
+  background: #eee7da;
+
+  font-size: 13px;
+}
+
+#error {
+  height: 18px;
+
+  margin-top: 10px;
+
+  font-size: 10px;
+  color: #d9a9a2;
+}
+
+#lock.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: .5s;
+}
+
+
+/* 메인 */
+
+#home {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100dvh;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(7,12,18,.08),
+      rgba(7,12,18,.18) 45%,
+      rgba(4,7,11,.72)
+    ),
+    radial-gradient(
+      circle at 50% 30%,
+      #647487 0%,
+      #293746 25%,
+      #111b25 53%,
+      #070b10 100%
+    );
+}
+
+
+/* 실제 사진을 넣으면 자동으로 사용 */
+
+#home.photo {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(4,7,11,.08),
+      rgba(4,7,11,.2) 45%,
+      rgba(4,7,11,.7)
+    ),
+    url("background.jpg") center / cover no-repeat;
+}
+
+
+/* 상단 */
+
+.header {
+  position: absolute;
+  z-index: 20;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  padding:
+    calc(22px + env(safe-area-inset-top))
+    22px
+    20px;
+
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 9px;
+  letter-spacing: .16em;
+
+  color: rgba(255,255,255,.58);
+}
+
+
+/* 제목 */
+
+.title {
+  position: absolute;
+  z-index: 5;
+
+  top: 35%;
+  left: 50%;
+
+  width: 90%;
+
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+
+  pointer-events: none;
+}
+
+.title-small {
+  font-size: 9px;
+  letter-spacing: .4em;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 14px;
+}
+
+.title h1 {
+  margin: 0;
+
+  font-family: Georgia, "Noto Serif KR", serif;
+  font-size: clamp(30px, 9vw, 50px);
+  font-weight: 400;
+
+  letter-spacing: -.08em;
+
+  text-shadow: 0 3px 20px rgba(0,0,0,.5);
+}
+
+.title p {
+  margin-top: 18px;
+
+  font-size: 10px;
+  line-height: 1.9;
+
+  color: rgba(255,255,255,.46);
+}
+
+
+/* 오브젝트 */
+
+.object {
+  position: absolute;
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 90px;
+  height: 90px;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.object:active {
+  transform: scale(1.15);
+  filter:
+    drop-shadow(0 0 10px rgba(255,240,190,.9));
+}
+
+.label {
+  position: absolute;
+
+  bottom: -2px;
+
+  font-family: Georgia, "Noto Serif KR", serif;
+
+  font-size: 9px;
+
+  color: rgba(255,255,255,.65);
+}
+
+
+/* 달 */
+
+#moonBtn {
+  top: 11%;
+  right: 20%;
+}
+
+.moon {
+  width: 47px;
+  height: 47px;
+
+  border-radius: 50%;
+
   background:
     radial-gradient(
-      ellipse at center,
-      transparent 15%,
-      rgba(0,0,0,.72) 100%
+      circle at 32% 30%,
+      #fffef3,
+      #e5e0cf 60%,
+      #aaa79c
     );
-  pointer-events:none;
+
+  box-shadow:
+    0 0 18px rgba(255,250,220,.7),
+    0 0 55px rgba(255,250,220,.25);
 }
-#lockScreen.unlocked{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
+
+
+/* 창문 */
+
+#windowBtn {
+  top: 18%;
+  right: 4%;
 }
-.lock-inner{
-  position:relative;
-  z-index:2;
-  width:min(88%,390px);
-  text-align:center;
-  padding:45px 28px;
-}
-.lock-small{
-  margin-bottom:30px;
-  color:rgba(255,255,255,.45);
-  font-size:8px;
-  letter-spacing:.42em;
-}
-.lock-inner h1{
-  font-family:"Noto Serif KR",serif;
-  font-weight:300;
-  font-size:clamp(25px,7vw,36px);
-  letter-spacing:.17em;
-  margin-left:.17em;
-}
-.lock-inner .subtitle{
-  margin-top:17px;
-  color:rgba(255,255,255,.52);
-  font-family:"Noto Serif KR",serif;
-  font-size:10px;
-  line-height:2.1;
-  letter-spacing:.08em;
-}
-.lock-line{
-  width:45px;
-  height:1px;
-  margin:30px auto;
-  background:rgba(255,255,255,.3);
-}
-.password-box{
-  position:relative;
-  display:flex;
-  align-items:center;
-  width:100%;
-  border-bottom:1px solid rgba(255,255,255,.3);
-}
-.password-box input{
-  width:100%;
-  padding:15px 45px 15px 8px;
-  border:0;
-  outline:none;
-  background:transparent;
-  color:white;
-  text-align:center;
-  font-size:11px;
-  letter-spacing:.25em;
-}
-.password-box input::placeholder{
-  color:rgba(255,255,255,.25);
-}
-.password-box button{
-  position:absolute;
-  right:0;
-  padding:12px 5px;
-  border:0;
-  background:transparent;
-  color:rgba(255,255,255,.7);
-  font-family:"Noto Serif KR",serif;
-  font-size:10px;
-  cursor:pointer;
-}
-#wrongPassword{
-  min-height:25px;
-  margin-top:17px;
-  color:rgba(255,190,160,.8);
-  font-size:9px;
-  letter-spacing:.08em;
-  opacity:0;
-  transition:opacity .3s;
-}
-#wrongPassword.show{
-  opacity:1;
-}
-/* =========================================================
-   WORLD
-========================================================= */
-.home{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  background:#020407;
-  isolation:isolate;
-}
-/* =========================================================
-   REAL PHOTO WORLD
-========================================================= */
-.world{
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  perspective:900px;
-  background:#020407;
-}
-/*
-  가장 먼 실제 사진.
-  움직임이 가장 느림.
-*/
-.world-far{
-  position:absolute;
-  inset:-8%;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(3,8,14,.18),
-      rgba(1,3,6,.55) 70%,
-      #020305 100%
-    ),
-    url("https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=2400&q=90");
-  background-size:cover;
-  background-position:center center;
-  transform:
-    translate3d(0,0,0)
-    scale(1.04);
-  will-change:transform;
-}
-/*
-  먼 골목.
-*/
-.world-distance{
-  position:absolute;
-  inset:-12% -18%;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(4,10,17,.05),
-      rgba(2,5,8,.25) 45%,
-      rgba(1,3,5,.75) 100%
-    ),
-    url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=2400&q=90");
-  background-size:cover;
-  background-position:center 46%;
-  opacity:.66;
-  transform:
-    translate3d(0,0,0)
-    scale(1.10);
-  mix-blend-mode:screen;
-  will-change:transform;
-}
-/*
-  중앙 골목 사진.
-*/
-.world-middle{
-  position:absolute;
-  inset:-18% -28%;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(4,8,13,.10),
-      rgba(2,4,7,.42) 55%,
-      rgba(1,2,4,.88) 100%
-    ),
-    url("https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=2400&q=90");
-  background-size:cover;
-  background-position:center 52%;
-  opacity:.36;
-  transform:
-    translate3d(0,0,0)
-    scale(1.14);
-  will-change:transform;
-}
-/* =========================================================
-   FAKE DEPTH BUILDINGS
-   사진 위에 겹쳐지는 어두운 foreground.
-   건물 모양 자체가 아니라 실제 사진을 가리는
-   깊이 마스크 역할.
-========================================================= */
-.depth-frame{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
+
+.window {
+  width: 51px;
+  height: 65px;
+
+  border: 5px solid #15191d;
+
   background:
     linear-gradient(
       90deg,
-      rgba(0,0,0,.74) 0%,
-      rgba(0,0,0,.18) 18%,
-      transparent 36%,
-      transparent 64%,
-      rgba(0,0,0,.18) 82%,
-      rgba(0,0,0,.74) 100%
-    );
-  z-index:8;
-}
-/* =========================================================
-   GROUND
-========================================================= */
-.ground{
-  position:absolute;
-  left:-30%;
-  right:-30%;
-  bottom:-48%;
-  height:76%;
-  z-index:12;
-  transform-origin:center bottom;
-  transform:
-    perspective(500px)
-    rotateX(63deg)
-    translate3d(0,0,0)
-    scale(1);
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(16,23,29,.18),
-      rgba(5,9,13,.72) 45%,
-      #020305 100%
+      transparent 46%,
+      #202328 47%,
+      #202328 53%,
+      transparent 54%
     ),
-    url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=2400&q=90");
-  background-size:cover;
-  background-position:center bottom;
-  clip-path:
-    polygon(
-      42% 0,
-      58% 0,
-      100% 100%,
-      0 100%
-    );
-  box-shadow:
-    inset 0 80px 100px rgba(255,255,255,.025);
-  will-change:transform;
-}
-/*
-  길 위의 흐릿한 눈길.
-*/
-.ground::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:0;
-  width:32%;
-  height:100%;
-  transform:translateX(-50%);
-  background:
     linear-gradient(
-      to bottom,
-      rgba(255,255,255,.055),
-      rgba(255,255,255,.015) 40%,
-      transparent 85%
-    );
-  filter:blur(7px);
-  opacity:.6;
-}
-/* =========================================================
-   CLOSE FOREGROUND PHOTO PLANES
-========================================================= */
-.foreground-left,
-.foreground-right{
-  position:absolute;
-  top:-10%;
-  bottom:-20%;
-  width:43%;
-  z-index:18;
-  background-size:cover;
-  filter:
-    brightness(.38)
-    contrast(1.16)
-    saturate(.65);
-  will-change:transform;
-}
-.foreground-left{
-  left:-20%;
-  background-image:
-    linear-gradient(
-      90deg,
-      rgba(0,0,0,.94),
-      rgba(3,7,11,.55),
-      transparent
+      0deg,
+      transparent 46%,
+      #202328 47%,
+      #202328 53%,
+      transparent 54%
     ),
-    url("https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=1800&q=90");
-  background-position:right center;
-  transform:
-    perspective(700px)
-    rotateY(18deg)
-    translate3d(0,0,0)
-    scale(1.08);
-}
-.foreground-right{
-  right:-20%;
-  background-image:
     linear-gradient(
-      -90deg,
-      rgba(0,0,0,.94),
-      rgba(3,7,11,.55),
-      transparent
-    ),
-    url("https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=1800&q=90");
-  background-position:left center;
-  transform:
-    perspective(700px)
-    rotateY(-18deg)
-    translate3d(0,0,0)
-    scale(1.08);
-}
-/* =========================================================
-   LAMP DEPTH
-========================================================= */
-.lamp-space{
-  position:absolute;
-  inset:0;
-  z-index:25;
-  pointer-events:none;
-}
-/*
-  먼 가로등
-*/
-.lamp-far{
-  position:absolute;
-  left:50%;
-  top:32%;
-  width:2px;
-  height:23%;
-  background:#11171b;
-  transform:
-    translateX(-50%)
-    scale(.65);
-  opacity:.65;
-  will-change:transform;
-}
-.lamp-far::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:0;
-  width:9px;
-  height:6px;
-  transform:translateX(-50%);
-  border-radius:50%;
-  background:#ffd99a;
+      135deg,
+      #ffe09a,
+      #9c633a
+    );
+
   box-shadow:
-    0 0 12px #ffd99a,
-    0 0 45px rgba(255,190,100,.55);
+    0 0 22px rgba(255,204,110,.5);
 }
-/*
-  가까운 가로등.
-*/
-.lamp-near{
-  position:absolute;
-  bottom:14%;
-  width:4px;
-  height:57%;
+
+
+/* 가로등 */
+
+#lampBtn {
+  left: 5%;
+  bottom: 17%;
+}
+
+.lamp {
+  position: relative;
+
+  width: 45px;
+  height: 135px;
+}
+
+.lamp-top {
+  position: absolute;
+
+  left: 4px;
+  top: 4px;
+
+  width: 38px;
+  height: 22px;
+
+  border-radius: 50% 50% 35% 35%;
+
+  background: #24282c;
+}
+
+.lamp-light {
+  position: absolute;
+
+  left: 9px;
+  top: 13px;
+
+  width: 28px;
+  height: 25px;
+
+  border-radius: 50%;
+
+  background: #ffd98d;
+
+  filter: blur(3px);
+
+  box-shadow:
+    0 0 10px #ffd98d,
+    0 0 30px rgba(255,217,141,.6);
+}
+
+.lamp-pole {
+  position: absolute;
+
+  left: 21px;
+  top: 23px;
+
+  width: 4px;
+  height: 112px;
+
+  background: linear-gradient(
+    to right,
+    #111,
+    #555,
+    #111
+  );
+
+  border-radius: 4px;
+}
+
+
+/* 우편함 */
+
+#mailBtn {
+  left: 31%;
+  bottom: 16%;
+}
+
+.mailbox {
+  position: relative;
+
+  width: 61px;
+  height: 49px;
+
+  border-radius: 7px;
+
   background:
     linear-gradient(
-      to right,
-      #030405,
-      #242a2d,
-      #030405
+      135deg,
+      #59646c,
+      #283138 65%,
+      #141a1f
     );
-  z-index:35;
-  will-change:transform;
+
+  box-shadow: 0 12px 25px rgba(0,0,0,.4);
 }
-.lamp-near.left{
-  left:12%;
+
+.mailbox::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: -14px;
+
+  width: 61px;
+  height: 23px;
+
+  border-radius: 50% 50% 0 0;
+
+  background: #3c464d;
 }
-.lamp-near.right{
-  right:12%;
+
+.mailbox::after {
+  content: "";
+
+  position: absolute;
+
+  right: 8px;
+  top: 14px;
+
+  width: 4px;
+  height: 22px;
+
+  background: #aaa;
 }
-.lamp-near::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:0;
-  width:27px;
-  height:11px;
-  transform:translateX(-50%);
-  border-radius:50%;
-  background:#ffd18a;
-  box-shadow:
-    0 0 9px #ffd18a,
-    0 0 30px rgba(255,198,120,.75),
-    0 0 100px rgba(255,170,70,.42);
+
+
+/* 사진 */
+
+#photoBtn {
+  right: 5%;
+  bottom: 16%;
 }
-/* =========================================================
-   WARM LIGHT POOL
-========================================================= */
-.light-pool{
-  position:absolute;
-  left:50%;
-  top:26%;
-  width:270px;
-  height:440px;
-  z-index:22;
-  transform:
-    translateX(-50%);
-  background:
-    radial-gradient(
-      ellipse at center 15%,
-      rgba(255,209,139,.25),
-      rgba(255,177,86,.10) 28%,
-      transparent 69%
-    );
-  filter:blur(9px);
-  opacity:.65;
-  pointer-events:none;
+
+.frame {
+  width: 65px;
+  height: 77px;
+
+  padding: 5px;
+
+  background: #d7d1c5;
+
+  transform: rotate(-4deg);
+
+  box-shadow: 0 14px 30px rgba(0,0,0,.5);
 }
-/* =========================================================
-   DESTINATION OBJECTS
-========================================================= */
-.destination{
-  position:absolute;
-  z-index:45;
-  border:0;
-  background:transparent;
-  color:white;
-  cursor:pointer;
-  opacity:0;
-  pointer-events:none;
-  will-change:transform,opacity;
-}
-/*
-  실제 공간 안의 목적지.
-*/
-.destination-card{
-  position:relative;
-  width:140px;
-  height:175px;
-  overflow:hidden;
-  border:
-    1px solid rgba(255,255,255,.15);
-  border-radius:4px;
-  background:#080c11;
-  box-shadow:
-    0 30px 100px rgba(0,0,0,.92),
-    0 0 70px rgba(255,193,110,.08);
-}
-.destination-card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:
-    brightness(.58)
-    contrast(1.12)
-    saturate(.72);
-}
-.destination-card::after{
-  content:"";
-  position:absolute;
-  inset:0;
+
+.frame-inner {
+  width: 100%;
+  height: 100%;
+
   background:
     linear-gradient(
-      to bottom,
-      transparent 25%,
-      rgba(0,0,0,.9) 100%
+      135deg,
+      #788391,
+      #222b33
     );
+
+  background-size: cover;
+  background-position: center;
 }
-.destination-info{
-  position:absolute;
-  left:15px;
-  right:15px;
-  bottom:15px;
-  z-index:2;
-  text-align:left;
+
+
+/* 눈 */
+
+#snow {
+  position: absolute;
+  z-index: 15;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
 }
-.destination-number{
-  display:block;
-  margin-bottom:6px;
-  color:rgba(255,255,255,.46);
-  font-size:7px;
-  letter-spacing:.25em;
+
+.flake {
+  position: absolute;
+  top: -20px;
+
+  color: rgba(255,255,255,.7);
+
+  animation: fall linear infinite;
 }
-.destination-title{
-  font-family:"Noto Serif KR",serif;
-  font-size:13px;
-  font-weight:300;
-  letter-spacing:.08em;
+
+@keyframes fall {
+  from {
+    transform: translateY(-20px);
+  }
+
+  to {
+    transform:
+      translateY(110vh)
+      translateX(var(--x));
+  }
 }
-.destination-hint{
-  display:block;
-  margin-top:5px;
-  color:rgba(255,255,255,.45);
-  font-size:7px;
-  letter-spacing:.12em;
-}
-/*
-  목적지 초기 위치.
-*/
-.destination.one{
-  left:calc(50% - 170px);
-  top:43%;
-  transform:
-    translate3d(0,30px,0)
-    scale(.34);
-}
-.destination.two{
-  right:calc(50% - 180px);
-  top:37%;
-  transform:
-    translate3d(0,30px,0)
-    scale(.28);
-}
-.destination.three{
-  left:50%;
-  top:30%;
-  transform:
-    translateX(-50%)
-    translate3d(0,30px,0)
-    scale(.22);
-}
-/* =========================================================
-   UI
-========================================================= */
-.top-ui{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  z-index:100;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
+
+
+/* 페이지 */
+
+.page {
+  position: fixed;
+  z-index: 100;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100dvh;
+
   padding:
     calc(25px + env(safe-area-inset-top))
-    24px 0;
-  pointer-events:none;
-}
-.top-ui > *{
-  pointer-events:auto;
-}
-.brand{
-  text-shadow:
-    0 2px 15px rgba(0,0,0,.8);
-}
-.brand-main{
-  font-family:"Noto Serif KR",serif;
-  font-size:13px;
-  font-weight:400;
-  letter-spacing:.18em;
-}
-.brand-sub{
-  margin-top:5px;
-  color:rgba(255,255,255,.38);
-  font-size:7px;
-  letter-spacing:.25em;
-}
-.sound-button{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding:9px 12px;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:100px;
-  background:rgba(5,8,12,.38);
-  backdrop-filter:blur(12px);
-  color:rgba(255,255,255,.6);
-  font-size:7px;
-  letter-spacing:.14em;
-  cursor:pointer;
-}
-.sound-button.on{
-  color:white;
-  background:rgba(255,196,120,.12);
-  border-color:rgba(255,210,150,.4);
-}
-.sound-icon{
-  position:relative;
-  width:11px;
-  height:10px;
-}
-.sound-icon::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:3px;
-  width:4px;
-  height:4px;
-  background:currentColor;
-}
-.sound-icon::after{
-  content:"";
-  position:absolute;
-  left:3px;
-  top:1px;
-  width:7px;
-  height:8px;
-  border-right:1px solid currentColor;
-  border-radius:50%;
-}
-/* =========================================================
-   WALK UI
-========================================================= */
-.walk-ui{
-  position:absolute;
-  left:50%;
-  bottom:calc(7% + env(safe-area-inset-bottom));
-  z-index:100;
-  width:100%;
-  transform:translateX(-50%);
-  text-align:center;
-  pointer-events:none;
-  transition:opacity .5s;
-}
-.step-count{
-  margin-bottom:11px;
-  color:rgba(255,255,255,.3);
-  font-size:7px;
-  letter-spacing:.4em;
-}
-.walk-message{
-  font-family:"Noto Serif KR",serif;
-  color:rgba(255,255,255,.65);
-  font-size:10px;
-  line-height:1.8;
-  letter-spacing:.18em;
-  text-shadow:
-    0 3px 15px #000;
-}
-.walk-line{
-  position:relative;
-  width:45px;
-  height:1px;
-  margin:15px auto 0;
-  background:rgba(255,255,255,.22);
-}
-.walk-line::after{
-  content:"";
-  position:absolute;
-  top:-2px;
-  right:0;
-  width:5px;
-  height:5px;
-  border-top:1px solid rgba(255,255,255,.5);
-  border-right:1px solid rgba(255,255,255,.5);
-  transform:rotate(45deg);
-}
-/* =========================================================
-   SNOW
-========================================================= */
-.snow-layer{
-  position:absolute;
-  inset:0;
-  z-index:70;
-  overflow:hidden;
-  pointer-events:none;
-}
-.snow{
-  position:absolute;
-  top:-10px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:
-    0 0 6px rgba(255,255,255,.55);
-  will-change:transform;
-}
-/*
-  가까운 눈.
-  JS에서 이동시킨다.
-*/
-.snow.near{
-  filter:blur(.2px);
-}
-.snow.mid{
-  filter:blur(.45px);
-}
-.snow.far{
-  filter:blur(.8px);
-}
-/* =========================================================
-   GRAIN
-========================================================= */
-.grain{
-  position:absolute;
-  inset:0;
-  z-index:80;
-  pointer-events:none;
-  opacity:.075;
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-  mix-blend-mode:soft-light;
-}
-.vignette{
-  position:absolute;
-  inset:0;
-  z-index:81;
-  pointer-events:none;
-  background:
-    radial-gradient(
-      ellipse at center,
-      transparent 30%,
-      rgba(0,0,0,.24) 62%,
-      rgba(0,0,0,.82) 100%
-    );
-}
-/* =========================================================
-   MOTION BLUR
-========================================================= */
-.motion-blur{
-  position:absolute;
-  inset:0;
-  z-index:85;
-  pointer-events:none;
-  opacity:0;
+    22px
+    calc(30px + env(safe-area-inset-bottom));
+
+  overflow-y: auto;
+
   background:
     linear-gradient(
-      to bottom,
-      transparent 20%,
-      rgba(255,255,255,.035),
-      transparent 80%
+      #0b1016,
+      #11171e
     );
-  transition:opacity .12s;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: translateY(15px);
+
+  transition: .4s;
 }
-.home.walking .motion-blur{
-  opacity:1;
+
+.page.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transform: translateY(0);
 }
-/* =========================================================
-   CONTENT MODAL
-========================================================= */
-.content-screen{
-  position:fixed;
-  inset:0;
-  z-index:500;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:
-    calc(25px + env(safe-area-inset-top))
-    20px
-    calc(25px + env(safe-area-inset-bottom));
-  background:rgba(2,4,7,.78);
-  backdrop-filter:blur(18px);
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transition:
-    opacity .55s ease,
-    visibility .55s ease;
+
+.back {
+  display: inline-flex;
+
+  min-height: 44px;
+
+  align-items: center;
+
+  color: rgba(255,255,255,.55);
+
+  font-size: 11px;
+
+  background: none;
+
+  margin-bottom: 30px;
 }
-.content-screen.open{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
+
+.back span {
+  margin-right: 8px;
+  font-size: 17px;
 }
-.content-panel{
-  position:relative;
-  width:min(92vw,570px);
-  max-height:88vh;
-  overflow-y:auto;
-  padding:34px 27px 40px;
-  border:1px solid rgba(255,255,255,.12);
+
+.page-kicker {
+  font-size: 9px;
+  letter-spacing: .3em;
+
+  color: rgba(255,255,255,.35);
+
+  margin-bottom: 12px;
+}
+
+.page h2 {
+  margin: 0;
+
+  font-family: Georgia, "Noto Serif KR", serif;
+
+  font-weight: 400;
+
+  font-size: 38px;
+
+  letter-spacing: -.08em;
+}
+
+.page-desc {
+  margin-top: 15px;
+
+  color: rgba(255,255,255,.45);
+
+  font-size: 11px;
+
+  line-height: 1.9;
+}
+
+
+/* 글 */
+
+.story {
+  max-width: 700px;
+  margin: 45px auto 0;
+}
+
+.story article {
+  padding: 24px 0;
+
+  border-top:
+    1px solid rgba(255,255,255,.1);
+}
+
+.story article:last-child {
+  border-bottom:
+    1px solid rgba(255,255,255,.1);
+}
+
+.story small {
+  color: rgba(255,255,255,.3);
+  font-size: 9px;
+  letter-spacing: .2em;
+}
+
+.story h3 {
+  margin: 10px 0;
+
+  font-family: Georgia, "Noto Serif KR", serif;
+
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.story p {
+  margin: 0;
+
+  font-size: 12px;
+  line-height: 2;
+
+  color: rgba(255,255,255,.58);
+}
+
+
+/* 사진 */
+
+.gallery {
+  max-width: 800px;
+
+  margin: 40px auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(2,1fr);
+
+  gap: 10px;
+}
+
+.gallery div {
+  aspect-ratio: 1;
+
   background:
     linear-gradient(
-      145deg,
-      rgba(16,23,31,.97),
-      rgba(5,8,12,.98)
+      135deg,
+      #65717c,
+      #1c252e
     );
-  box-shadow:
-    0 40px 120px rgba(0,0,0,.8);
-  transform:
-    translateY(35px)
-    scale(.97);
-  transition:
-    transform .65s cubic-bezier(.2,.8,.2,1);
 }
-.content-screen.open .content-panel{
-  transform:
-    translateY(0)
-    scale(1);
+
+
+/* 참여진 */
+
+.people {
+  max-width: 700px;
+
+  margin: 40px auto;
 }
-.close-content{
-  position:absolute;
-  top:18px;
-  right:19px;
-  width:30px;
-  height:30px;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:50%;
-  background:rgba(255,255,255,.03);
-  color:rgba(255,255,255,.65);
-  font-size:16px;
-  cursor:pointer;
+
+.person {
+  padding: 21px 0;
+
+  border-top:
+    1px solid rgba(255,255,255,.1);
 }
-.content-number{
-  color:rgba(255,202,130,.65);
-  font-size:7px;
-  letter-spacing:.35em;
+
+.person:last-child {
+  border-bottom:
+    1px solid rgba(255,255,255,.1);
 }
-.content-title{
-  margin-top:12px;
-  font-family:"Noto Serif KR",serif;
-  font-size:clamp(24px,7vw,35px);
-  font-weight:300;
-  letter-spacing:.08em;
+
+.person-name {
+  font-family: Georgia, "Noto Serif KR", serif;
+  font-size: 17px;
 }
-.content-line{
-  width:40px;
-  height:1px;
-  margin:23px 0;
-  background:rgba(255,205,143,.5);
+
+.person-role {
+  margin-top: 5px;
+
+  color: rgba(255,255,255,.4);
+
+  font-size: 10px;
 }
-.content-text{
-  color:rgba(255,255,255,.68);
-  font-family:"Noto Serif KR",serif;
-  font-size:11px;
-  line-height:2.25;
-  letter-spacing:.05em;
+
+
+/* 소개 */
+
+.about {
+  max-width: 700px;
+
+  margin: 40px auto;
+
+  font-family: Georgia, "Noto Serif KR", serif;
+
+  font-size: 14px;
+  line-height: 2.3;
+
+  color: rgba(255,255,255,.7);
 }
-.content-image{
-  width:100%;
-  margin-top:27px;
-  aspect-ratio:4 / 3;
-  overflow:hidden;
-  background:#080c11;
-}
-.content-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:
-    brightness(.72)
-    contrast(1.05)
-    saturate(.7);
-}
-/* =========================================================
-   FLASH
-========================================================= */
-.screen-flash{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  background:white;
-  opacity:0;
-  pointer-events:none;
-}
-.screen-flash.active{
-  animation:flash .7s ease;
-}
-@keyframes flash{
-  0%{opacity:0}
-  20%{opacity:.08}
-  100%{opacity:0}
-}
-/* =========================================================
-   WALK ANIMATION
-========================================================= */
-.home.walking .foreground-left{
-  filter:
-    brightness(.30)
-    contrast(1.2)
-    saturate(.6)
-}
-.home.walking .foreground-right{
-  filter:
-    brightness(.30)
-    contrast(1.2)
-    saturate(.6)
-}
-/* =========================================================
-   MOBILE
-========================================================= */
-@media(max-width:600px){
-  .world-far{
-    inset:-10% -22%;
+
+@media (min-width:700px) {
+
+  #lampBtn {
+    left: 15%;
   }
-  .world-distance{
-    inset:-14% -32%;
+
+  #mailBtn {
+    left: 35%;
   }
-  .world-middle{
-    inset:-20% -40%;
+
+  #photoBtn {
+    right: 15%;
   }
-  .ground{
-    left:-55%;
-    right:-55%;
-    bottom:-50%;
-    height:78%;
+
+  #windowBtn {
+    right: 15%;
   }
-  .foreground-left,
-  .foreground-right{
-    width:55%;
+
+  #moonBtn {
+    right: 30%;
   }
-  .foreground-left{
-    left:-31%;
+
+  .title {
+    top: 38%;
   }
-  .foreground-right{
-    right:-31%;
-  }
-  .lamp-near.left{
-    left:8%;
-  }
-  .lamp-near.right{
-    right:8%;
-  }
-  .destination-card{
-    width:108px;
-    height:142px;
-  }
-  .destination.one{
-    left:5%;
-  }
-  .destination.two{
-    right:5%;
-  }
-  .walk-message{
-    font-size:9px;
-    letter-spacing:.13em;
-  }
-  .content-panel{
-    padding:30px 22px 32px;
-  }
-}
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-@media(prefers-reduced-motion:reduce){
-  *,
-  *::before,
-  *::after{
-    animation-duration:.01ms!important;
-    transition-duration:.01ms!important;
-  }
+
 }
 </style>
 </head>
+
 <body>
-<!-- =======================================================
-     AUDIO
-======================================================= -->
-<audio id="bgm" loop preload="auto">
-  <source src="./music/winter-piano.mp3" type="audio/mpeg">
-</audio>
-<!-- =======================================================
-     LOCK SCREEN
-======================================================= -->
-<div id="lockScreen">
-  <div class="lock-inner">
-<div class="lock-small">
-  PRIVATE WINTER WEBZINE
+
+
+<!-- 비밀번호 -->
+
+<div id="lock">
+
+  <div class="lock-box">
+
+    <div class="lock-mini">
+      PRIVATE WEBZINE
+    </div>
+
+    <div class="lock-title">
+      탐라배 곱꽹대전
+    </div>
+
+    <div class="lock-text">
+      아주 조용한 겨울밤입니다.<br>
+      문을 열려면 비밀번호를 입력해주세요.
+    </div>
+
+    <input
+      id="password"
+      type="password"
+      placeholder="PASSWORD"
+      autocomplete="off">
+
+    <button id="enter">
+      들어가기
+    </button>
+
+    <div id="error"></div>
+
+  </div>
+
 </div>
-<h1>
-  탐라배 곱꽹대전
-</h1>
-<div class="subtitle">
-  아주 조용한 겨울밤,<br>
-  골목 끝까지 걸어 들어오세요.
-</div>
-<div class="lock-line"></div>
-<div class="password-box">
-  <input
-    id="passwordInput"
-    type="password"
-    placeholder="PASSWORD"
-    autocomplete="off"
-  >
-  <button id="enterButton">
-    ENTER
+
+
+<!-- 메인 -->
+
+<main id="home">
+
+  <div class="header">
+    <span>탐라배 곱꽹대전</span>
+    <span>PRIVATE</span>
+  </div>
+
+
+  <div class="title">
+
+    <div class="title-small">
+      WINTER · NIGHT · STORY
+    </div>
+
+    <h1>
+      탐라배 곱꽹대전
+    </h1>
+
+    <p>
+      아무것도 없는 것 같은 밤에<br>
+      조금 천천히 들여다보세요.
+    </p>
+
+  </div>
+
+
+  <!-- 달 -->
+
+  <button
+    class="object"
+    id="moonBtn"
+    data-page="about">
+
+    <div class="moon"></div>
+
+    <div class="label">
+      소개
+    </div>
+
   </button>
-</div>
-<div id="wrongPassword">
-  비밀번호가 올바르지 않습니다.
-</div>
-  </div>
-</div>
-<!-- =======================================================
-     WORLD
-======================================================= -->
-<main class="home" id="home">
-  <section class="world" id="world">
-<!-- 가장 먼 실제 사진 -->
-<div class="world-far" id="worldFar"></div>
-<!-- 먼 거리 -->
-<div class="world-distance" id="worldDistance"></div>
-<!-- 중간 거리 -->
-<div class="world-middle" id="worldMiddle"></div>
-<!-- 길 -->
-<div class="ground" id="ground"></div>
-<!-- 가까운 건물/벽 -->
-<div
-  class="foreground-left"
-  id="foregroundLeft"
-></div>
-<div
-  class="foreground-right"
-  id="foregroundRight"
-></div>
-<!-- 빛 -->
-<div class="light-pool"></div>
-<!-- 먼 가로등 -->
-<div class="lamp-space">
-  <div
-    class="lamp-far"
-    id="lampFar"
-  ></div>
-  <div
-    class="lamp-near left"
-    id="lampLeft"
-  ></div>
-  <div
-    class="lamp-near right"
-    id="lampRight"
-  ></div>
-</div>
-<div class="depth-frame"></div>
-<!-- =====================================================
-     DESTINATION 01
-====================================================== -->
-<button
-  class="destination one"
-  id="destination1"
-  type="button"
->
-  <div class="destination-card">
-    <img
-      src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=85"
-      alt="책과 겨울밤"
-    >
-    <div class="destination-info">
-      <span class="destination-number">
-        01 / STORIES
-      </span>
-      <div class="destination-title">
-        벤치 위의 책
-      </div>
-      <span class="destination-hint">
-        가까이 다가가기
-      </span>
+
+
+  <!-- 창문 -->
+
+  <button
+    class="object"
+    id="windowBtn"
+    data-page="videos">
+
+    <div class="window"></div>
+
+    <div class="label">
+      영상
     </div>
-  </div>
-</button>
-<!-- =====================================================
-     DESTINATION 02
-====================================================== -->
-<button
-  class="destination two"
-  id="destination2"
-  type="button"
->
-  <div class="destination-card">
-    <img
-      src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=800&q=85"
-      alt="겨울밤 가로등"
-    >
-    <div class="destination-info">
-      <span class="destination-number">
-        02 / PHOTOGRAPHS
-      </span>
-      <div class="destination-title">
-        가로등 아래
-      </div>
-      <span class="destination-hint">
-        가까이 다가가기
-      </span>
+
+  </button>
+
+
+  <!-- 가로등 -->
+
+  <button
+    class="object"
+    id="lampBtn"
+    data-page="people">
+
+    <div class="lamp">
+
+      <div class="lamp-top"></div>
+      <div class="lamp-light"></div>
+      <div class="lamp-pole"></div>
+
     </div>
-  </div>
-</button>
-<!-- =====================================================
-     DESTINATION 03
-====================================================== -->
-<button
-  class="destination three"
-  id="destination3"
-  type="button"
->
-  <div class="destination-card">
-    <img
-      src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=800&q=85"
-      alt="따뜻한 창문"
-    >
-    <div class="destination-info">
-      <span class="destination-number">
-        03 / MOVIES
-      </span>
-      <div class="destination-title">
-        따뜻한 창문
-      </div>
-      <span class="destination-hint">
-        가까이 다가가기
-      </span>
+
+    <div class="label">
+      참여진
     </div>
-  </div>
-</button>
-  </section>
-  <!-- =====================================================
-       TOP UI
-  ====================================================== -->
-  <header class="top-ui">
-<div class="brand">
-  <div class="brand-main">
-    탐라배 곱꽹대전
-  </div>
-  <div class="brand-sub">
-    WINTER NIGHT / 2026
-  </div>
-</div>
-<button
-  class="sound-button"
-  id="soundButton"
-  type="button"
->
-  <span class="sound-icon"></span>
-  <span id="soundText">
-    SOUND OFF
-  </span>
-</button>
-  </header>
-  <!-- =====================================================
-       WALK UI
-  ====================================================== -->
-  <div class="walk-ui" id="walkUI">
-<div class="step-count" id="stepCount">
-  00 / 12
-</div>
-<div
-  class="walk-message"
-  id="walkMessage"
->
-  화면을 가볍게 터치해<br>
-  겨울밤 안쪽으로 걸어가세요
-</div>
-<div class="walk-line"></div>
-  </div>
-  <!-- =====================================================
-       SNOW
-  ====================================================== -->
-  <div
-    class="snow-layer"
-    id="snowLayer"
-  ></div>
-  <div class="motion-blur"></div>
-  <div class="grain"></div>
-  <div class="vignette"></div>
+
+  </button>
+
+
+  <!-- 우편함 -->
+
+  <button
+    class="object"
+    id="mailBtn"
+    data-page="stories">
+
+    <div class="mailbox"></div>
+
+    <div class="label">
+      글
+    </div>
+
+  </button>
+
+
+  <!-- 사진 -->
+
+  <button
+    class="object"
+    id="photoBtn"
+    data-page="photos">
+
+    <div class="frame">
+      <div class="frame-inner"></div>
+    </div>
+
+    <div class="label">
+      사진
+    </div>
+
+  </button>
+
+
+  <div id="snow"></div>
+
 </main>
-<!-- =======================================================
-     CONTENT
-======================================================= -->
-<div
-  class="content-screen"
-  id="contentScreen"
->
-  <article class="content-panel">
-<button
-  class="close-content"
-  id="closeContent"
-  type="button"
-  aria-label="닫기"
->
-  ×
-</button>
-<div
-  class="content-number"
-  id="contentNumber"
->
-  01 / STORIES
-</div>
-<h2
-  class="content-title"
-  id="contentTitle"
->
-  벤치 위의 책
-</h2>
-<div class="content-line"></div>
-<div
-  class="content-text"
-  id="contentText"
-></div>
-<div
-  class="content-image"
-  id="contentImage"
->
-  <img
-    src=""
-    alt=""
-  >
-</div>
-  </article>
-</div>
-<div
-  class="screen-flash"
-  id="screenFlash"
-></div>
+
+
+<!-- 글 -->
+
+<section id="stories" class="page">
+
+  <button class="back">
+    <span>←</span>
+    돌아가기
+  </button>
+
+  <div class="page-kicker">
+    STORIES
+  </div>
+
+  <h2>글</h2>
+
+  <div class="page-desc">
+    우편함 안에 오래 넣어두었던 이야기들.
+  </div>
+
+  <div class="story">
+
+    <article>
+      <small>STORY 01</small>
+      <h3>첫 번째 겨울밤</h3>
+      <p>
+        아직 아무도 오지 않은 밤이었다.
+        가로등 아래에는 눈이 조금씩 쌓이고 있었다.
+      </p>
+    </article>
+
+    <article>
+      <small>STORY 02</small>
+      <h3>우편함에 남겨진 것</h3>
+      <p>
+        보내지 못한 편지는 이상하게도
+        시간이 지날수록 더 선명해졌다.
+      </p>
+    </article>
+
+    <article>
+      <small>STORY 03</small>
+      <h3>불이 켜진 창문</h3>
+      <p>
+        저 창문 안에는 누가 살고 있을까.
+        나는 한참 동안 그곳을 바라보았다.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- 사진 -->
+
+<section id="photos" class="page">
+
+  <button class="back">
+    <span>←</span>
+    돌아가기
+  </button>
+
+  <div class="page-kicker">
+    PHOTOGRAPHS
+  </div>
+
+  <h2>사진</h2>
+
+  <div class="page-desc">
+    겨울밤에 남겨진 장면들.
+  </div>
+
+  <div class="gallery">
+
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+  </div>
+
+</section>
+
+
+<!-- 영상 -->
+
+<section id="videos" class="page">
+
+  <button class="back">
+    <span>←</span>
+    돌아가기
+  </button>
+
+  <div class="page-kicker">
+    MOVING IMAGES
+  </div>
+
+  <h2>영상</h2>
+
+  <div class="page-desc">
+    창문 너머에서 흘러나오는 장면들.
+  </div>
+
+  <div class="story">
+
+    <article>
+      <small>VIDEO 01</small>
+      <h3>겨울밤의 기록</h3>
+      <p>
+        영상이 준비되면 이곳에 연결해주세요.
+      </p>
+    </article>
+
+    <article>
+      <small>VIDEO 02</small>
+      <h3>곱꽹대전 비하인드</h3>
+      <p>
+        영상이 준비되면 이곳에 연결해주세요.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- 참여진 -->
+
+<section id="people" class="page">
+
+  <button class="back">
+    <span>←</span>
+    돌아가기
+  </button>
+
+  <div class="page-kicker">
+    CONTRIBUTORS
+  </div>
+
+  <h2>참여진</h2>
+
+  <div class="page-desc">
+    이 겨울밤을 함께 만든 사람들.
+  </div>
+
+  <div class="people">
+
+    <div class="person">
+      <div class="person-name">이름을 입력해주세요</div>
+      <div class="person-role">작가</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">이름을 입력해주세요</div>
+      <div class="person-role">작가</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">이름을 입력해주세요</div>
+      <div class="person-role">사진</div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">이름을 입력해주세요</div>
+      <div class="person-role">디자인</div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- 소개 -->
+
+<section id="about" class="page">
+
+  <button class="back">
+    <span>←</span>
+    돌아가기
+  </button>
+
+  <div class="page-kicker">
+    ABOUT
+  </div>
+
+  <h2>소개</h2>
+
+  <div class="page-desc">
+    탐라배 곱꽹대전이라는 겨울밤.
+  </div>
+
+  <div class="about">
+
+    <p>
+      탐라배 곱꽹대전은
+      이야기와 사진과 영상이 한데 모이는
+      작은 겨울밤의 웹진입니다.
+    </p>
+
+    <p>
+      화면에 놓인 오브젝트를 하나씩 발견하면서
+      이곳에 남겨진 이야기를 만나주세요.
+    </p>
+
+    <p>
+      누군가는 우편함에 글을 넣어두었고,
+      누군가는 창문에 영상을 틀어두었고,
+      누군가는 가로등 아래에 자신의 이름을 남겼습니다.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- 소리 -->
+
+<audio id="clickSound" preload="auto">
+  <source src="tap_click.wav" type="audio/wav">
+</audio>
+
+<audio id="music" loop preload="auto">
+  <source src="background.mp3" type="audio/mpeg">
+</audio>
+
+
 <script>
-/* =========================================================
-   ELEMENTS
-========================================================= */
-const home =
-  document.getElementById("home");
-const lockScreen =
-  document.getElementById("lockScreen");
-const passwordInput =
-  document.getElementById("passwordInput");
-const enterButton =
-  document.getElementById("enterButton");
-const wrongPassword =
-  document.getElementById("wrongPassword");
-const bgm =
-  document.getElementById("bgm");
-const soundButton =
-  document.getElementById("soundButton");
-const soundText =
-  document.getElementById("soundText");
-const stepCount =
-  document.getElementById("stepCount");
-const walkMessage =
-  document.getElementById("walkMessage");
-const walkUI =
-  document.getElementById("walkUI");
-const worldFar =
-  document.getElementById("worldFar");
-const worldDistance =
-  document.getElementById("worldDistance");
-const worldMiddle =
-  document.getElementById("worldMiddle");
-const ground =
-  document.getElementById("ground");
-const foregroundLeft =
-  document.getElementById("foregroundLeft");
-const foregroundRight =
-  document.getElementById("foregroundRight");
-const lampFar =
-  document.getElementById("lampFar");
-const lampLeft =
-  document.getElementById("lampLeft");
-const lampRight =
-  document.getElementById("lampRight");
-const destination1 =
-  document.getElementById("destination1");
-const destination2 =
-  document.getElementById("destination2");
-const destination3 =
-  document.getElementById("destination3");
-const contentScreen =
-  document.getElementById("contentScreen");
-const closeContent =
-  document.getElementById("closeContent");
-const contentNumber =
-  document.getElementById("contentNumber");
-const contentTitle =
-  document.getElementById("contentTitle");
-const contentText =
-  document.getElementById("contentText");
-const contentImage =
-  document.querySelector("#contentImage img");
-const screenFlash =
-  document.getElementById("screenFlash");
-const snowLayer =
-  document.getElementById("snowLayer");
-/* =========================================================
-   PASSWORD
-========================================================= */
-const SECRET_PW = "ohmyps";
-function checkPassword(){
-  if(passwordInput.value === SECRET_PW){
-    lockScreen.classList.add("unlocked");
-    sessionStorage.setItem(
-      "alleyUnlocked",
-      "true"
-    );
-    startAmbientSound();
-  }else{
-    wrongPassword.classList.add("show");
-    passwordInput.value = "";
-    setTimeout(()=>{
-      wrongPassword.classList.remove("show");
-    },2200);
-  }
+
+const PASSWORD = "ohmyps";
+
+const lock =
+  document.getElementById("lock");
+
+const password =
+  document.getElementById("password");
+
+const enter =
+  document.getElementById("enter");
+
+const error =
+  document.getElementById("error");
+
+const clickSound =
+  document.getElementById("clickSound");
+
+const music =
+  document.getElementById("music");
+
+
+/* 클릭 소리 */
+
+function click() {
+
+  if (!clickSound) return;
+
+  clickSound.currentTime = 0;
+
+  clickSound.play().catch(() => {});
+
 }
-enterButton.addEventListener(
+
+
+/* 음악 */
+
+function startMusic() {
+
+  if (!music) return;
+
+  music.volume = 0.3;
+
+  music.play().catch(() => {});
+
+}
+
+
+/* 로그인 */
+
+function login() {
+
+  if (password.value === PASSWORD) {
+
+    click();
+
+    lock.classList.add("hidden");
+
+    try {
+      sessionStorage.setItem(
+        "unlocked",
+        "yes"
+      );
+    } catch(e) {}
+
+    startMusic();
+
+  } else {
+
+    click();
+
+    error.textContent =
+      "비밀번호가 맞지 않습니다.";
+
+    password.value = "";
+
+    password.focus();
+
+  }
+
+}
+
+
+/* 들어가기 */
+
+enter.addEventListener(
   "click",
-  checkPassword
+  login
 );
-passwordInput.addEventListener(
+
+
+/* 엔터 */
+
+password.addEventListener(
   "keydown",
-  event=>{
-    if(event.key === "Enter"){
-      checkPassword();
+  function(e) {
+
+    if (e.key === "Enter") {
+      login();
     }
+
   }
 );
-/* =========================================================
-   AUDIO
-========================================================= */
-let audioStarted = false;
-bgm.volume = 0;
-function fadeVolume(
-  target,
-  duration=1200
-){
-  const start =
-    bgm.volume;
-  const startTime =
-    performance.now();
-  function animate(now){
-    const progress =
-      Math.min(
-        1,
-        (now-startTime)/duration
-      );
-    const eased =
-      1-Math.pow(
-        1-progress,
-        3
-      );
-    bgm.volume =
-      start+
-      (target-start)*eased;
-    if(progress<1){
-      requestAnimationFrame(
-        animate
-      );
-    }
-  }
-  requestAnimationFrame(
-    animate
-  );
-}
-async function startAmbientSound(){
-  if(audioStarted) return;
-  try{
-    await bgm.play();
-    audioStarted = true;
-    fadeVolume(.32,1800);
-    soundButton.classList.add("on");
-    soundText.textContent =
-      "SOUND ON";
-  }catch(error){
-    console.log(
-      "자동재생이 차단되었습니다.",
-      error
-    );
-  }
-}
-async function toggleSound(){
-  if(bgm.paused){
-    try{
-      await bgm.play();
-      audioStarted = true;
-      fadeVolume(.32,900);
-      soundButton.classList.add("on");
-      soundText.textContent =
-        "SOUND ON";
-    }catch(error){
-      console.error(error);
-    }
-  }else{
-    fadeVolume(0,500);
-    setTimeout(()=>{
-      bgm.pause();
-    },520);
-    soundButton.classList.remove("on");
-    soundText.textContent =
-      "SOUND OFF";
-  }
-}
-soundButton.addEventListener(
-  "click",
-  event=>{
-    event.stopPropagation();
-    toggleSound();
-  }
-);
-/* =========================================================
-   STEP SOUND
-========================================================= */
-let audioContext=null;
-function getAudioContext(){
-  if(!audioContext){
-    audioContext =
-      new(
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
-  }
-  if(
-    audioContext.state ===
-    "suspended"
-  ){
-    audioContext.resume();
-  }
-  return audioContext;
-}
-function playStepSound(){
-  try{
-    const ctx =
-      getAudioContext();
-    const duration=.15;
-    const buffer =
-      ctx.createBuffer(
-        1,
-        ctx.sampleRate*duration,
-        ctx.sampleRate
-      );
-    const data =
-      buffer.getChannelData(0);
-    for(
-      let i=0;
-      i<data.length;
-      i++
-    ){
-      const envelope =
-        1-i/data.length;
-      data[i]=
-        (Math.random()*2-1)*
-        envelope;
-    }
-    const source =
-      ctx.createBufferSource();
-    source.buffer=buffer;
-    const filter =
-      ctx.createBiquadFilter();
-    filter.type="lowpass";
-    filter.frequency.value=1150;
-    const gain =
-      ctx.createGain();
-    gain.gain.setValueAtTime(
-      .095,
-      ctx.currentTime
-    );
-    gain.gain.exponentialRampToValueAtTime(
-      .001,
-      ctx.currentTime+duration
-    );
-    source
-      .connect(filter)
-      .connect(gain)
-      .connect(ctx.destination);
-    source.start();
-  }catch(error){}
-}
-/* =========================================================
-   WALK SYSTEM
-========================================================= */
-/*
-  핵심.
-  기존에는 0 → 1 → 2였다.
-  이제는 0 → 12.
-  각각의 값은 실제 카메라가 골목 안으로
-  들어간 거리라고 생각하면 된다.
-*/
-const MAX_STEPS = 12;
-let walkProgress = 0;
-let walking = false;
-/*
-  목적지가 등장할 거리.
-*/
-const destinationDistance = {
-  one:4.0,
-  two:7.5,
-  three:10.5
-};
-/*
-  거리별 움직임.
-  far:
-  아주 먼 건물/하늘
-  distance:
-  골목 안쪽
-  middle:
-  중간 건물
-  ground:
-  바닥
-  foreground:
-  가장 가까운 벽
-  lamps:
-  가로등
-*/
-function easeOutCubic(t){
-  return 1-
-    Math.pow(
-      1-t,
-      3
-    );
-}
-function easeInOut(t){
-  return t<.5
-    ? 4*t*t*t
-    : 1-
-      Math.pow(
-        -2*t+2,
-        3
-      )/2;
-}
-/*
-  실제 카메라 이동.
-  단순 scale이 아니라
-  translate + perspective + scale의 조합.
-  가까운 레이어일수록
-  훨씬 크게 이동한다.
-*/
-function renderWorld(){
-  const p =
-    walkProgress/MAX_STEPS;
-  const smooth =
-    easeInOut(p);
-  /*
-    먼 배경
-  */
-  const farY =
-    smooth * -18;
-  const farScale =
-    1.04+
-    smooth*.035;
-  worldFar.style.transform =
-    `
-      translate3d(
-        0,
-        ${farY}vh,
-        0
-      )
-      scale(${farScale})
-    `;
-  /*
-    먼 골목
-    약간 옆으로도 흐른다.
-  */
-  const distanceY =
-    smooth*-30;
-  const distanceX =
-    Math.sin(
-      p*Math.PI*.9
-    )*-2.5;
-  const distanceScale =
-    1.10+
-    smooth*.08;
-  worldDistance.style.transform =
-    `
-      translate3d(
-        ${distanceX}vw,
-        ${distanceY}vh,
-        0
-      )
-      scale(${distanceScale})
-    `;
-  /*
-    중간 사진
-    더 빠르게 이동.
-  */
-  const middleY =
-    smooth*-55;
-  const middleX =
-    Math.sin(
-      p*Math.PI
-    )*4;
-  const middleScale =
-    1.14+
-    smooth*.20;
-  worldMiddle.style.transform =
-    `
-      translate3d(
-        ${middleX}vw,
-        ${middleY}vh,
-        0
-      )
-      scale(${middleScale})
-    `;
-  /*
-    바닥.
-    이 부분이 실제로
-    걸어가는 느낌을 만드는 핵심.
-    아래쪽에서 앞으로
-    길이 밀려 올라간다.
-  */
-  const groundY =
-    smooth*-125;
-  const groundScale =
-    1+
-    smooth*1.35;
-  ground.style.transform =
-    `
-      perspective(500px)
-      rotateX(63deg)
-      translate3d(
-        0,
-        ${groundY}px,
-        ${smooth*90}px
-      )
-      scale(${groundScale})
-    `;
-  /*
-    가까운 왼쪽 건물.
-    화면 옆으로 빠르게 스쳐간다.
-  */
-  const nearX =
-    smooth*-34;
-  const nearY =
-    smooth*-20;
-  const nearScale =
-    1.08+
-    smooth*.75;
-  foregroundLeft.style.transform =
-    `
-      perspective(700px)
-      rotateY(18deg)
-      translate3d(
-        ${nearX}vw,
-        ${nearY}vh,
-        ${smooth*80}px
-      )
-      scale(${nearScale})
-    `;
-  /*
-    오른쪽 건물.
-  */
-  foregroundRight.style.transform =
-    `
-      perspective(700px)
-      rotateY(-18deg)
-      translate3d(
-        ${-nearX}vw,
-        ${nearY}vh,
-        ${smooth*80}px
-      )
-      scale(${nearScale})
-    `;
-  /*
-    먼 가로등
-  */
-  const farLampX =
-    Math.sin(
-      p*Math.PI
-    )*8;
-  lampFar.style.transform =
-    `
-      translateX(
-        calc(-50% + ${farLampX}vw)
-      )
-      translateY(
-        ${smooth*-20}vh
-      )
-      scale(
-        ${.65+smooth*.22}
-      )
-    `;
-  /*
-    가까운 가로등 왼쪽.
-  */
-  const lampLeftX =
-    smooth*-52;
-  const lampLeftY =
-    smooth*-28;
-  const lampScale =
-    1+
-    smooth*1.7;
-  lampLeft.style.transform =
-    `
-      translate3d(
-        ${lampLeftX}vw,
-        ${lampLeftY}vh,
-        ${smooth*100}px
-      )
-      scale(${lampScale})
-    `;
-  /*
-    가까운 가로등 오른쪽.
-  */
-  lampRight.style.transform =
-    `
-      translate3d(
-        ${-lampLeftX}vw,
-        ${lampLeftY}vh,
-        ${smooth*100}px
-      )
-      scale(${lampScale})
-    `;
-  /*
-    목적지.
-  */
-  renderDestination(
-    destination1,
-    destinationDistance.one,
-    p,
-    "one"
-  );
-  renderDestination(
-    destination2,
-    destinationDistance.two,
-    p,
-    "two"
-  );
-  renderDestination(
-    destination3,
-    destinationDistance.three,
-    p,
-    "three"
-  );
-  /*
-    숫자 / 안내문.
-  */
-  const visibleStep =
-    Math.min(
-      MAX_STEPS,
-      Math.max(
-        0,
-        Math.floor(
-          walkProgress
-        )
-      )
-    );
-  stepCount.textContent =
-    String(visibleStep).padStart(2,"0")
-    +" / "
-    +String(MAX_STEPS).padStart(2,"0");
-  updateMessage();
-}
-/*
-  목적지를 공간에 배치한다.
-  아직 먼 경우:
-  작고 희미함
-  가까워질수록:
-  커지고 위로 올라옴
-  지나친 경우:
-  다시 멀어져 사라짐
-*/
-function renderDestination(
-  element,
-  target,
-  progress,
-  type
-){
-  const distance =
-    target-progress;
-  const abs =
-    Math.abs(distance);
-  /*
-    아직 발견하지 못한 상태
-  */
-  if(distance>1.35){
-    element.style.opacity="0";
-    element.style.pointerEvents="none";
-    return;
-  }
-  /*
-    너무 지나간 경우
-  */
-  if(distance<-.95){
-    element.style.opacity="0";
-    element.style.pointerEvents="none";
-    return;
-  }
-  /*
-    1.35 → -0.95
-    가까워지는 정도.
-  */
-  const arrival =
-    1-
-    Math.min(
-      1,
-      Math.max(
-        0,
-        (distance+0.95)/2.3
-      )
-    );
-  const smooth =
-    easeOutCubic(arrival);
-  /*
-    가까워질수록 카드가 커지고
-    위로 올라간다.
-  */
-  const scale =
-    type==="one"
-      ? .34 + smooth*.90
-      : type==="two"
-        ? .28 + smooth*1.00
-        : .22 + smooth*1.18;
-  const y =
-    30 -
-    smooth*42;
-  const opacity =
-    Math.min(
-      1,
-      smooth*1.8
-    );
-  element.style.opacity =
-    String(opacity);
-  element.style.pointerEvents =
-    opacity>.72
-      ? "auto"
-      : "none";
-  if(type==="three"){
-    element.style.transform =
-      `
-        translateX(-50%)
-        translate3d(
-          0,
-          ${y}px,
-          0
-        )
-        scale(${scale})
-      `;
-  }else{
-    /*
-      1번은 왼쪽에서,
-      2번은 오른쪽에서
-      살짝 들어온다.
-    */
-    const side =
-      type==="one"
-        ? -1
-        : 1;
-    const x =
-      side*
-      smooth*
-      10;
-    element.style.transform =
-      `
-        translate3d(
-          ${x}vw,
-          ${y}px,
-          0
-        )
-        scale(${scale})
-      `;
-  }
-}
-/*
-  현재 거리별 안내문.
-*/
-function updateMessage(){
-  if(walkProgress===0){
-    walkMessage.innerHTML =
-      "화면을 가볍게 터치해<br>겨울밤 안쪽으로 걸어가세요";
-    return;
-  }
-  if(walkProgress<4){
-    walkMessage.innerHTML =
-      "조금 더 안쪽으로<br>천천히 걸어가세요";
-    return;
-  }
-  if(walkProgress<7.5){
-    walkMessage.innerHTML =
-      "가로등 불빛이<br>조금씩 가까워집니다";
-    return;
-  }
-  if(walkProgress<10.5){
-    walkMessage.innerHTML =
-      "눈앞의 불빛을 따라<br>골목 안쪽으로";
-    return;
-  }
-  if(walkProgress<MAX_STEPS){
-    walkMessage.innerHTML =
-      "골목 끝이 보입니다<br>조금만 더";
-    return;
-  }
-  walkMessage.innerHTML =
-    "골목 끝에 도착했습니다<br>따뜻한 불빛이 기다리고 있습니다";
-}
-/*
-  걷기 실행.
-*/
-function stepForward(){
-  if(walking) return;
-  if(walkProgress>=MAX_STEPS){
-    finishWalk();
-    return;
-  }
-  walking=true;
-  home.classList.add("walking");
-  playStepSound();
-  /*
-    한 번 터치할 때
-    0.75 정도씩 전진.
-    모바일에서 너무 갑자기
-    장면이 바뀌지 않게 한다.
-  */
-  const start =
-    walkProgress;
-  const target =
-    Math.min(
-      MAX_STEPS,
-      start+0.75
-    );
-  const duration =
-    780;
-  const startTime =
-    performance.now();
-  function animate(now){
-    const t =
-      Math.min(
-        1,
-        (now-startTime)/duration
-      );
-    const eased =
-      easeOutCubic(t);
-    walkProgress =
-      start+
-      (target-start)*eased;
-    renderWorld();
-    if(t<1){
-      requestAnimationFrame(
-        animate
-      );
-    }else{
-      walkProgress =
-        target;
-      renderWorld();
-      setTimeout(()=>{
-        walking=false;
-        home.classList.remove(
-          "walking"
-        );
-      },110);
-    }
-  }
-  requestAnimationFrame(
-    animate
-  );
-}
-/*
-  마지막 도착.
-  처음으로 되돌리지 않는다.
-*/
-function finishWalk(){
-  home.classList.add("walking");
-  walkUI.style.opacity="0";
-  setTimeout(()=>{
-    walkUI.style.opacity="1";
-    home.classList.remove(
-      "walking"
-    );
-  },600);
-}
-/* =========================================================
-   TOUCH / CLICK
-========================================================= */
-home.addEventListener(
-  "click",
-  event=>{
-    if(
-      event.target.closest(
-        ".destination"
-      ) ||
-      event.target.closest(
-        ".sound-button"
-      )
-    ){
-      return;
-    }
-    stepForward();
-  }
-);
-/*
-  모바일에서 빠르게 두 번 누르는
-  줌을 방지.
-*/
-home.addEventListener(
-  "touchstart",
-  event=>{
-    if(
-      event.target.closest(
-        ".destination"
-      )
-    ){
-      return;
-    }
-    event.preventDefault();
-  },
-  {
-    passive:false
-  }
-);
-/* =========================================================
-   CONTENT
-========================================================= */
-const contents={
-  story:{
-    number:
-      "01 / STORIES",
-    title:
-      "벤치 위의 책",
-    text:
-      `눈이 하얗게 내려앉은 벤치 위에
-누군가 작은 책 한 권을 두고 갔습니다.
-차가운 밤공기와 가로등의 희미한 빛.
-페이지를 한 장 넘기자 오래전부터
-마음속에 묻어두었던 이야기들이
-조용히 모습을 드러냅니다.
-아무에게도 꺼내놓지 않았던 문장들.
-그 겨울밤의 이야기는
-아직 이 골목 어딘가에 머물러 있습니다.`,
-    image:
-      "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1000&q=85"
-  },
-  photo:{
-    number:
-      "02 / PHOTOGRAPHS",
-    title:
-      "가로등 아래",
-    text:
-      `골목 어귀를 밝히는 작은 가로등.
-눈송이는 불빛을 지나갈 때마다
-잠깐씩 반짝이고,
-발자국은 아무도 걷지 않은
-하얀 길 위에 천천히 쌓입니다.
-누군가에게는 평범한 겨울밤이지만
-사진 속에서는 이상할 만큼
-오래 기억될 장면이 됩니다.`,
-    image:
-      "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=1000&q=85"
-  },
-  movie:{
-    number:
-      "03 / MOVIES",
-    title:
-      "따뜻한 창문",
-    text:
-      `골목 가장 안쪽.
-멀리서부터 작은 노란 불빛 하나가
-눈 위에 번지고 있습니다.
-창문 너머에는 누군가의 겨울이 있고,
-우리는 그 모습을 잠시 바라보다가
-다시 천천히 길을 걸어갑니다.
-어쩌면 겨울밤이 따뜻하게 느껴지는 건
-이런 작은 불빛 때문인지도 모릅니다.`,
-    image:
-      "https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=1000&q=85"
-  }
-};
-function openContent(type){
-  const data =
-    contents[type];
-  contentNumber.textContent =
-    data.number;
-  contentTitle.textContent =
-    data.title;
-  contentText.innerHTML =
-    data.text.replace(
-      /\n/g,
-      "<br>"
-    );
-  contentImage.src =
-    data.image;
-  contentImage.alt =
-    data.title;
-  contentScreen.classList.add(
-    "open"
-  );
-  screenFlash.classList.remove(
-    "active"
-  );
-  void screenFlash.offsetWidth;
-  screenFlash.classList.add(
-    "active"
-  );
-}
-function closeContentScreen(){
-  contentScreen.classList.remove(
-    "open"
-  );
-}
-closeContent.addEventListener(
-  "click",
-  closeContentScreen
-);
-contentScreen.addEventListener(
-  "click",
-  event=>{
-    if(
-      event.target===
-      contentScreen
-    ){
-      closeContentScreen();
-    }
-  }
-);
-/* =========================================================
-   DESTINATION EVENTS
-========================================================= */
-destination1.addEventListener(
-  "click",
-  event=>{
-    event.stopPropagation();
-    openContent("story");
-  }
-);
-destination2.addEventListener(
-  "click",
-  event=>{
-    event.stopPropagation();
-    openContent("photo");
-  }
-);
-destination3.addEventListener(
-  "click",
-  event=>{
-    event.stopPropagation();
-    openContent("movie");
-  }
-);
-/* =========================================================
-   SNOW SYSTEM
-========================================================= */
-const snowflakes=[];
-/*
-  눈을 단순히 아래로 떨어뜨리는 게 아니라
-  각 눈송이마다 깊이를 준다.
-  far:
-  아주 느림
-  mid:
-  보통
-  near:
-  빠름
-*/
-function createSnowLayer(
-  count,
-  minSize,
-  maxSize,
-  depth,
-  blur
-){
-  for(
-    let i=0;
-    i<count;
-    i++
-  ){
-    const flake =
-      document.createElement("div");
-    flake.className =
-      "snow "+depth;
-    const size =
-      minSize+
-      Math.random()*
-      (maxSize-minSize);
-    const item={
-      element:flake,
-      x:
-        Math.random()*100,
-      y:
-        Math.random()*100,
-      size:size,
-      drift:
-        Math.random()*40-20,
-      speed:
-        depth==="near"
-          ? .95+Math.random()*.55
-          : depth==="mid"
-            ? .55+Math.random()*.45
-            : .25+Math.random()*.28,
-      opacity:
-        depth==="near"
-          ? .45+Math.random()*.45
-          : depth==="mid"
-            ? .25+Math.random()*.4
-            : .12+Math.random()*.25,
-      blur:blur
-    };
-    flake.style.width=
-      size+"px";
-    flake.style.height=
-      size+"px";
-    flake.style.opacity=
-      item.opacity;
-    flake.style.filter=
-      `blur(${blur}px)`;
-    snowLayer.appendChild(
-      flake
-    );
-    snowflakes.push(
-      item
-    );
-  }
-}
-createSnowLayer(
-  45,
-  1,
-  2,
-  "far",
-  .8
-);
-createSnowLayer(
-  34,
-  2,
-  3.5,
-  "mid",
-  .4
-);
-createSnowLayer(
-  15,
-  4,
-  7,
-  "near",
-  .1
-);
-/*
-  눈 애니메이션.
-  걷는 동안에는 카메라 쪽으로
-  빠르게 들어오는 느낌을 추가.
-*/
-let snowTime=0;
-function animateSnow(){
-  snowTime+=.016;
-  const walkVelocity =
-    walking
-      ? 2.8
-      : .25;
-  snowflakes.forEach(
-    flake=>{
-      flake.y +=
-        flake.speed*
-        walkVelocity;
-      flake.x +=
-        Math.sin(
-          snowTime+
-          flake.y*.03
-        )*.018;
-      if(flake.y>108){
-        flake.y=-5;
-        flake.x=
-          Math.random()*100;
+
+
+/* 오브젝트 */
+
+document
+  .querySelectorAll(".object")
+  .forEach(function(button) {
+
+    button.addEventListener(
+      "click",
+      function() {
+
+        const id =
+          button.dataset.page;
+
+        click();
+
+        setTimeout(function() {
+
+          document
+            .querySelectorAll(".page")
+            .forEach(function(page) {
+              page.classList.remove("open");
+            });
+
+          const page =
+            document.getElementById(id);
+
+          if (page) {
+            page.classList.add("open");
+            page.scrollTop = 0;
+          }
+
+        }, 150);
+
       }
-      const parallax =
-        walkProgress*
-        flake.speed*
-        0.8;
-      const drift =
-        Math.sin(
-          snowTime+
-          flake.y
-        )*
-        flake.drift;
-      flake.element.style.transform=
-        `
-          translate3d(
-            calc(${flake.x}% + ${drift}px),
-            ${flake.y+parallax}%,
-            0
-          )
-          scale(
-            ${1+
-              walkProgress*
-              flake.speed*
-              .025}
-          )
-        `;
-    }
+    );
+
+  });
+
+
+/* 뒤로가기 */
+
+document
+  .querySelectorAll(".back")
+  .forEach(function(button) {
+
+    button.addEventListener(
+      "click",
+      function() {
+
+        click();
+
+        document
+          .querySelectorAll(".page")
+          .forEach(function(page) {
+            page.classList.remove("open");
+          });
+
+      }
+    );
+
+  });
+
+
+/* 눈 */
+
+const snow =
+  document.getElementById("snow");
+
+for (let i = 0; i < 45; i++) {
+
+  const flake =
+    document.createElement("span");
+
+  flake.className = "flake";
+
+  flake.textContent =
+    Math.random() > .5
+      ? "•"
+      : "✦";
+
+  flake.style.left =
+    Math.random() * 100 + "%";
+
+  flake.style.fontSize =
+    Math.random() * 5 + 2 + "px";
+
+  flake.style.animationDuration =
+    Math.random() * 8 + 7 + "s";
+
+  flake.style.animationDelay =
+    Math.random() * -15 + "s";
+
+  flake.style.setProperty(
+    "--x",
+    (Math.random() * 100 - 50) + "px"
   );
-  requestAnimationFrame(
-    animateSnow
-  );
+
+  snow.appendChild(flake);
+
 }
-animateSnow();
-/* =========================================================
-   INITIAL STATE
-========================================================= */
-renderWorld();
-if(
-  sessionStorage.getItem(
-    "alleyUnlocked"
-  )==="true"
-){
-  lockScreen.classList.add(
-    "unlocked"
-  );
-}
-/* =========================================================
-   FIRST USER INTERACTION
-========================================================= */
-document.addEventListener(
-  "pointerdown",
-  ()=>{
-    if(
-      !audioStarted &&
-      lockScreen.classList.contains(
-        "unlocked"
-      )
-    ){
-      startAmbientSound();
-    }
-  },
-  {
-    once:true
+
+
+/* 이전에 로그인했다면 */
+
+try {
+
+  if (
+    sessionStorage.getItem("unlocked")
+    === "yes"
+  ) {
+
+    lock.classList.add("hidden");
+
   }
-);
-/* =========================================================
-   ESC
-========================================================= */
-document.addEventListener(
-  "keydown",
-  event=>{
-    if(
-      event.key==="Escape"
-    ){
-      closeContentScreen();
-    }
-  }
-);
+
+} catch(e) {}
+
 </script>
+
 </body>
 </html>

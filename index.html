@@ -2,1412 +2,1434 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<meta name="theme-color" content="#05080d">
 
 <title>탐라배 곱꽹대전</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;400;500&display=swap"
+      rel="stylesheet">
+
 <style>
+
+/* =========================================================
+   BASIC
+========================================================= */
+
 * {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
 body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #080b10;
-  color: #f5f0e7;
-  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #05080d;
+    color: #fff;
+}
+
+body {
+    font-family: "Noto Sans KR", sans-serif;
+    overflow-x: hidden;
 }
 
 button {
-  font: inherit;
-  border: 0;
-  color: inherit;
-}
-
-#lock {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 30px;
-
-  background:
-    linear-gradient(
-      rgba(4,7,12,.48),
-      rgba(4,7,12,.82)
-    ),
-    radial-gradient(
-      circle at 50% 35%,
-      #39495b 0%,
-      #17212d 38%,
-      #080b10 75%
-    );
-}
-
-.lock-box {
-  width: min(90vw, 380px);
-  padding: 38px 25px;
-
-  text-align: center;
-
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 22px;
-
-  background: rgba(8,12,18,.55);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-}
-
-.lock-mini {
-  font-size: 9px;
-  letter-spacing: .3em;
-  color: rgba(255,255,255,.42);
-  margin-bottom: 17px;
-}
-
-.lock-title {
-  font-family: Georgia, "Noto Serif KR", serif;
-  font-size: 31px;
-  font-weight: 400;
-  letter-spacing: -.08em;
-}
-
-.lock-text {
-  margin: 18px 0 25px;
-
-  font-size: 11px;
-  line-height: 1.9;
-
-  color: rgba(255,255,255,.55);
-}
-
-#password {
-  width: 100%;
-  height: 48px;
-
-  border: 1px solid rgba(255,255,255,.17);
-  border-radius: 11px;
-
-  outline: none;
-
-  text-align: center;
-
-  color: white;
-  background: rgba(255,255,255,.06);
-}
-
-#password::placeholder {
-  color: rgba(255,255,255,.3);
-}
-
-#enter {
-  width: 100%;
-  height: 48px;
-
-  margin-top: 10px;
-
-  border-radius: 11px;
-
-  color: #111;
-  background: #eee7da;
-
-  font-size: 13px;
-}
-
-#error {
-  height: 18px;
-
-  margin-top: 10px;
-
-  font-size: 10px;
-  color: #d9a9a2;
-}
-
-#lock.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-
-  transition: .5s;
+    font-family: inherit;
 }
 
 
-/* 메인 */
+/* =========================================================
+   PASSWORD
+========================================================= */
 
-#home {
-  position: fixed;
-  inset: 0;
+#passwordScreen {
 
-  width: 100%;
-  height: 100dvh;
+    position: fixed;
+    inset: 0;
 
-  overflow: hidden;
+    z-index: 9999;
 
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(7,12,18,.08),
-      rgba(7,12,18,.18) 45%,
-      rgba(4,7,11,.72)
-    ),
-    radial-gradient(
-      circle at 50% 30%,
-      #647487 0%,
-      #293746 25%,
-      #111b25 53%,
-      #070b10 100%
-    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            rgba(3,7,13,.55),
+            rgba(3,7,13,.88)
+        ),
+        url("https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1800&q=90")
+        center / cover no-repeat;
+}
+
+.passwordBox {
+
+    width: min(390px, 100%);
+
+    text-align: center;
+
+    padding: 42px 28px;
+
+    background: rgba(4,8,14,.50);
+
+    border: 1px solid rgba(255,255,255,.14);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.45);
+}
+
+.passwordSmall {
+
+    font-size: 9px;
+
+    letter-spacing: .35em;
+
+    opacity: .55;
+
+    margin-bottom: 20px;
+}
+
+.passwordTitle {
+
+    font-family: "Noto Serif KR", serif;
+
+    font-size: 27px;
+
+    font-weight: 300;
+
+    letter-spacing: .12em;
+
+    margin-bottom: 10px;
+}
+
+.passwordDesc {
+
+    font-size: 11px;
+
+    line-height: 1.9;
+
+    color: rgba(255,255,255,.58);
+
+    margin-bottom: 28px;
+}
+
+.passwordInput {
+
+    width: 100%;
+
+    padding: 14px 15px;
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    background: rgba(0,0,0,.22);
+
+    color: white;
+
+    outline: none;
+
+    text-align: center;
+
+    letter-spacing: .15em;
+
+    font-size: 14px;
+}
+
+.passwordInput::placeholder {
+    color: rgba(255,255,255,.3);
+}
+
+.passwordButton {
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 14px;
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    background: rgba(255,255,255,.08);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.passwordButton:active {
+    background: rgba(255,255,255,.18);
+}
+
+.passwordError {
+
+    height: 18px;
+
+    margin-top: 12px;
+
+    font-size: 10px;
+
+    color: rgba(255,170,170,.9);
 }
 
 
-/* 실제 사진을 넣으면 자동으로 사용 */
+/* =========================================================
+   MAIN
+========================================================= */
 
-#home.photo {
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(4,7,11,.08),
-      rgba(4,7,11,.2) 45%,
-      rgba(4,7,11,.7)
-    ),
-    url("background.jpg") center / cover no-repeat;
+#site {
+
+    display: none;
+
+    position: relative;
+
+    width: 100%;
+    min-height: 100svh;
+
+    overflow: hidden;
 }
 
 
-/* 상단 */
+/* =========================================================
+   REAL PHOTO BACKGROUND
+========================================================= */
 
-.header {
-  position: absolute;
-  z-index: 20;
+.home {
 
-  top: 0;
-  left: 0;
+    position: relative;
 
-  width: 100%;
+    width: 100%;
+    height: 100svh;
 
-  padding:
-    calc(22px + env(safe-area-inset-top))
-    22px
-    20px;
+    min-height: 650px;
 
-  display: flex;
-  justify-content: space-between;
+    overflow: hidden;
 
-  font-size: 9px;
-  letter-spacing: .16em;
+    background: #05080d;
+}
 
-  color: rgba(255,255,255,.58);
+.homePhoto {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    filter:
+        brightness(.64)
+        contrast(1.05)
+        saturate(.78);
+
+    transform: scale(1.015);
+
+    animation: slowZoom 18s ease-in-out infinite alternate;
+}
+
+@keyframes slowZoom {
+
+    from {
+        transform: scale(1.015);
+    }
+
+    to {
+        transform: scale(1.045);
+    }
 }
 
 
-/* 제목 */
+/* 사진 위 어둡게 */
 
-.title {
-  position: absolute;
-  z-index: 5;
+.homeOverlay {
 
-  top: 35%;
-  left: 50%;
+    position: absolute;
 
-  width: 90%;
+    inset: 0;
 
-  transform: translate(-50%, -50%);
+    background:
 
-  text-align: center;
+        linear-gradient(
+            to bottom,
+            rgba(2,5,10,.15),
+            rgba(2,5,10,.30) 45%,
+            rgba(2,5,10,.78) 100%
+        );
 
-  pointer-events: none;
-}
-
-.title-small {
-  font-size: 9px;
-  letter-spacing: .4em;
-  color: rgba(255,255,255,.45);
-  margin-bottom: 14px;
-}
-
-.title h1 {
-  margin: 0;
-
-  font-family: Georgia, "Noto Serif KR", serif;
-  font-size: clamp(30px, 9vw, 50px);
-  font-weight: 400;
-
-  letter-spacing: -.08em;
-
-  text-shadow: 0 3px 20px rgba(0,0,0,.5);
-}
-
-.title p {
-  margin-top: 18px;
-
-  font-size: 10px;
-  line-height: 1.9;
-
-  color: rgba(255,255,255,.46);
+    pointer-events: none;
 }
 
 
-/* 오브젝트 */
+/* =========================================================
+   TITLE
+========================================================= */
 
-.object {
-  position: absolute;
-  z-index: 20;
+.mainTitle {
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
 
-  width: 90px;
-  height: 90px;
+    top: 13%;
 
-  background: transparent;
+    left: 50%;
 
-  cursor: pointer;
+    transform: translateX(-50%);
 
-  transition: .2s;
+    width: 90%;
+
+    text-align: center;
+
+    z-index: 4;
+
+    text-shadow:
+        0 3px 25px rgba(0,0,0,.8);
 }
 
-.object:active {
-  transform: scale(1.15);
-  filter:
-    drop-shadow(0 0 10px rgba(255,240,190,.9));
+.mainTitle .english {
+
+    font-size: 9px;
+
+    letter-spacing: .38em;
+
+    opacity: .65;
+
+    margin-bottom: 17px;
 }
 
-.label {
-  position: absolute;
+.mainTitle h1 {
 
-  bottom: -2px;
+    margin: 0;
 
-  font-family: Georgia, "Noto Serif KR", serif;
+    font-family: "Noto Serif KR", serif;
 
-  font-size: 9px;
+    font-weight: 300;
 
-  color: rgba(255,255,255,.65);
+    font-size: clamp(30px, 8vw, 55px);
+
+    letter-spacing: .12em;
 }
 
+.mainTitle p {
 
-/* 달 */
+    margin-top: 17px;
 
-#moonBtn {
-  top: 11%;
-  right: 20%;
-}
+    font-size: 11px;
 
-.moon {
-  width: 47px;
-  height: 47px;
+    line-height: 1.8;
 
-  border-radius: 50%;
+    color: rgba(255,255,255,.7);
 
-  background:
-    radial-gradient(
-      circle at 32% 30%,
-      #fffef3,
-      #e5e0cf 60%,
-      #aaa79c
-    );
-
-  box-shadow:
-    0 0 18px rgba(255,250,220,.7),
-    0 0 55px rgba(255,250,220,.25);
+    letter-spacing: .08em;
 }
 
 
-/* 창문 */
+/* =========================================================
+   PHOTO HOTSPOTS
+   실제 사진 위에 투명한 클릭 영역
+========================================================= */
 
-#windowBtn {
-  top: 18%;
-  right: 4%;
+.hotspot {
+
+    position: absolute;
+
+    z-index: 5;
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    border-radius: 50%;
 }
 
-.window {
-  width: 51px;
-  height: 65px;
+.hotspot::before {
 
-  border: 5px solid #15191d;
+    content: "";
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent 46%,
-      #202328 47%,
-      #202328 53%,
-      transparent 54%
-    ),
-    linear-gradient(
-      0deg,
-      transparent 46%,
-      #202328 47%,
-      #202328 53%,
-      transparent 54%
-    ),
-    linear-gradient(
-      135deg,
-      #ffe09a,
-      #9c633a
-    );
+    position: absolute;
 
-  box-shadow:
-    0 0 22px rgba(255,204,110,.5);
+    inset: 28%;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.28);
+
+    opacity: 0;
+
+    transition: .35s;
 }
 
+.hotspot:active::before {
 
-/* 가로등 */
+    opacity: 1;
 
-#lampBtn {
-  left: 5%;
-  bottom: 17%;
-}
-
-.lamp {
-  position: relative;
-
-  width: 45px;
-  height: 135px;
-}
-
-.lamp-top {
-  position: absolute;
-
-  left: 4px;
-  top: 4px;
-
-  width: 38px;
-  height: 22px;
-
-  border-radius: 50% 50% 35% 35%;
-
-  background: #24282c;
-}
-
-.lamp-light {
-  position: absolute;
-
-  left: 9px;
-  top: 13px;
-
-  width: 28px;
-  height: 25px;
-
-  border-radius: 50%;
-
-  background: #ffd98d;
-
-  filter: blur(3px);
-
-  box-shadow:
-    0 0 10px #ffd98d,
-    0 0 30px rgba(255,217,141,.6);
-}
-
-.lamp-pole {
-  position: absolute;
-
-  left: 21px;
-  top: 23px;
-
-  width: 4px;
-  height: 112px;
-
-  background: linear-gradient(
-    to right,
-    #111,
-    #555,
-    #111
-  );
-
-  border-radius: 4px;
+    transform: scale(1.45);
 }
 
 
-/* 우편함 */
+/*
+  사진의 위치에 따라 이 좌표를 조절하면 됨.
 
-#mailBtn {
-  left: 31%;
-  bottom: 16%;
+  LEFT = 글
+  CENTER = 사진
+  RIGHT = 영상
+*/
+
+.hotspotStory {
+
+    left: 10%;
+    top: 49%;
+
+    width: 27%;
+    height: 28%;
 }
 
-.mailbox {
-  position: relative;
+.hotspotPhoto {
 
-  width: 61px;
-  height: 49px;
+    left: 37%;
+    top: 50%;
 
-  border-radius: 7px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #59646c,
-      #283138 65%,
-      #141a1f
-    );
-
-  box-shadow: 0 12px 25px rgba(0,0,0,.4);
+    width: 27%;
+    height: 28%;
 }
 
-.mailbox::before {
-  content: "";
+.hotspotVideo {
 
-  position: absolute;
+    right: 8%;
+    top: 48%;
 
-  left: 0;
-  top: -14px;
-
-  width: 61px;
-  height: 23px;
-
-  border-radius: 50% 50% 0 0;
-
-  background: #3c464d;
-}
-
-.mailbox::after {
-  content: "";
-
-  position: absolute;
-
-  right: 8px;
-  top: 14px;
-
-  width: 4px;
-  height: 22px;
-
-  background: #aaa;
+    width: 29%;
+    height: 30%;
 }
 
 
-/* 사진 */
+/* =========================================================
+   MENU LABEL
+========================================================= */
 
-#photoBtn {
-  right: 5%;
-  bottom: 16%;
+.menuLabels {
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 15%;
+
+    display: flex;
+
+    justify-content: space-around;
+
+    padding: 0 8%;
+
+    z-index: 6;
+
+    pointer-events: none;
 }
 
-.frame {
-  width: 65px;
-  height: 77px;
+.menuLabel {
 
-  padding: 5px;
+    width: 30%;
 
-  background: #d7d1c5;
+    text-align: center;
 
-  transform: rotate(-4deg);
+    font-size: 9px;
 
-  box-shadow: 0 14px 30px rgba(0,0,0,.5);
-}
+    letter-spacing: .25em;
 
-.frame-inner {
-  width: 100%;
-  height: 100%;
+    color: rgba(255,255,255,.62);
 
-  background:
-    linear-gradient(
-      135deg,
-      #788391,
-      #222b33
-    );
-
-  background-size: cover;
-  background-position: center;
-}
-
-
-/* 눈 */
-
-#snow {
-  position: absolute;
-  z-index: 15;
-
-  inset: 0;
-
-  overflow: hidden;
-
-  pointer-events: none;
-}
-
-.flake {
-  position: absolute;
-  top: -20px;
-
-  color: rgba(255,255,255,.7);
-
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  from {
-    transform: translateY(-20px);
-  }
-
-  to {
-    transform:
-      translateY(110vh)
-      translateX(var(--x));
-  }
+    text-shadow:
+        0 2px 12px rgba(0,0,0,.9);
 }
 
 
-/* 페이지 */
+/* =========================================================
+   PARTICIPANTS
+========================================================= */
+
+.creditsButton {
+
+    position: absolute;
+
+    top: 22px;
+    right: 20px;
+
+    z-index: 20;
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    background: rgba(0,0,0,.18);
+
+    color: rgba(255,255,255,.75);
+
+    padding: 8px 11px;
+
+    font-size: 8px;
+
+    letter-spacing: .18em;
+
+    backdrop-filter: blur(5px);
+}
+
+.credits {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 28px;
+
+    background: rgba(2,5,10,.74);
+
+    backdrop-filter: blur(12px);
+}
+
+.credits.show {
+    display: flex;
+}
+
+.creditsBox {
+
+    width: min(390px, 100%);
+
+    padding: 35px 25px;
+
+    background: rgba(7,12,19,.88);
+
+    border: 1px solid rgba(255,255,255,.14);
+
+    text-align: center;
+}
+
+.creditsBox h2 {
+
+    font-family: "Noto Serif KR", serif;
+
+    font-weight: 300;
+
+    letter-spacing: .12em;
+
+    margin: 0 0 28px;
+}
+
+.names {
+
+    font-size: 12px;
+
+    line-height: 2.3;
+
+    color: rgba(255,255,255,.72);
+}
+
+.closeButton {
+
+    margin-top: 25px;
+
+    border: 1px solid rgba(255,255,255,.2);
+
+    background: transparent;
+
+    color: white;
+
+    padding: 9px 18px;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SNOW
+========================================================= */
+
+.snow {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 3;
+
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+.snowflake {
+
+    position: absolute;
+
+    top: -20px;
+
+    width: 3px;
+    height: 3px;
+
+    background: rgba(255,255,255,.8);
+
+    border-radius: 50%;
+
+    filter: blur(.3px);
+
+    animation:
+        snowfall linear infinite,
+        snowSway ease-in-out infinite alternate;
+}
+
+@keyframes snowfall {
+
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+@keyframes snowSway {
+
+    from {
+        margin-left: -25px;
+    }
+
+    to {
+        margin-left: 25px;
+    }
+}
+
+
+/* =========================================================
+   SUB PAGES
+========================================================= */
 
 .page {
-  position: fixed;
-  z-index: 100;
 
-  inset: 0;
+    position: fixed;
 
-  width: 100%;
-  height: 100dvh;
+    inset: 0;
 
-  padding:
-    calc(25px + env(safe-area-inset-top))
-    22px
-    calc(30px + env(safe-area-inset-bottom));
+    z-index: 50;
 
-  overflow-y: auto;
+    display: none;
 
-  background:
-    linear-gradient(
-      #0b1016,
-      #11171e
-    );
+    overflow-y: auto;
 
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+    background:
+        linear-gradient(
+            rgba(3,7,13,.88),
+            rgba(3,7,13,.97)
+        );
 
-  transform: translateY(15px);
-
-  transition: .4s;
+    padding:
+        calc(35px + env(safe-area-inset-top))
+        22px
+        calc(40px + env(safe-area-inset-bottom));
 }
 
-.page.open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+.page.show {
+    display: block;
+}
 
-  transform: translateY(0);
+.pageTop {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 55px;
+}
+
+.pageTop small {
+
+    font-size: 9px;
+
+    letter-spacing: .25em;
+
+    color: rgba(255,255,255,.45);
 }
 
 .back {
-  display: inline-flex;
 
-  min-height: 44px;
+    border: 0;
 
-  align-items: center;
+    background: transparent;
 
-  color: rgba(255,255,255,.55);
+    color: rgba(255,255,255,.7);
 
-  font-size: 11px;
-
-  background: none;
-
-  margin-bottom: 30px;
-}
-
-.back span {
-  margin-right: 8px;
-  font-size: 17px;
-}
-
-.page-kicker {
-  font-size: 9px;
-  letter-spacing: .3em;
-
-  color: rgba(255,255,255,.35);
-
-  margin-bottom: 12px;
-}
-
-.page h2 {
-  margin: 0;
-
-  font-family: Georgia, "Noto Serif KR", serif;
-
-  font-weight: 400;
-
-  font-size: 38px;
-
-  letter-spacing: -.08em;
-}
-
-.page-desc {
-  margin-top: 15px;
-
-  color: rgba(255,255,255,.45);
-
-  font-size: 11px;
-
-  line-height: 1.9;
+    font-size: 11px;
 }
 
 
-/* 글 */
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.pageTitle {
+
+    font-family: "Noto Serif KR", serif;
+
+    font-size: 30px;
+
+    font-weight: 300;
+
+    letter-spacing: .08em;
+
+    margin-bottom: 40px;
+}
+
+
+/* =========================================================
+   STORY
+========================================================= */
 
 .story {
-  max-width: 700px;
-  margin: 45px auto 0;
+
+    padding: 25px 0;
+
+    border-top: 1px solid rgba(255,255,255,.11);
 }
 
-.story article {
-  padding: 24px 0;
-
-  border-top:
-    1px solid rgba(255,255,255,.1);
+.story:last-child {
+    border-bottom: 1px solid rgba(255,255,255,.11);
 }
 
-.story article:last-child {
-  border-bottom:
-    1px solid rgba(255,255,255,.1);
-}
+.storyNumber {
 
-.story small {
-  color: rgba(255,255,255,.3);
-  font-size: 9px;
-  letter-spacing: .2em;
+    font-size: 9px;
+
+    letter-spacing: .2em;
+
+    color: rgba(255,255,255,.4);
 }
 
 .story h3 {
-  margin: 10px 0;
 
-  font-family: Georgia, "Noto Serif KR", serif;
+    margin: 12px 0 9px;
 
-  font-size: 20px;
-  font-weight: 400;
+    font-family: "Noto Serif KR", serif;
+
+    font-weight: 400;
+
+    font-size: 20px;
 }
 
 .story p {
-  margin: 0;
 
-  font-size: 12px;
-  line-height: 2;
+    margin: 0;
 
-  color: rgba(255,255,255,.58);
+    font-size: 12px;
+
+    line-height: 2;
+
+    color: rgba(255,255,255,.57);
 }
 
 
-/* 사진 */
+/* =========================================================
+   PHOTO GRID
+========================================================= */
 
-.gallery {
-  max-width: 800px;
+.photoGrid {
 
-  margin: 40px auto;
+    display: grid;
 
-  display: grid;
+    grid-template-columns: 1fr 1fr;
 
-  grid-template-columns: repeat(2,1fr);
-
-  gap: 10px;
+    gap: 9px;
 }
 
-.gallery div {
-  aspect-ratio: 1;
+.photoGrid img {
 
-  background:
-    linear-gradient(
-      135deg,
-      #65717c,
-      #1c252e
-    );
+    width: 100%;
+
+    aspect-ratio: 1 / 1.25;
+
+    object-fit: cover;
+
+    filter: brightness(.8);
+
+    transition: .3s;
 }
 
+.photoGrid img:active {
 
-/* 참여진 */
+    transform: scale(.98);
 
-.people {
-  max-width: 700px;
-
-  margin: 40px auto;
-}
-
-.person {
-  padding: 21px 0;
-
-  border-top:
-    1px solid rgba(255,255,255,.1);
-}
-
-.person:last-child {
-  border-bottom:
-    1px solid rgba(255,255,255,.1);
-}
-
-.person-name {
-  font-family: Georgia, "Noto Serif KR", serif;
-  font-size: 17px;
-}
-
-.person-role {
-  margin-top: 5px;
-
-  color: rgba(255,255,255,.4);
-
-  font-size: 10px;
+    filter: brightness(1);
 }
 
 
-/* 소개 */
+/* =========================================================
+   VIDEO
+========================================================= */
 
-.about {
-  max-width: 700px;
+.videoCard {
 
-  margin: 40px auto;
+    position: relative;
 
-  font-family: Georgia, "Noto Serif KR", serif;
+    margin-bottom: 20px;
 
-  font-size: 14px;
-  line-height: 2.3;
-
-  color: rgba(255,255,255,.7);
+    overflow: hidden;
 }
 
-@media (min-width:700px) {
+.videoCard img {
 
-  #lampBtn {
-    left: 15%;
-  }
+    width: 100%;
 
-  #mailBtn {
-    left: 35%;
-  }
+    display: block;
 
-  #photoBtn {
-    right: 15%;
-  }
+    aspect-ratio: 16 / 10;
 
-  #windowBtn {
-    right: 15%;
-  }
+    object-fit: cover;
 
-  #moonBtn {
-    right: 30%;
-  }
+    filter: brightness(.6);
+}
 
-  .title {
-    top: 38%;
-  }
+.play {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.6);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 17px;
+
+    background: rgba(0,0,0,.25);
+
+    backdrop-filter: blur(5px);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .mainTitle {
+        top: 11%;
+    }
+
+    .mainTitle h1 {
+        font-size: 28px;
+    }
+
+    .menuLabels {
+        bottom: 13%;
+    }
 
 }
+
 </style>
 </head>
+
 
 <body>
 
 
-<!-- 비밀번호 -->
+<!-- =======================================================
+     PASSWORD
+======================================================= -->
 
-<div id="lock">
+<section id="passwordScreen">
 
-  <div class="lock-box">
+    <div class="passwordBox">
 
-    <div class="lock-mini">
-      PRIVATE WEBZINE
+        <div class="passwordSmall">
+            PRIVATE WEBZINE
+        </div>
+
+        <div class="passwordTitle">
+            탐라배 곱꽹대전
+        </div>
+
+        <div class="passwordDesc">
+            눈이 내리는 밤,<br>
+            우리가 남겨두고 싶은 이야기들.
+        </div>
+
+        <input
+            id="passwordInput"
+            class="passwordInput"
+            type="password"
+            placeholder="PASSWORD"
+            autocomplete="off"
+        >
+
+        <button
+            class="passwordButton"
+            onclick="enterSite()">
+            ENTER
+        </button>
+
+        <div
+            id="passwordError"
+            class="passwordError">
+        </div>
+
     </div>
 
-    <div class="lock-title">
-      탐라배 곱꽹대전
+</section>
+
+
+
+<!-- =======================================================
+     SITE
+======================================================= -->
+
+<main id="site">
+
+
+<!-- HOME -->
+
+<section class="home">
+
+
+    <!-- ===================================================
+         REAL PHOTO
+         여기!!! 실제 사진
+    ==================================================== -->
+
+    <img
+        class="homePhoto"
+        src="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1800&q=90"
+        alt="겨울밤 실사 배경"
+    >
+
+
+    <div class="homeOverlay"></div>
+
+
+    <!-- SNOW -->
+
+    <div class="snow" id="snow"></div>
+
+
+    <!-- TITLE -->
+
+    <div class="mainTitle">
+
+        <div class="english">
+            LITERARY WEBZINE
+        </div>
+
+        <h1>
+            탐라배 곱꽹대전
+        </h1>
+
+        <p>
+            눈이 내리는 밤, 우리가 남겨두고 싶은 이야기들.
+        </p>
+
     </div>
 
-    <div class="lock-text">
-      아주 조용한 겨울밤입니다.<br>
-      문을 열려면 비밀번호를 입력해주세요.
-    </div>
 
-    <input
-      id="password"
-      type="password"
-      placeholder="PASSWORD"
-      autocomplete="off">
+    <!-- PARTICIPANTS -->
 
-    <button id="enter">
-      들어가기
+    <button
+        class="creditsButton"
+        onclick="openCredits()">
+        CREDITS
     </button>
 
-    <div id="error"></div>
 
-  </div>
+    <!-- ================================================
+         INVISIBLE PHOTO HOTSPOTS
+    ================================================ -->
 
-</div>
+    <button
+        class="hotspot hotspotStory"
+        onclick="openPage('storyPage')"
+        aria-label="글">
+    </button>
 
+    <button
+        class="hotspot hotspotPhoto"
+        onclick="openPage('photoPage')"
+        aria-label="사진">
+    </button>
 
-<!-- 메인 -->
-
-<main id="home">
-
-  <div class="header">
-    <span>탐라배 곱꽹대전</span>
-    <span>PRIVATE</span>
-  </div>
-
-
-  <div class="title">
-
-    <div class="title-small">
-      WINTER · NIGHT · STORY
-    </div>
-
-    <h1>
-      탐라배 곱꽹대전
-    </h1>
-
-    <p>
-      아무것도 없는 것 같은 밤에<br>
-      조금 천천히 들여다보세요.
-    </p>
-
-  </div>
+    <button
+        class="hotspot hotspotVideo"
+        onclick="openPage('videoPage')"
+        aria-label="영상">
+    </button>
 
 
-  <!-- 달 -->
+    <!-- MENU TEXT -->
 
-  <button
-    class="object"
-    id="moonBtn"
-    data-page="about">
+    <div class="menuLabels">
 
-    <div class="moon"></div>
+        <div class="menuLabel">
+            글
+        </div>
 
-    <div class="label">
-      소개
-    </div>
+        <div class="menuLabel">
+            사진
+        </div>
 
-  </button>
-
-
-  <!-- 창문 -->
-
-  <button
-    class="object"
-    id="windowBtn"
-    data-page="videos">
-
-    <div class="window"></div>
-
-    <div class="label">
-      영상
-    </div>
-
-  </button>
-
-
-  <!-- 가로등 -->
-
-  <button
-    class="object"
-    id="lampBtn"
-    data-page="people">
-
-    <div class="lamp">
-
-      <div class="lamp-top"></div>
-      <div class="lamp-light"></div>
-      <div class="lamp-pole"></div>
+        <div class="menuLabel">
+            영상
+        </div>
 
     </div>
 
-    <div class="label">
-      참여진
+
+</section>
+
+
+
+<!-- =======================================================
+     STORY PAGE
+======================================================= -->
+
+<section
+    id="storyPage"
+    class="page">
+
+    <div class="pageTop">
+
+        <small>
+            TAMRABAE / STORY
+        </small>
+
+        <button
+            class="back"
+            onclick="closePage()">
+            돌아가기
+        </button>
+
     </div>
 
-  </button>
 
-
-  <!-- 우편함 -->
-
-  <button
-    class="object"
-    id="mailBtn"
-    data-page="stories">
-
-    <div class="mailbox"></div>
-
-    <div class="label">
-      글
+    <div class="pageTitle">
+        글
     </div>
 
-  </button>
+
+    <article class="story">
+
+        <div class="storyNumber">
+            STORY 01
+        </div>
+
+        <h3>
+            겨울밤에 남겨진 것
+        </h3>
+
+        <p>
+            여기에 첫 번째 작품의 소개글을 넣어주세요.
+            차가운 밤공기와 오래된 기억에 대한 이야기.
+        </p>
+
+    </article>
 
 
-  <!-- 사진 -->
+    <article class="story">
 
-  <button
-    class="object"
-    id="photoBtn"
-    data-page="photos">
+        <div class="storyNumber">
+            STORY 02
+        </div>
 
-    <div class="frame">
-      <div class="frame-inner"></div>
+        <h3>
+            눈이 오던 날
+        </h3>
+
+        <p>
+            두 번째 작품의 소개글이 들어가는 자리입니다.
+        </p>
+
+    </article>
+
+
+    <article class="story">
+
+        <div class="storyNumber">
+            STORY 03
+        </div>
+
+        <h3>
+            우리가 걷던 골목
+        </h3>
+
+        <p>
+            세 번째 작품의 소개글이 들어가는 자리입니다.
+        </p>
+
+    </article>
+
+</section>
+
+
+
+<!-- =======================================================
+     PHOTO PAGE
+======================================================= -->
+
+<section
+    id="photoPage"
+    class="page">
+
+    <div class="pageTop">
+
+        <small>
+            TAMRABAE / PHOTO
+        </small>
+
+        <button
+            class="back"
+            onclick="closePage()">
+            돌아가기
+        </button>
+
     </div>
 
-    <div class="label">
-      사진
+
+    <div class="pageTitle">
+        사진
     </div>
 
-  </button>
+
+    <div class="photoGrid">
+
+        <img
+            src="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=900&q=85"
+            alt="겨울 사진">
+
+        <img
+            src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=900&q=85"
+            alt="겨울 사진">
+
+        <img
+            src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=85"
+            alt="겨울 사진">
+
+        <img
+            src="https://images.unsplash.com/photo-1453306458620-5bbef13a5bca?auto=format&fit=crop&w=900&q=85"
+            alt="겨울 사진">
+
+    </div>
+
+</section>
 
 
-  <div id="snow"></div>
+
+<!-- =======================================================
+     VIDEO PAGE
+======================================================= -->
+
+<section
+    id="videoPage"
+    class="page">
+
+    <div class="pageTop">
+
+        <small>
+            TAMRABAE / VIDEO
+        </small>
+
+        <button
+            class="back"
+            onclick="closePage()">
+            돌아가기
+        </button>
+
+    </div>
+
+
+    <div class="pageTitle">
+        영상
+    </div>
+
+
+    <div class="videoCard">
+
+        <img
+            src="https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?auto=format&fit=crop&w=1200&q=85"
+            alt="영상">
+
+        <div class="play">
+            ▶
+        </div>
+
+    </div>
+
+
+    <div class="videoCard">
+
+        <img
+            src="https://images.unsplash.com/photo-1483347756197-71ef80e95f73?auto=format&fit=crop&w=1200&q=85"
+            alt="영상">
+
+        <div class="play">
+            ▶
+        </div>
+
+    </div>
+
+</section>
+
 
 </main>
 
 
-<!-- 글 -->
 
-<section id="stories" class="page">
+<!-- =======================================================
+     CREDITS
+======================================================= -->
 
-  <button class="back">
-    <span>←</span>
-    돌아가기
-  </button>
+<div
+    id="credits"
+    class="credits">
 
-  <div class="page-kicker">
-    STORIES
-  </div>
+    <div class="creditsBox">
 
-  <h2>글</h2>
+        <h2>
+            참여자
+        </h2>
 
-  <div class="page-desc">
-    우편함 안에 오래 넣어두었던 이야기들.
-  </div>
+        <div class="names">
 
-  <div class="story">
+            이름 01<br>
+            이름 02<br>
+            이름 03<br>
+            이름 04<br>
+            이름 05
 
-    <article>
-      <small>STORY 01</small>
-      <h3>첫 번째 겨울밤</h3>
-      <p>
-        아직 아무도 오지 않은 밤이었다.
-        가로등 아래에는 눈이 조금씩 쌓이고 있었다.
-      </p>
-    </article>
+        </div>
 
-    <article>
-      <small>STORY 02</small>
-      <h3>우편함에 남겨진 것</h3>
-      <p>
-        보내지 못한 편지는 이상하게도
-        시간이 지날수록 더 선명해졌다.
-      </p>
-    </article>
+        <button
+            class="closeButton"
+            onclick="closeCredits()">
+            닫기
+        </button>
 
-    <article>
-      <small>STORY 03</small>
-      <h3>불이 켜진 창문</h3>
-      <p>
-        저 창문 안에는 누가 살고 있을까.
-        나는 한참 동안 그곳을 바라보았다.
-      </p>
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- 사진 -->
-
-<section id="photos" class="page">
-
-  <button class="back">
-    <span>←</span>
-    돌아가기
-  </button>
-
-  <div class="page-kicker">
-    PHOTOGRAPHS
-  </div>
-
-  <h2>사진</h2>
-
-  <div class="page-desc">
-    겨울밤에 남겨진 장면들.
-  </div>
-
-  <div class="gallery">
-
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-
-  </div>
-
-</section>
-
-
-<!-- 영상 -->
-
-<section id="videos" class="page">
-
-  <button class="back">
-    <span>←</span>
-    돌아가기
-  </button>
-
-  <div class="page-kicker">
-    MOVING IMAGES
-  </div>
-
-  <h2>영상</h2>
-
-  <div class="page-desc">
-    창문 너머에서 흘러나오는 장면들.
-  </div>
-
-  <div class="story">
-
-    <article>
-      <small>VIDEO 01</small>
-      <h3>겨울밤의 기록</h3>
-      <p>
-        영상이 준비되면 이곳에 연결해주세요.
-      </p>
-    </article>
-
-    <article>
-      <small>VIDEO 02</small>
-      <h3>곱꽹대전 비하인드</h3>
-      <p>
-        영상이 준비되면 이곳에 연결해주세요.
-      </p>
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- 참여진 -->
-
-<section id="people" class="page">
-
-  <button class="back">
-    <span>←</span>
-    돌아가기
-  </button>
-
-  <div class="page-kicker">
-    CONTRIBUTORS
-  </div>
-
-  <h2>참여진</h2>
-
-  <div class="page-desc">
-    이 겨울밤을 함께 만든 사람들.
-  </div>
-
-  <div class="people">
-
-    <div class="person">
-      <div class="person-name">이름을 입력해주세요</div>
-      <div class="person-role">작가</div>
     </div>
 
-    <div class="person">
-      <div class="person-name">이름을 입력해주세요</div>
-      <div class="person-role">작가</div>
-    </div>
+</div>
 
-    <div class="person">
-      <div class="person-name">이름을 입력해주세요</div>
-      <div class="person-role">사진</div>
-    </div>
-
-    <div class="person">
-      <div class="person-name">이름을 입력해주세요</div>
-      <div class="person-role">디자인</div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- 소개 -->
-
-<section id="about" class="page">
-
-  <button class="back">
-    <span>←</span>
-    돌아가기
-  </button>
-
-  <div class="page-kicker">
-    ABOUT
-  </div>
-
-  <h2>소개</h2>
-
-  <div class="page-desc">
-    탐라배 곱꽹대전이라는 겨울밤.
-  </div>
-
-  <div class="about">
-
-    <p>
-      탐라배 곱꽹대전은
-      이야기와 사진과 영상이 한데 모이는
-      작은 겨울밤의 웹진입니다.
-    </p>
-
-    <p>
-      화면에 놓인 오브젝트를 하나씩 발견하면서
-      이곳에 남겨진 이야기를 만나주세요.
-    </p>
-
-    <p>
-      누군가는 우편함에 글을 넣어두었고,
-      누군가는 창문에 영상을 틀어두었고,
-      누군가는 가로등 아래에 자신의 이름을 남겼습니다.
-    </p>
-
-  </div>
-
-</section>
-
-
-<!-- 소리 -->
-
-<audio id="clickSound" preload="auto">
-  <source src="tap_click.wav" type="audio/wav">
-</audio>
-
-<audio id="music" loop preload="auto">
-  <source src="background.mp3" type="audio/mpeg">
-</audio>
 
 
 <script>
 
-const PASSWORD = "ohmyps";
+/* =========================================================
+   PASSWORD
+========================================================= */
 
-const lock =
-  document.getElementById("lock");
-
-const password =
-  document.getElementById("password");
-
-const enter =
-  document.getElementById("enter");
-
-const error =
-  document.getElementById("error");
-
-const clickSound =
-  document.getElementById("clickSound");
-
-const music =
-  document.getElementById("music");
+const SECRET_PASSWORD = "ohmyps";
 
 
-/* 클릭 소리 */
+function enterSite() {
 
-function click() {
+    const input =
+        document.getElementById("passwordInput");
 
-  if (!clickSound) return;
+    const error =
+        document.getElementById("passwordError");
 
-  clickSound.currentTime = 0;
+    if (input.value === SECRET_PASSWORD) {
 
-  clickSound.play().catch(() => {});
+        document.getElementById("passwordScreen").style.display =
+            "none";
 
-}
+        document.getElementById("site").style.display =
+            "block";
 
+        sessionStorage.setItem(
+            "tamrabae_access",
+            "true"
+        );
 
-/* 음악 */
+    } else {
 
-function startMusic() {
+        error.textContent =
+            "비밀번호가 맞지 않습니다.";
 
-  if (!music) return;
+        input.value = "";
 
-  music.volume = 0.3;
+        input.focus();
 
-  music.play().catch(() => {});
-
-}
-
-
-/* 로그인 */
-
-function login() {
-
-  if (password.value === PASSWORD) {
-
-    click();
-
-    lock.classList.add("hidden");
-
-    try {
-      sessionStorage.setItem(
-        "unlocked",
-        "yes"
-      );
-    } catch(e) {}
-
-    startMusic();
-
-  } else {
-
-    click();
-
-    error.textContent =
-      "비밀번호가 맞지 않습니다.";
-
-    password.value = "";
-
-    password.focus();
-
-  }
-
-}
-
-
-/* 들어가기 */
-
-enter.addEventListener(
-  "click",
-  login
-);
-
-
-/* 엔터 */
-
-password.addEventListener(
-  "keydown",
-  function(e) {
-
-    if (e.key === "Enter") {
-      login();
     }
 
-  }
-);
+}
 
 
-/* 오브젝트 */
-
-document
-  .querySelectorAll(".object")
-  .forEach(function(button) {
-
-    button.addEventListener(
-      "click",
-      function() {
-
-        const id =
-          button.dataset.page;
-
-        click();
-
-        setTimeout(function() {
-
-          document
-            .querySelectorAll(".page")
-            .forEach(function(page) {
-              page.classList.remove("open");
-            });
-
-          const page =
-            document.getElementById(id);
-
-          if (page) {
-            page.classList.add("open");
-            page.scrollTop = 0;
-          }
-
-        }, 150);
-
-      }
-    );
-
-  });
-
-
-/* 뒤로가기 */
+/* ENTER KEY */
 
 document
-  .querySelectorAll(".back")
-  .forEach(function(button) {
+    .getElementById("passwordInput")
+    .addEventListener("keydown", function(e) {
 
-    button.addEventListener(
-      "click",
-      function() {
+        if (e.key === "Enter") {
+            enterSite();
+        }
 
-        click();
-
-        document
-          .querySelectorAll(".page")
-          .forEach(function(page) {
-            page.classList.remove("open");
-          });
-
-      }
-    );
-
-  });
+    });
 
 
-/* 눈 */
+/* =========================================================
+   SESSION
+========================================================= */
 
-const snow =
-  document.getElementById("snow");
+if (
+    sessionStorage.getItem("tamrabae_access")
+    === "true"
+) {
 
-for (let i = 0; i < 45; i++) {
+    document.getElementById("passwordScreen").style.display =
+        "none";
 
-  const flake =
-    document.createElement("span");
-
-  flake.className = "flake";
-
-  flake.textContent =
-    Math.random() > .5
-      ? "•"
-      : "✦";
-
-  flake.style.left =
-    Math.random() * 100 + "%";
-
-  flake.style.fontSize =
-    Math.random() * 5 + 2 + "px";
-
-  flake.style.animationDuration =
-    Math.random() * 8 + 7 + "s";
-
-  flake.style.animationDelay =
-    Math.random() * -15 + "s";
-
-  flake.style.setProperty(
-    "--x",
-    (Math.random() * 100 - 50) + "px"
-  );
-
-  snow.appendChild(flake);
+    document.getElementById("site").style.display =
+        "block";
 
 }
 
 
-/* 이전에 로그인했다면 */
+/* =========================================================
+   PAGE
+========================================================= */
 
-try {
+function openPage(id) {
 
-  if (
-    sessionStorage.getItem("unlocked")
-    === "yes"
-  ) {
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+            page.classList.remove("show");
+        });
 
-    lock.classList.add("hidden");
+    document
+        .getElementById(id)
+        .classList.add("show");
 
-  }
+}
 
-} catch(e) {}
+
+function closePage() {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+            page.classList.remove("show");
+        });
+
+}
+
+
+/* =========================================================
+   CREDITS
+========================================================= */
+
+function openCredits() {
+
+    document
+        .getElementById("credits")
+        .classList.add("show");
+
+}
+
+
+function closeCredits() {
+
+    document
+        .getElementById("credits")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================================
+   SNOW
+========================================================= */
+
+const snow =
+    document.getElementById("snow");
+
+for (let i = 0; i < 75; i++) {
+
+    const flake =
+        document.createElement("span");
+
+    flake.className =
+        "snowflake";
+
+    const size =
+        Math.random() * 3 + 1;
+
+    flake.style.width =
+        size + "px";
+
+    flake.style.height =
+        size + "px";
+
+    flake.style.left =
+        Math.random() * 100 + "%";
+
+    flake.style.opacity =
+        Math.random() * .65 + .2;
+
+    flake.style.animationDuration =
+        (Math.random() * 10 + 8) + "s";
+
+    flake.style.animationDelay =
+        (Math.random() * -15) + "s";
+
+    snow.appendChild(flake);
+
+}
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener("keydown", function(e) {
+
+    if (e.key === "Escape") {
+
+        closePage();
+        closeCredits();
+
+    }
+
+});
 
 </script>
 

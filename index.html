@@ -162,7 +162,6 @@ body {
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  transition: opacity 0.8s ease, transform 1s cubic-bezier(.22,.61,.36,1);
 }
 
 .home::after {
@@ -173,7 +172,7 @@ body {
   pointer-events: none;
 }
 
-/* 가로등 은은한 깜빡임 효과 */
+/* 가로등 은은한 빛 */
 .lamp-glow {
   position: absolute;
   top: 15%;
@@ -193,7 +192,7 @@ body {
 }
 
 /* =========================
-   상단 영역 (달 / BGM)
+   상단 영역
 ========================= */
 .top {
   position: absolute;
@@ -274,6 +273,7 @@ body {
 
 .bgm-btn.active {
   background: rgba(255,255,255,0.3);
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
 }
 
 /* =========================
@@ -287,6 +287,7 @@ body {
   top: 22%;
   text-align: center;
   animation: appear 1.6s ease both;
+  pointer-events: none;
 }
 
 .small-title {
@@ -316,18 +317,18 @@ body {
 }
 
 /* =========================
-   겨울밤 골목 오브젝트 메뉴
+   자연스레 놓인 사물 형태의 메뉴
 ========================= */
 .menu {
   position: absolute;
   z-index: 10;
   left: 0;
   right: 0;
-  bottom: 14%;
+  bottom: 13%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: clamp(25px, 8vw, 60px);
+  gap: clamp(25px, 8vw, 55px);
 }
 
 .menu-item {
@@ -338,59 +339,64 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   transition: transform .4s cubic-bezier(.22,.61,.36,1), opacity .4s ease;
+  opacity: 0.75;
 }
 
 .menu-item:hover {
-  transform: translateY(-6px);
+  transform: translateY(-5px);
+  opacity: 1;
 }
 
 .object-box {
-  width: 58px;
-  height: 58px;
-  border-radius: 14px;
-  background: rgba(16, 24, 34, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(20, 28, 38, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
-  overflow: hidden;
-  transition: border-color 0.3s, background 0.3s, transform 0.4s;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  backdrop-filter: blur(3px);
+  transition: all 0.3s ease;
 }
 
 .menu-item:hover .object-box {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(26, 36, 48, 0.9);
+  background: rgba(30, 42, 56, 0.65);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.1);
 }
 
-/* 우편함 열리는 애니메이션 효과 */
 .menu-item.opening .object-box {
-  transform: rotate(-8deg) scale(1.1);
+  transform: rotate(-6deg) scale(1.08);
 }
 
-/* 사진 확대 애니메이션 효과 */
 .menu-item.zooming .object-box {
-  transform: scale(1.2);
+  transform: scale(1.12);
 }
 
 .object-box img {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-  opacity: 0.9;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  opacity: 0.85;
 }
 
 .menu-label {
   font-family: "Noto Serif KR", serif;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: .16em;
-  opacity: 0.8;
-  text-shadow: 0 2px 8px rgba(0,0,0,.7);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: .15em;
+  opacity: 0.65;
+  text-shadow: 0 2px 6px rgba(0,0,0,.8);
+  transition: opacity 0.3s;
+}
+
+.menu-item:hover .menu-label {
+  opacity: 1;
 }
 
 /* =========================
@@ -463,7 +469,7 @@ body {
 }
 
 /* =========================
-   다중 입체 눈 레이어 (가까운 눈 / 먼 눈)
+   다중 입체 눈 레이어
 ========================= */
 .snow-container {
   position: absolute;
@@ -569,7 +575,6 @@ body {
   opacity: .62;
 }
 
-/* 내부 콘텐츠 스타일 */
 .article {
   padding: 25px 0;
   border-top: 1px solid rgba(255,255,255,.13);
@@ -686,7 +691,7 @@ body {
   .intro { top: 19%; }
   .main-title { font-size: 30px; }
   .description { font-size: 10px; }
-  .menu { bottom: 14%; gap: 20px; }
+  .menu { bottom: 13%; gap: 18px; }
 }
 </style>
 </head>
@@ -702,7 +707,7 @@ body {
     <p>비공개 웹진입니다.<br>비밀번호를 입력해주세요.</p>
     <div class="password-box">
       <input type="password" id="passwordInput" placeholder="PASSWORD" autocomplete="off">
-      <button onclick="playCustomSound('click'); checkPassword();">입장</button>
+      <button onclick="playAnalogSound('click'); checkPassword();">입장</button>
     </div>
     <div id="wrongPassword">비밀번호가 올바르지 않습니다.</div>
     <div class="private-note">PRIVATE · WINTER / 01</div>
@@ -719,12 +724,10 @@ body {
       <div class="issue">WINTER / 01</div>
     </div>
     <div class="top-controls">
-      <!-- 달 버튼 (참여진) -->
-      <button class="moon-btn" onclick="playCustomSound('ding'); toggleModal(true);">
+      <button class="moon-btn" onclick="playAnalogSound('ding'); toggleModal(true);">
         <div class="moon-icon"></div>
         <span>참여진</span>
       </button>
-      <!-- BGM 토글 -->
       <button class="bgm-btn" id="bgmToggleBtn" onclick="toggleBGM()">BGM OFF</button>
     </div>
   </div>
@@ -738,9 +741,8 @@ body {
     </p>
   </section>
 
-  <!-- 겨울밤 골목 오브젝트 메뉴 -->
+  <!-- 자연스레 놓인 오브젝트 형태의 메뉴 -->
   <nav class="menu">
-    <!-- 우편함 (글) -->
     <button class="menu-item" id="mailMenu" onclick="triggerAction('mail', 'stories')">
       <div class="object-box">
         <img src="https://api.iconify.design/lucide:mailbox.svg?color=%23f4f1eb" alt="우편함">
@@ -748,7 +750,6 @@ body {
       <span class="menu-label">우편함</span>
     </button>
 
-    <!-- 액자/사진 -->
     <button class="menu-item" id="photoMenu" onclick="triggerAction('photo', 'photos')">
       <div class="object-box">
         <img src="https://api.iconify.design/lucide:image.svg?color=%23f4f1eb" alt="사진">
@@ -756,7 +757,6 @@ body {
       <span class="menu-label">사진</span>
     </button>
 
-    <!-- 라디오/영상 -->
     <button class="menu-item" id="radioMenu" onclick="triggerAction('radio', 'videos')">
       <div class="object-box">
         <img src="https://api.iconify.design/lucide:radio.svg?color=%23f4f1eb" alt="라디오">
@@ -778,14 +778,14 @@ body {
       사진 및 비주얼 아카이브 · 김제주<br>
       디자인 및 기술 지원 · 웹진 개발팀
     </div>
-    <button class="modal-close" onclick="playCustomSound('click'); toggleModal(false);">닫기</button>
+    <button class="modal-close" onclick="playAnalogSound('click'); toggleModal(false);">닫기</button>
   </div>
 </div>
 
 <!-- 글 페이지 -->
 <section class="page" id="stories">
   <div class="page-content">
-    <button class="back" onclick="playCustomSound('click'); closePage();">← BACK</button>
+    <button class="back" onclick="playAnalogSound('click'); closePage();">← BACK</button>
     <header class="page-header">
       <div class="page-number">01 / STORIES</div>
       <h2 class="page-title">우편함의 기록</h2>
@@ -807,7 +807,7 @@ body {
 <!-- 사진 페이지 -->
 <section class="page" id="photos">
   <div class="page-content">
-    <button class="back" onclick="playCustomSound('click'); closePage();">← BACK</button>
+    <button class="back" onclick="playAnalogSound('click'); closePage();">← BACK</button>
     <header class="page-header">
       <div class="page-number">02 / PHOTOGRAPHS</div>
       <h2 class="page-title">골목의 사진들</h2>
@@ -823,7 +823,7 @@ body {
 <!-- 영상 페이지 -->
 <section class="page" id="videos">
   <div class="page-content">
-    <button class="back" onclick="playCustomSound('click'); closePage();">← BACK</button>
+    <button class="back" onclick="playAnalogSound('click'); closePage();">← BACK</button>
     <header class="page-header">
       <div class="page-number">03 / MOVIES</div>
       <h2 class="page-title">라디오 & 영상</h2>
@@ -838,7 +838,7 @@ body {
 
 <script>
 /* =========================
-   다양한 맞춤형 효과음 (Web Audio API)
+   아날로그 질감의 효과음 & 크리스마스 피아노 BGM (Web Audio API)
 ========================= */
 let audioCtx = null;
 
@@ -851,74 +851,103 @@ function initAudio() {
   }
 }
 
-function playCustomSound(type) {
+function playAnalogSound(type) {
   try {
     initAudio();
     const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    
+
     if (type === 'mail') {
-      // 철컥- (우편함 열리는 느낌)
-      osc.type = 'square';
-      osc.frequency.setValueAtTime(220, now);
-      osc.frequency.setValueAtTime(330, now + 0.05);
-      gain.gain.setValueAtTime(0.1, now);
-      gain.gain.linearRampToValueAtTime(0.001, now + 0.1);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(now);
-      osc.stop(now + 0.1);
-    } else if (type === 'photo') {
-      // 종이 넘기는 사각사각 느낌
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(500, now);
-      osc.frequency.exponentialRampToValueAtTime(150, now + 0.08);
-      gain.gain.setValueAtTime(0.12, now);
-      gain.gain.linearRampToValueAtTime(0.001, now + 0.08);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(now);
-      osc.stop(now + 0.08);
-    } else if (type === 'ding') {
-      // 아주 작은 딩 소리 (달/참여진)
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, now);
-      gain.gain.setValueAtTime(0.08, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(now);
-      osc.stop(now + 0.2);
-    } else {
-      // 기본 딸깍 소리
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(400, now);
-      osc.frequency.exponentialRampToValueAtTime(120, now + 0.04);
+      // 묵직하고 단단한 철제 우편함 뚜껑이 닫히는 소리
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(140, now);
+      osc.frequency.exponentialRampToValueAtTime(45, now + 0.12);
+      
       gain.gain.setValueAtTime(0.15, now);
-      gain.gain.linearRampToValueAtTime(0.01, now + 0.04);
+      gain.gain.linearRampToValueAtTime(0.001, now + 0.12);
+      
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now);
-      osc.stop(now + 0.04);
+      osc.stop(now + 0.12);
+
+    } else if (type === 'photo') {
+      // 종이/필름이 스치는 서걱서걱한 아날로그 질감 (화이트노이즈 활용)
+      const bufferSize = audioCtx.sampleRate * 0.08;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const whiteNoise = audioCtx.createBufferSource();
+      whiteNoise.buffer = buffer;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 1200;
+      filter.Q.value = 3;
+
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+      whiteNoise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      whiteNoise.start(now);
+
+    } else if (type === 'ding') {
+      // 빈티지 종소리 (아날로그 타종 느낌)
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(659.25, now); // 미(E5)
+      osc.frequency.exponentialRampToValueAtTime(329.63, now + 0.3);
+
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.3);
+
+    } else {
+      // 라디오 스위치 / 묵직한 아날로그 버튼 딸깍 소리
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(280, now);
+      osc.frequency.exponentialRampToValueAtTime(80, now + 0.05);
+
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.linearRampToValueAtTime(0.001, now + 0.05);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.05);
     }
   } catch (e) {}
 }
 
 /* =========================
-   오브젝트 인터랙션 & 페이지 전환
+   자연스러운 오브젝트 액션 & 페이지 전환
 ========================= */
 function triggerAction(type, pageId) {
   const el = document.getElementById(type === 'mail' ? 'mailMenu' : type === 'photo' ? 'photoMenu' : 'radioMenu');
   
   if (type === 'mail') {
-    playCustomSound('mail');
+    playAnalogSound('mail');
     el.classList.add('opening');
   } else if (type === 'photo') {
-    playCustomSound('photo');
+    playAnalogSound('photo');
     el.classList.add('zooming');
   } else {
-    playCustomSound('click');
+    playAnalogSound('click');
   }
 
   setTimeout(() => {
@@ -928,7 +957,7 @@ function triggerAction(type, pageId) {
 }
 
 /* =========================
-   차별화된 배경음악(BGM)
+   크리스마스 캐럴 풍 아련한 피아노 BGM
 ========================= */
 let bgmInterval = null;
 let isBgmPlaying = false;
@@ -936,45 +965,51 @@ let isBgmPlaying = false;
 function toggleBGM() {
   const btn = document.getElementById('bgmToggleBtn');
   if (!isBgmPlaying) {
-    startAmbientBGM();
+    startXmasBGM();
     isBgmPlaying = true;
     btn.textContent = "BGM ON";
     btn.classList.add('active');
   } else {
-    stopAmbientBGM();
+    stopXmasBGM();
     isBgmPlaying = false;
     btn.textContent = "BGM OFF";
     btn.classList.remove('active');
   }
 }
 
-function startAmbientBGM() {
+function startXmasBGM() {
   initAudio();
-  // 아주 잔잔한 피아노 선율 느낌의 화음 배열
-  const notes = [261.63, 329.63, 392.00, 440.00, 523.25]; 
-  
+  const xmasMelody = [
+    523.25, 587.33, 659.25, 523.25, 
+    659.25, 783.99, 880.00, 783.99, 
+    523.25, 392.00, 440.00, 523.25  
+  ];
+  let index = 0;
+
   bgmInterval = setInterval(() => {
     if (!isBgmPlaying) return;
-    const note = notes[Math.floor(Math.random() * notes.length)];
+    const freq = xmasMelody[index % xmasMelody.length];
+    index++;
+
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(note, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
     
     gain.gain.setValueAtTime(0, audioCtx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.025, audioCtx.currentTime + 1.2);
-    gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 3.5);
+    gain.gain.linearRampToValueAtTime(0.03, audioCtx.currentTime + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
     
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     
     osc.start();
-    osc.stop(audioCtx.currentTime + 3.5);
-  }, 2800);
+    osc.stop(audioCtx.currentTime + 1.8);
+  }, 650);
 }
 
-function stopAmbientBGM() {
+function stopXmasBGM() {
   if (bgmInterval) {
     clearInterval(bgmInterval);
     bgmInterval = null;
@@ -1005,7 +1040,7 @@ function checkPassword() {
 
 document.getElementById("passwordInput").addEventListener("keydown", function(e) {
   if (e.key === "Enter") {
-    playCustomSound('click');
+    playAnalogSound('click');
     checkPassword();
   }
 });
@@ -1027,11 +1062,10 @@ function toggleModal(show) {
 }
 
 /* =========================
-   입체적인 눈 내리기 (가까운 눈 / 먼 눈 분리)
+   입체적인 눈 내리기
 ========================= */
 const container = document.getElementById("snowContainer");
 
-// 먼 눈 (작고 느림)
 for (let i = 0; i < 35; i++) {
   const flake = document.createElement("span");
   flake.className = "flake-far";
@@ -1042,7 +1076,6 @@ for (let i = 0; i < 35; i++) {
   container.appendChild(flake);
 }
 
-// 가까운 눈 (크고 빠름)
 for (let i = 0; i < 20; i++) {
   const flake = document.createElement("span");
   flake.className = "flake-close";
@@ -1070,7 +1103,7 @@ function closePage() {
 
 document.addEventListener("keydown", function(e) {
   if (e.key === "Escape") {
-    playCustomSound('click');
+    playAnalogSound('click');
     closePage();
     toggleModal(false);
   }

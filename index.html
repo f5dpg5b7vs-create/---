@@ -5,709 +5,1133 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<meta name="theme-color" content="#05070a">
+<meta name="theme-color" content="#05070b">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
 <title>탐라배 곱꽹대전</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
 *{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  background:#05070a;
-  color:#f5f1e9;
+html,
+body{
+    width:100%;
+    height:100%;
+    background:#05070b;
+    color:#f5f2ec;
 }
 
 body{
-  overflow:hidden;
-  font-family:"Noto Sans KR",sans-serif;
+    overflow:hidden;
+    font-family:"Noto Sans KR",sans-serif;
 }
 
-button,input{
-  font:inherit;
+button,
+input{
+    font:inherit;
 }
 
 button{
-  -webkit-appearance:none;
-}
-
-/* ================= PASSWORD ================= */
-
-#passwordScreen{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  background:#05070a;
-}
-
-.passwordPhoto{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-
-  /* ★ 새 실사 겨울밤 사진 */
-  content:url(
-    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Snow-covered_street_in_Quebec_City_at_night.jpg"
-  );
-
-  filter:
-    brightness(.38)
-    contrast(1.08)
-    saturate(.72);
-}
-
-.passwordDark{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.25),
-      rgba(0,0,0,.72)
-    );
-}
-
-.passwordBox{
-  position:relative;
-  z-index:2;
-  width:calc(100% - 48px);
-  max-width:380px;
-  text-align:center;
-}
-
-.passwordKicker{
-  font-size:9px;
-  letter-spacing:.42em;
-  opacity:.62;
-  margin-bottom:18px;
-}
-
-.passwordTitle{
-  margin:0;
-  font-family:"Noto Serif KR",serif;
-  font-weight:300;
-  font-size:30px;
-  letter-spacing:.08em;
-}
-
-.passwordDescription{
-  margin:16px 0 30px;
-  font-family:"Noto Serif KR",serif;
-  font-size:12px;
-  line-height:2;
-  opacity:.68;
-}
-
-.passwordInput{
-  width:100%;
-  padding:15px;
-  border:1px solid rgba(255,255,255,.25);
-  background:rgba(0,0,0,.25);
-  color:white;
-  outline:none;
-  text-align:center;
-  letter-spacing:.18em;
-  backdrop-filter:blur(8px);
-}
-
-.passwordInput::placeholder{
-  color:rgba(255,255,255,.42);
-}
-
-.passwordButton{
-  width:100%;
-  margin-top:10px;
-  padding:14px;
-  border:1px solid rgba(255,255,255,.45);
-  background:rgba(255,255,255,.07);
-  color:white;
-  letter-spacing:.25em;
-}
-
-.passwordButton:active{
-  transform:scale(.98);
-}
-
-.passwordError{
-  height:18px;
-  margin-top:12px;
-  color:#dcb5ad;
-  font-size:10px;
-  opacity:0;
-}
-
-.passwordError.show{
-  opacity:1;
+    border:0;
+    background:none;
+    color:inherit;
 }
 
 
-/* ================= SITE ================= */
+/* =====================================================
+   PHOTO
+===================================================== */
 
-#site{
-  display:none;
+.bg-photo{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    /*
+      모바일에서 길이 너무 아래쪽으로
+      잘리지 않도록 살짝 위쪽
+    */
+    object-position:center center;
+
+    z-index:0;
 }
 
-#site.visible{
-  display:block;
+.bg-dark{
+    position:absolute;
+    inset:0;
+    z-index:1;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(3,6,10,.52) 0%,
+            rgba(3,6,10,.12) 38%,
+            rgba(3,6,10,.18) 58%,
+            rgba(3,6,10,.72) 100%
+        );
 }
 
+.bg-vignette{
+    position:absolute;
+    inset:0;
+    z-index:2;
 
-/* ================= HOME ================= */
+    pointer-events:none;
 
-.home{
-  position:relative;
-  width:100vw;
-  height:100svh;
-  min-height:100vh;
-  overflow:hidden;
-  background:#080a0d;
-}
-
-.homePhoto{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-
-  /*
-    ★★★★★
-    진짜 새 실사 겨울밤 사진
-  */
-  content:url(
-    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Snow-covered_street_in_Quebec_City_at_night.jpg"
-  );
-
-  object-position:center center;
-
-  filter:
-    brightness(.64)
-    contrast(1.08)
-    saturate(.72);
-
-  transform:scale(1.01);
-}
-
-.homeOverlay{
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.48) 0%,
-      rgba(0,0,0,.08) 34%,
-      rgba(0,0,0,.15) 58%,
-      rgba(0,0,0,.72) 100%
-    );
-}
-
-.homeVignette{
-  position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(
-      ellipse at center,
-      transparent 30%,
-      rgba(0,0,0,.4) 100%
-    );
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 28%,
+            rgba(0,0,0,.12) 55%,
+            rgba(0,0,0,.62) 100%
+        );
 }
 
 
-/* ================= SNOW ================= */
+/* =====================================================
+   PAGE
+===================================================== */
+
+.page{
+    position:fixed;
+    inset:0;
+
+    width:100%;
+    height:100dvh;
+
+    overflow:hidden;
+
+    background:#05070b;
+}
+
+
+/* =====================================================
+   SNOW
+===================================================== */
 
 .snow{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  pointer-events:none;
-  overflow:hidden;
+    position:absolute;
+    inset:0;
+
+    z-index:3;
+
+    pointer-events:none;
+
+    overflow:hidden;
 }
 
 .snowflake{
-  position:absolute;
-  top:-20px;
-  border-radius:50%;
-  background:rgba(255,255,255,.78);
-  animation:snowfall linear infinite;
+    position:absolute;
+
+    top:-15px;
+
+    width:2px;
+    height:2px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.72);
+
+    animation:
+        snowFall linear infinite;
 }
 
-@keyframes snowfall{
-  from{
-    transform:translate3d(0,-20px,0);
-  }
-  to{
-    transform:translate3d(35px,110vh,0);
-  }
-}
+@keyframes snowFall{
 
+    from{
+        transform:
+            translate3d(0,-20px,0);
+    }
 
-/* ================= TITLE ================= */
+    to{
+        transform:
+            translate3d(var(--drift),110vh,0);
+    }
 
-.mainTitle{
-  position:absolute;
-  z-index:6;
-  top:15%;
-  left:0;
-  right:0;
-  text-align:center;
-  pointer-events:none;
-}
-
-.titleKicker{
-  font-size:9px;
-  letter-spacing:.48em;
-  opacity:.62;
-  margin-bottom:15px;
-}
-
-.titleMain{
-  margin:0;
-  font-family:"Noto Serif KR",serif;
-  font-size:clamp(30px,9vw,50px);
-  font-weight:300;
-  letter-spacing:.08em;
-  text-shadow:0 2px 20px rgba(0,0,0,.7);
-}
-
-.titleLine{
-  width:40px;
-  height:1px;
-  margin:18px auto 16px;
-  background:rgba(255,255,255,.48);
-}
-
-.titleSub{
-  margin:0;
-  font-family:"Noto Serif KR",serif;
-  font-size:11px;
-  line-height:2;
-  letter-spacing:.1em;
-  opacity:.75;
 }
 
 
-/* ================= CREDITS BUTTON ================= */
+/* =====================================================
+   PASSWORD
+===================================================== */
 
-.creditsButton{
-  position:absolute;
-  z-index:20;
-  top:calc(env(safe-area-inset-top) + 18px);
-  right:20px;
-  border:0;
-  background:none;
-  color:white;
-  font-size:9px;
-  letter-spacing:.28em;
-  opacity:.72;
+#passwordPage{
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+}
+
+.password-box{
+
+    position:relative;
+
+    z-index:10;
+
+    width:min(86%,400px);
+
+    text-align:center;
+
+    padding:30px 20px;
+}
+
+.password-small{
+
+    font-size:9px;
+
+    letter-spacing:.45em;
+
+    margin-left:.45em;
+
+    color:rgba(255,255,255,.64);
+
+    margin-bottom:20px;
+}
+
+.password-title{
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:
+        clamp(
+            34px,
+            9vw,
+            47px
+        );
+
+    font-weight:400;
+
+    letter-spacing:-.08em;
+
+    text-shadow:
+        0 3px 25px rgba(0,0,0,.8);
+}
+
+.password-desc{
+
+    margin-top:15px;
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:12px;
+
+    line-height:1.9;
+
+    color:rgba(255,255,255,.72);
+}
+
+.password-divider{
+
+    width:1px;
+
+    height:45px;
+
+    background:
+        rgba(255,255,255,.35);
+
+    margin:29px auto 23px;
+}
+
+.password-input{
+
+    width:100%;
+
+    height:50px;
+
+    padding:0 15px;
+
+    text-align:center;
+
+    color:white;
+
+    background:
+        rgba(0,0,0,.27);
+
+    border:
+        1px solid
+        rgba(255,255,255,.34);
+
+    outline:none;
+
+    border-radius:2px;
+
+    letter-spacing:.25em;
+
+    backdrop-filter:blur(8px);
+}
+
+.password-input::placeholder{
+
+    color:
+        rgba(255,255,255,.43);
+}
+
+.password-input:focus{
+
+    border-color:
+        rgba(255,255,255,.7);
+}
+
+.enter-button{
+
+    width:100%;
+
+    height:50px;
+
+    margin-top:10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.45);
+
+    background:
+        rgba(255,255,255,.06);
+
+    font-size:10px;
+
+    letter-spacing:.32em;
+
+    padding-left:.32em;
+}
+
+.enter-button:active{
+
+    background:
+        rgba(255,255,255,.18);
+
+    transform:scale(.985);
+}
+
+.password-error{
+
+    height:20px;
+
+    margin-top:11px;
+
+    font-size:10px;
+
+    color:
+        rgba(255,205,205,.9);
 }
 
 
-/* ================= HOTSPOTS ================= */
+/* =====================================================
+   HOME
+===================================================== */
+
+#homePage{
+    display:none;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.home-header{
+
+    position:absolute;
+
+    z-index:8;
+
+    top:
+        max(
+            8%,
+            env(safe-area-inset-top) + 35px
+        );
+
+    left:0;
+
+    width:100%;
+
+    text-align:center;
+
+    pointer-events:none;
+}
+
+.home-overline{
+
+    font-size:8px;
+
+    letter-spacing:.48em;
+
+    margin-left:.48em;
+
+    color:
+        rgba(255,255,255,.67);
+
+    margin-bottom:17px;
+}
+
+.home-title{
+
+    font-family:"Noto Serif KR",serif;
+
+    font-weight:400;
+
+    font-size:
+        clamp(
+            35px,
+            10vw,
+            53px
+        );
+
+    letter-spacing:-.08em;
+
+    text-shadow:
+        0 4px 25px
+        rgba(0,0,0,.8);
+}
+
+.home-desc{
+
+    margin-top:13px;
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:10px;
+
+    line-height:1.9;
+
+    color:
+        rgba(255,255,255,.7);
+}
+
+
+/* =====================================================
+   CREDITS BUTTON
+===================================================== */
+
+.credits-open{
+
+    position:absolute;
+
+    z-index:12;
+
+    right:18px;
+
+    top:
+        max(
+            20px,
+            env(safe-area-inset-top)
+        );
+
+    padding:10px 3px;
+
+    font-size:9px;
+
+    letter-spacing:.24em;
+
+    color:
+        rgba(255,255,255,.68);
+}
+
+.credits-open::after{
+
+    content:"";
+
+    display:block;
+
+    width:100%;
+
+    height:1px;
+
+    margin-top:4px;
+
+    background:
+        rgba(255,255,255,.4);
+}
+
+
+/* =====================================================
+   INVISIBLE PHOTO HOTSPOTS
+===================================================== */
+
+/*
+    이게 이번 핵심.
+
+    사진 위에 버튼처럼 보이는 요소가 없음.
+    실제 사진의 세 영역을 직접 누르면 이동.
+
+    왼쪽  = 글
+    중앙  = 사진
+    오른쪽 = 영상
+*/
 
 .hotspot{
-  position:absolute;
-  z-index:10;
-  border:0;
-  background:transparent;
-}
 
-.hotspot:active{
-  background:rgba(255,255,255,.07);
-}
+    position:absolute;
 
-.hotspotStory{
-  left:7%;
-  top:47%;
-  width:28%;
-  height:29%;
-}
+    z-index:9;
 
-.hotspotPhoto{
-  left:36%;
-  top:48%;
-  width:28%;
-  height:29%;
-}
+    border:0;
 
-.hotspotVideo{
-  right:6%;
-  top:46%;
-  width:29%;
-  height:30%;
+    background:transparent;
+
+    cursor:pointer;
 }
 
 
-/* ================= MENU ================= */
+/* 왼쪽 골목 */
 
-.menuLabels{
-  position:absolute;
-  z-index:11;
-  left:0;
-  right:0;
-  bottom:calc(env(safe-area-inset-bottom) + 7%);
-  display:flex;
-  justify-content:center;
-  gap:16vw;
-  pointer-events:none;
-}
+.hotspot-left{
 
-.menuLabel{
-  min-width:42px;
-  text-align:center;
-  font-family:"Noto Serif KR",serif;
-  font-size:12px;
-  letter-spacing:.18em;
-  text-shadow:0 2px 10px #000;
-}
+    left:0;
 
-.menuLabel::after{
-  content:"";
-  display:block;
-  width:18px;
-  height:1px;
-  margin:8px auto 0;
-  background:rgba(255,255,255,.55);
+    top:37%;
+
+    width:35%;
+
+    height:48%;
 }
 
 
-/* ================= PAGE ================= */
+/* 중앙 길 */
 
-.page{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:none;
-  overflow-y:auto;
-  background:#080b10;
-}
+.hotspot-center{
 
-.page.show{
-  display:block;
-}
+    left:30%;
 
-.pageTop{
-  position:sticky;
-  top:0;
-  z-index:5;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:
-    calc(env(safe-area-inset-top) + 18px)
-    20px
-    15px;
-  background:linear-gradient(#080b10,rgba(8,11,16,.8),transparent);
-}
+    top:38%;
 
-.pageKicker{
-  font-size:9px;
-  letter-spacing:.3em;
-  opacity:.45;
-}
+    width:40%;
 
-.closePage{
-  width:35px;
-  height:35px;
-  border:1px solid rgba(255,255,255,.18);
-  border-radius:50%;
-  background:rgba(255,255,255,.04);
-  color:white;
-  font-size:21px;
-}
-
-.pageInner{
-  width:calc(100% - 40px);
-  max-width:720px;
-  margin:20px auto 100px;
-}
-
-.pageTitle{
-  margin:20px 0 10px;
-  font-family:"Noto Serif KR",serif;
-  font-size:36px;
-  font-weight:300;
-}
-
-.pageIntro{
-  margin:0 0 40px;
-  font-family:"Noto Serif KR",serif;
-  font-size:12px;
-  line-height:2;
-  opacity:.55;
+    height:49%;
 }
 
 
-/* ================= STORY ================= */
+/* 오른쪽 건물 / 빛 */
 
-.storyArticle{
-  padding:27px 0 30px;
-  border-top:1px solid rgba(255,255,255,.12);
-}
+.hotspot-right{
 
-.storyNumber{
-  font-size:9px;
-  letter-spacing:.3em;
-  opacity:.4;
-}
+    right:0;
 
-.storyTitle{
-  margin:11px 0 8px;
-  font-family:"Noto Serif KR",serif;
-  font-size:21px;
-  font-weight:400;
-}
+    top:35%;
 
-.storyMeta{
-  font-size:10px;
-  opacity:.4;
-}
+    width:35%;
 
-.storyText{
-  margin-top:21px;
-  font-family:"Noto Serif KR",serif;
-  font-size:13px;
-  line-height:2.25;
-  color:rgba(255,255,255,.7);
+    height:51%;
 }
 
 
-/* ================= PHOTO ================= */
+/* =====================================================
+   VERY SUBTLE LABELS
+===================================================== */
 
-.photoGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
+.area-label{
+
+    position:absolute;
+
+    z-index:10;
+
+    pointer-events:none;
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:11px;
+
+    letter-spacing:.16em;
+
+    color:
+        rgba(255,255,255,.68);
+
+    text-shadow:
+        0 2px 12px rgba(0,0,0,.9);
+
+    opacity:.72;
+
+    transition:.35s;
 }
 
-.photoCard{
-  position:relative;
-  overflow:hidden;
-  aspect-ratio:1/1;
+.label-left{
+
+    left:11%;
+
+    top:68%;
 }
 
-.photoCard:nth-child(1),
-.photoCard:nth-child(4){
-  aspect-ratio:3/4;
+.label-center{
+
+    left:50%;
+
+    top:72%;
+
+    transform:translateX(-50%);
 }
 
-.photoCard img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:saturate(.72) contrast(1.05);
+.label-right{
+
+    right:10%;
+
+    top:67%;
 }
 
-.photoCaption{
-  position:absolute;
-  left:12px;
-  bottom:12px;
-  font-size:9px;
-  text-shadow:0 2px 7px #000;
-}
+.hotspot:active ~ .label-left,
+.hotspot:active ~ .label-center,
+.hotspot:active ~ .label-right{
 
-
-/* ================= VIDEO ================= */
-
-.videoCard{
-  position:relative;
-  margin-bottom:10px;
-  overflow:hidden;
-  aspect-ratio:16/9;
-}
-
-.videoCard img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(.62) saturate(.65);
-}
-
-.playButton{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:52px;
-  height:52px;
-  border:1px solid rgba(255,255,255,.55);
-  border-radius:50%;
-  background:rgba(0,0,0,.25);
-  color:white;
-}
-
-.videoCaption{
-  margin-bottom:25px;
-  font-family:"Noto Serif KR",serif;
-  font-size:13px;
+    opacity:1;
 }
 
 
-/* ================= CREDITS ================= */
+/* =====================================================
+   BOTTOM
+===================================================== */
 
-.credits{
-  position:fixed;
-  inset:0;
-  z-index:500;
-  display:none;
-  overflow-y:auto;
-  background:linear-gradient(#080b10,#05070b);
+.home-bottom{
+
+    position:absolute;
+
+    z-index:8;
+
+    left:0;
+
+    bottom:
+        max(
+            25px,
+            env(safe-area-inset-bottom) + 18px
+        );
+
+    width:100%;
+
+    text-align:center;
+
+    pointer-events:none;
 }
 
-.credits.show{
-  display:block;
+.bottom-line{
+
+    width:34px;
+
+    height:1px;
+
+    margin:0 auto 11px;
+
+    background:
+        rgba(255,255,255,.42);
 }
 
-.creditsClose{
-  position:fixed;
-  z-index:10;
-  top:calc(env(safe-area-inset-top) + 17px);
-  right:18px;
-  width:37px;
-  height:37px;
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:50%;
-  background:rgba(255,255,255,.04);
-  color:white;
-  font-size:23px;
-}
+.home-bottom p{
 
-.creditsInner{
-  width:calc(100% - 42px);
-  max-width:650px;
-  margin:auto;
-  padding:
-    calc(env(safe-area-inset-top) + 100px)
-    0
-    calc(env(safe-area-inset-bottom) + 70px);
-}
+    font-size:8px;
 
-.creditsKicker{
-  font-size:8px;
-  letter-spacing:.35em;
-  opacity:.42;
-}
+    letter-spacing:.3em;
 
-.creditsTitle{
-  margin:14px 0 9px;
-  font-family:"Noto Serif KR",serif;
-  font-size:39px;
-  font-weight:300;
-}
-
-.creditsSubtitle{
-  font-family:"Noto Serif KR",serif;
-  font-size:11px;
-  opacity:.5;
-}
-
-.creditsLine{
-  width:100%;
-  height:1px;
-  margin:35px 0 40px;
-  background:rgba(255,255,255,.13);
-}
-
-.creditSection{
-  margin-bottom:48px;
-}
-
-.creditSectionTitle{
-  display:flex;
-  align-items:baseline;
-  gap:12px;
-  margin-bottom:16px;
-  padding-bottom:10px;
-  border-bottom:1px solid rgba(255,255,255,.09);
-}
-
-.creditSectionTitle span{
-  font-family:"Noto Serif KR",serif;
-  font-size:20px;
-}
-
-.creditSectionTitle small{
-  font-size:8px;
-  letter-spacing:.22em;
-  opacity:.35;
-}
-
-.creditItem{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  padding:12px 0;
-  border-bottom:1px solid rgba(255,255,255,.045);
-}
-
-.creditName{
-  font-size:11px;
-}
-
-.creditCP{
-  max-width:63%;
-  text-align:right;
-  font-family:"Noto Serif KR",serif;
-  font-size:11px;
-  line-height:1.7;
-  color:rgba(255,255,255,.55);
-}
-
-.creditEmpty{
-  padding:14px 0;
-  font-size:10px;
-  opacity:.35;
-}
-
-.creditFooter{
-  margin-top:80px;
-  padding-top:22px;
-  border-top:1px solid rgba(255,255,255,.1);
-  font-size:8px;
-  line-height:2.2;
-  letter-spacing:.25em;
-  opacity:.32;
+    color:
+        rgba(255,255,255,.47);
 }
 
 
-/* ================= MOBILE ================= */
+/* =====================================================
+   SUB PAGE
+===================================================== */
 
-@media(max-width:390px){
+.subpage{
 
-  .titleMain{
-    font-size:29px;
-  }
+    position:fixed;
 
-  .menuLabels{
-    gap:14vw;
-  }
+    inset:0;
 
+    z-index:50;
+
+    background:#080b10;
+
+    overflow-y:auto;
+
+    -webkit-overflow-scrolling:touch;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.sub-inner{
+
+    width:min(88%,650px);
+
+    margin:auto;
+
+    padding:
+        max(
+            82px,
+            env(safe-area-inset-top) + 60px
+        )
+        0
+        70px;
+}
+
+.back{
+
+    position:fixed;
+
+    z-index:60;
+
+    left:19px;
+
+    top:
+        max(
+            18px,
+            env(safe-area-inset-top)
+        );
+
+    padding:12px 3px;
+
+    font-size:9px;
+
+    letter-spacing:.22em;
+
+    color:
+        rgba(255,255,255,.68);
+}
+
+.sub-overline{
+
+    font-size:8px;
+
+    letter-spacing:.42em;
+
+    color:
+        rgba(255,255,255,.42);
+
+    margin-bottom:16px;
+}
+
+.sub-title{
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:34px;
+
+    font-weight:400;
+
+    letter-spacing:-.08em;
+}
+
+.sub-line{
+
+    width:35px;
+
+    height:1px;
+
+    background:
+        rgba(255,255,255,.34);
+
+    margin:23px 0 40px;
 }
 
 
-/* ================= DESKTOP ================= */
+/* =====================================================
+   STORY
+===================================================== */
+
+.story{
+
+    padding-bottom:48px;
+
+    margin-bottom:45px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.09);
+}
+
+.story-number{
+
+    font-size:9px;
+
+    letter-spacing:.25em;
+
+    color:
+        rgba(255,255,255,.32);
+
+    margin-bottom:13px;
+}
+
+.story-title{
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:23px;
+
+    line-height:1.5;
+
+    font-weight:500;
+
+    letter-spacing:-.05em;
+}
+
+.story-meta{
+
+    margin-top:9px;
+
+    font-size:9px;
+
+    color:
+        rgba(255,255,255,.38);
+}
+
+.story-text{
+
+    margin-top:28px;
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:13px;
+
+    line-height:2.25;
+
+    color:
+        rgba(255,255,255,.74);
+
+    word-break:keep-all;
+}
+
+
+/* =====================================================
+   PHOTO
+===================================================== */
+
+.photo-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+}
+
+.photo-card{
+
+    overflow:hidden;
+
+    aspect-ratio:3/4;
+
+    background:#111;
+}
+
+.photo-card:first-child{
+
+    grid-column:span 2;
+
+    aspect-ratio:16/10;
+}
+
+.photo-card img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+}
+
+
+/* =====================================================
+   VIDEO
+===================================================== */
+
+.video-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+}
+
+.video-card{
+
+    position:relative;
+
+    width:100%;
+
+    aspect-ratio:16/9;
+
+    overflow:hidden;
+
+    background:#111;
+}
+
+.video-card img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+}
+
+.video-dark{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.75),
+            rgba(0,0,0,.05)
+        );
+}
+
+.play{
+
+    position:absolute;
+
+    left:50%;
+
+    top:50%;
+
+    width:55px;
+
+    height:55px;
+
+    transform:translate(-50%,-50%);
+
+    border:
+        1px solid
+        rgba(255,255,255,.65);
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:14px;
+
+    padding-left:3px;
+}
+
+.video-name{
+
+    position:absolute;
+
+    left:15px;
+
+    bottom:14px;
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   CREDITS
+===================================================== */
+
+#creditsPage{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100;
+
+    display:none;
+
+    overflow-y:auto;
+
+    background:#070a0f;
+}
+
+.credits-inner{
+
+    width:min(88%,600px);
+
+    margin:auto;
+
+    padding:
+        max(
+            90px,
+            env(safe-area-inset-top) + 65px
+        )
+        0
+        80px;
+}
+
+.credits-close{
+
+    position:fixed;
+
+    z-index:110;
+
+    right:19px;
+
+    top:
+        max(
+            18px,
+            env(safe-area-inset-top)
+        );
+
+    padding:12px 3px;
+
+    font-size:9px;
+
+    letter-spacing:.2em;
+
+    color:
+        rgba(255,255,255,.65);
+}
+
+.credits-head{
+
+    text-align:center;
+}
+
+.credits-head small{
+
+    font-size:8px;
+
+    letter-spacing:.4em;
+
+    color:
+        rgba(255,255,255,.4);
+}
+
+.credits-head h2{
+
+    margin-top:17px;
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:34px;
+
+    font-weight:400;
+
+    letter-spacing:-.08em;
+}
+
+.credits-head p{
+
+    margin-top:14px;
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:10px;
+
+    line-height:1.9;
+
+    color:
+        rgba(255,255,255,.45);
+}
+
+.credit-line{
+
+    width:35px;
+
+    height:1px;
+
+    background:
+        rgba(255,255,255,.3);
+
+    margin:27px auto 48px;
+}
+
+.credit-section{
+
+    margin-bottom:45px;
+}
+
+.credit-section-title{
+
+    font-size:9px;
+
+    letter-spacing:.3em;
+
+    color:
+        rgba(255,255,255,.4);
+
+    margin-bottom:19px;
+}
+
+.credit-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+}
+
+.credit-item{
+
+    padding-bottom:14px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.credit-name{
+
+    display:block;
+
+    font-family:"Noto Serif KR",serif;
+
+    font-size:14px;
+}
+
+.credit-work{
+
+    display:block;
+
+    margin-top:4px;
+
+    font-size:9px;
+
+    line-height:1.7;
+
+    color:
+        rgba(255,255,255,.45);
+}
+
+
+/* =====================================================
+   DESKTOP
+===================================================== */
 
 @media(min-width:700px){
 
-  .homePhoto{
-    object-position:center center;
-  }
+    .home-title{
+        top:10%;
+    }
+
+    .hotspot-left{
+        width:32%;
+    }
+
+    .hotspot-center{
+        width:36%;
+        left:32%;
+    }
+
+    .hotspot-right{
+        width:32%;
+    }
 
 }
 
@@ -718,856 +1142,1184 @@ button{
 <body>
 
 
-<!-- ================= PASSWORD ================= -->
-
-<section id="passwordScreen">
-
-  <img
-    class="passwordPhoto"
-    alt="겨울밤 실사 사진"
-  >
-
-  <div class="passwordDark"></div>
-
-  <div class="passwordBox">
-
-    <div class="passwordKicker">
-      TAMRABAE · PRIVATE WEBZINE
-    </div>
-
-    <h1 class="passwordTitle">
-      탐라배 곱꽹대전
-    </h1>
-
-    <p class="passwordDescription">
-      눈이 내리는 밤,<br>
-      우리가 남겨두고 싶은 이야기들.
-    </p>
-
-    <input
-      id="passwordInput"
-      class="passwordInput"
-      type="password"
-      placeholder="PASSWORD"
-      autocomplete="off"
-    >
-
-    <button
-      class="passwordButton"
-      onclick="clickSound();enterSite();"
-    >
-      ENTER
-    </button>
-
-    <div
-      id="passwordError"
-      class="passwordError"
-    >
-      비밀번호가 올바르지 않습니다.
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= MAIN ================= -->
-
-<main id="site">
-
-<section class="home">
-
-  <!-- ★★★★★ 새 실사 겨울밤 배경 -->
-  <img
-    class="homePhoto"
-    alt="눈 덮인 겨울밤 거리"
-  >
-
-  <div class="homeOverlay"></div>
-  <div class="homeVignette"></div>
-
-  <div
-    class="snow"
-    id="snow"
-  ></div>
-
-
-  <div class="mainTitle">
-
-    <div class="titleKicker">
-      LITERARY WEBZINE
-    </div>
-
-    <h1 class="titleMain">
-      탐라배 곱꽹대전
-    </h1>
-
-    <div class="titleLine"></div>
-
-    <p class="titleSub">
-      눈이 내리는 밤, 우리가 남겨두고 싶은 이야기들.
-    </p>
-
-  </div>
-
-
-  <button
-    class="creditsButton"
-    onclick="clickSound();openCredits();"
-  >
-    CREDITS
-  </button>
-
-
-  <button
-    class="hotspot hotspotStory"
-    onclick="clickSound();openPage('storyPage')"
-    aria-label="글"
-  ></button>
-
-  <button
-    class="hotspot hotspotPhoto"
-    onclick="clickSound();openPage('photoPage')"
-    aria-label="사진"
-  ></button>
-
-  <button
-    class="hotspot hotspotVideo"
-    onclick="clickSound();openPage('videoPage')"
-    aria-label="영상"
-  ></button>
-
-
-  <div class="menuLabels">
-
-    <div class="menuLabel">글</div>
-    <div class="menuLabel">사진</div>
-    <div class="menuLabel">영상</div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= STORY ================= -->
-
-<section id="storyPage" class="page">
-
-  <div class="pageTop">
-
-    <div class="pageKicker">
-      TAMRABAE · WRITING
-    </div>
-
-    <button
-      class="closePage"
-      onclick="clickSound();closePage()"
-    >
-      ×
-    </button>
-
-  </div>
-
-  <div class="pageInner">
-
-    <h1 class="pageTitle">글</h1>
-
-    <p class="pageIntro">
-      우리가 겨울밤에 남겨놓은 문장들.
-    </p>
-
-
-    <article class="storyArticle">
-
-      <div class="storyNumber">001</div>
-
-      <h2 class="storyTitle">
-        겨울의 가장자리
-      </h2>
-
-      <div class="storyMeta">
-        탐라배 곱꽹대전
-      </div>
-
-      <p class="storyText">
-        겨울밤에는 이상하게도 평소보다 많은 것들이
-        선명해진다. 멀리 있는 불빛과 오래된 기억,
-        그리고 아직 하지 못한 말들까지.
-      </p>
-
-    </article>
-
-
-    <article class="storyArticle">
-
-      <div class="storyNumber">002</div>
-
-      <h2 class="storyTitle">
-        눈이 오던 날의 이야기
-      </h2>
-
-      <div class="storyMeta">
-        탐라배 곱꽹대전
-      </div>
-
-      <p class="storyText">
-        창문에 기대어 눈을 바라보던 밤.
-        세상은 조용했고 우리는 서로에게
-        조금 더 가까워져 있었다.
-      </p>
-
-    </article>
-
-
-    <article class="storyArticle">
-
-      <div class="storyNumber">003</div>
-
-      <h2 class="storyTitle">
-        남겨진 불빛
-      </h2>
-
-      <div class="storyMeta">
-        탐라배 곱꽹대전
-      </div>
-
-      <p class="storyText">
-        모두가 돌아간 뒤에도 하나의 불빛은
-        오래도록 꺼지지 않았다.
-        어쩌면 그것은 누군가를 기다리는 마음이었다.
-      </p>
-
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- ================= PHOTO ================= -->
-
-<section id="photoPage" class="page">
-
-  <div class="pageTop">
-
-    <div class="pageKicker">
-      TAMRABAE · PHOTOGRAPHY
-    </div>
-
-    <button
-      class="closePage"
-      onclick="clickSound();closePage()"
-    >
-      ×
-    </button>
-
-  </div>
-
-  <div class="pageInner">
-
-    <h1 class="pageTitle">사진</h1>
-
-    <p class="pageIntro">
-      말보다 오래 남는 장면들.
-    </p>
-
-    <div class="photoGrid">
-
-      <div class="photoCard">
-        <img
-          src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=900&q=85"
-          alt="겨울 숲"
-        >
-        <div class="photoCaption">WINTER · 01</div>
-      </div>
-
-      <div class="photoCard">
-        <img
-          src="https://images.unsplash.com/photo-1453306458620-5bbef13a5bca?auto=format&fit=crop&w=900&q=85"
-          alt="겨울 풍경"
-        >
-        <div class="photoCaption">WINTER · 02</div>
-      </div>
-
-      <div class="photoCard">
-        <img
-          src="https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?auto=format&fit=crop&w=900&q=85"
-          alt="눈 내리는 겨울"
-        >
-        <div class="photoCaption">WINTER · 03</div>
-      </div>
-
-      <div class="photoCard">
-        <img
-          src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&w=900&q=85"
-          alt="겨울밤"
-        >
-        <div class="photoCaption">WINTER · 04</div>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= VIDEO ================= -->
-
-<section id="videoPage" class="page">
-
-  <div class="pageTop">
-
-    <div class="pageKicker">
-      TAMRABAE · VIDEO
-    </div>
-
-    <button
-      class="closePage"
-      onclick="clickSound();closePage()"
-    >
-      ×
-    </button>
-
-  </div>
-
-  <div class="pageInner">
-
-    <h1 class="pageTitle">영상</h1>
-
-    <p class="pageIntro">
-      겨울밤의 장면을 움직임으로 남기다.
-    </p>
-
-    <div class="videoCard">
-
-      <img
-        src="https://images.unsplash.com/photo-1478266403884-80b7f6c7e6e8?auto=format&fit=crop&w=1200&q=85"
-        alt="겨울 영상"
-      >
-
-      <button
-        class="playButton"
-        onclick="clickSound();fakeVideo()"
-      >
-        ▶
-      </button>
-
-    </div>
-
-    <div class="videoCaption">
-      WINTER NIGHT · 01
-    </div>
-
-
-    <div class="videoCard">
-
-      <img
-        src="https://images.unsplash.com/photo-1548777123-e216912df7d8?auto=format&fit=crop&w=1200&q=85"
-        alt="겨울밤 영상"
-      >
-
-      <button
-        class="playButton"
-        onclick="clickSound();fakeVideo()"
-      >
-        ▶
-      </button>
-
-    </div>
-
-    <div class="videoCaption">
-      WINTER NIGHT · 02
-    </div>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<!-- ================= CREDITS ================= -->
-
-<div
-  id="credits"
-  class="credits"
+<!-- =====================================================
+     PASSWORD PAGE
+===================================================== -->
+
+<section
+    id="passwordPage"
+    class="page"
 >
 
-  <button
-    class="creditsClose"
-    onclick="clickSound();closeCredits()"
-  >
-    ×
-  </button>
+    <img
+        class="bg-photo"
+        src="https://images.unsplash.com/photo-1765749420162-4e12f3798d84?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=85&w=2400"
+        alt=""
+    >
+
+    <div class="bg-dark"></div>
+    <div class="bg-vignette"></div>
+
+    <div
+        class="snow"
+        id="passwordSnow"
+    ></div>
 
 
-  <div class="creditsInner">
+    <div class="password-box">
 
-    <div class="creditsKicker">
-      TAMRABAE · LITERARY WEBZINE
+        <div class="password-small">
+            LITERARY WEBZINE
+        </div>
+
+        <h1 class="password-title">
+            탐라배 곱꽹대전
+        </h1>
+
+        <p class="password-desc">
+            눈이 내리는 밤,<br>
+            우리가 남겨두고 싶은 이야기들.
+        </p>
+
+        <div class="password-divider"></div>
+
+        <input
+            id="passwordInput"
+            class="password-input"
+            type="password"
+            placeholder="PASSWORD"
+            autocomplete="off"
+        >
+
+        <button
+            id="enterButton"
+            class="enter-button"
+        >
+            ENTER
+        </button>
+
+        <div
+            id="passwordError"
+            class="password-error"
+        ></div>
+
     </div>
 
-    <h1 class="creditsTitle">
-      참여진
-    </h1>
+</section>
 
-    <div class="creditsSubtitle">
-      탐라배 곱꽹대전에 함께해주신 분들
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section
+    id="homePage"
+    class="page"
+>
+
+    <img
+        class="bg-photo"
+        src="https://images.unsplash.com/photo-1765749420162-4e12f3798d84?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=85&w=2400"
+        alt="눈 내리는 겨울밤의 골목"
+    >
+
+    <div class="bg-dark"></div>
+    <div class="bg-vignette"></div>
+
+    <div
+        class="snow"
+        id="homeSnow"
+    ></div>
+
+
+    <!-- CREDITS -->
+
+    <button
+        id="creditsOpen"
+        class="credits-open"
+    >
+        CREDITS
+    </button>
+
+
+    <!-- TITLE -->
+
+    <div class="home-header">
+
+        <div class="home-overline">
+            LITERARY WEBZINE
+        </div>
+
+        <h1 class="home-title">
+            탐라배 곱꽹대전
+        </h1>
+
+        <p class="home-desc">
+            눈이 내리는 밤, 우리가 남겨두고 싶은 이야기들.
+        </p>
+
     </div>
 
-    <div class="creditsLine"></div>
+
+    <!-- =================================================
+         INVISIBLE HOTSPOTS
+    ================================================= -->
+
+    <button
+        id="storyButton"
+        class="hotspot hotspot-left"
+        aria-label="글"
+    ></button>
+
+    <button
+        id="photoButton"
+        class="hotspot hotspot-center"
+        aria-label="사진"
+    ></button>
+
+    <button
+        id="videoButton"
+        class="hotspot hotspot-right"
+        aria-label="영상"
+    ></button>
 
 
-    <!-- 글 -->
+    <!-- 아주 작게만 표시되는 안내 -->
 
-    <section class="creditSection">
-
-      <div class="creditSectionTitle">
-        <span>글</span>
-        <small>WRITING</small>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">필삼이</span>
-        <span class="creditCP">요미꼬미 쭌뺌</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">치약이</span>
-        <span class="creditCP">빵왕</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">개양이</span>
-        <span class="creditCP">탠동 원구 뼈뉴 요미꼬미</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">벌벌</span>
-        <span class="creditCP">후혜</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">스디</span>
-        <span class="creditCP">우강훈김영우</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">청</span>
-        <span class="creditCP">탠찬 민욱</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">영원</span>
-        <span class="creditCP">윤손</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">SA</span>
-        <span class="creditCP">탠찬</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">하린</span>
-        <span class="creditCP">달별</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">동이</span>
-        <span class="creditCP">윤손 꼬순</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">딱</span>
-        <span class="creditCP">재롱 쭌잿</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">cuybf</span>
-        <span class="creditCP">쩡껀</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">본</span>
-        <span class="creditCP">창찬</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">아</span>
-        <span class="creditCP">한훈</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">순이</span>
-        <span class="creditCP">윤훈</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">you</span>
-        <span class="creditCP">윤황</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">하프</span>
-        <span class="creditCP">삐뭅 건뱅</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">궁</span>
-        <span class="creditCP">한우</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">킨교</span>
-        <span class="creditCP">
-          전준표박준현<br>
-          장재영이주형<br>
-          김주원신재인
-        </span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">dp</span>
-        <span class="creditCP">
-          렘배(안배) 읠뎡
-        </span>
-      </div>
-
-    </section>
-
-
-    <!-- 그림 -->
-
-    <section class="creditSection">
-
-      <div class="creditSectionTitle">
-        <span>그림</span>
-        <small>ILLUSTRATION</small>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">
-          연쇄박음마: 일등병⭐️(히키)
-        </span>
-        <span class="creditCP">창찬</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">얌빵</span>
-        <span class="creditCP">펑뜽</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">박진만</span>
-        <span class="creditCP">풍뎅</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">Ham guinea jyu</span>
-        <span class="creditCP">한훈 뱅쬬</span>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">눙</span>
-        <span class="creditCP">쩡손</span>
-      </div>
-
-    </section>
-
-
-    <!-- 영상 -->
-
-    <section class="creditSection">
-
-      <div class="creditSectionTitle">
-        <span>영상</span>
-        <small>VIDEO</small>
-      </div>
-
-      <div class="creditEmpty">
-        아직 등록된 영상 참여자가 없습니다.
-      </div>
-
-    </section>
-
-
-    <!-- 기타 -->
-
-    <section class="creditSection">
-
-      <div class="creditSectionTitle">
-        <span>기타</span>
-        <small>OTHER</small>
-      </div>
-
-      <div class="creditItem">
-        <span class="creditName">사부</span>
-        <span class="creditCP">한훈</span>
-      </div>
-
-    </section>
-
-
-    <div class="creditFooter">
-      탐라배 곱꽹대전<br>
-      2026 · WINTER NIGHT
+    <div class="area-label label-left">
+        글
     </div>
 
-  </div>
+    <div class="area-label label-center">
+        사진
+    </div>
 
-</div>
+    <div class="area-label label-right">
+        영상
+    </div>
+
+
+    <div class="home-bottom">
+
+        <div class="bottom-line"></div>
+
+        <p>
+            WINTER · 2026
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     STORY
+===================================================== -->
+
+<section
+    id="storyPage"
+    class="subpage hidden"
+>
+
+    <button
+        class="back"
+        onclick="goHome()"
+    >
+        ← HOME
+    </button>
+
+
+    <div class="sub-inner">
+
+        <div class="sub-overline">
+            LITERATURE
+        </div>
+
+        <h2 class="sub-title">
+            글
+        </h2>
+
+        <div class="sub-line"></div>
+
+
+        <article class="story">
+
+            <div class="story-number">
+                01
+            </div>
+
+            <h3 class="story-title">
+                겨울밤의 이름
+            </h3>
+
+            <div class="story-meta">
+                탐라배 곱꽹대전
+            </div>
+
+            <p class="story-text">
+                눈이 내리는 날이면 이상하게도 오래전의
+                목소리들이 생각난다.<br><br>
+
+                아주 멀리 있는 것처럼 느껴졌던 계절이
+                사실은 한 걸음밖에 떨어져 있지 않았다는
+                것을, 겨울은 조용히 알려준다.<br><br>
+
+                우리는 서로에게 아무 말도 하지 않은 채
+                같은 밤을 걷고 있었다.
+            </p>
+
+        </article>
+
+
+        <article class="story">
+
+            <div class="story-number">
+                02
+            </div>
+
+            <h3 class="story-title">
+                우리가 남겨둔 것들
+            </h3>
+
+            <div class="story-meta">
+                탐라배 곱꽹대전
+            </div>
+
+            <p class="story-text">
+                어떤 이야기는 끝나지 않는다.<br><br>
+
+                다만 다음 계절로 넘어가면서
+                조금씩 다른 이름을 갖게 될 뿐이다.
+            </p>
+
+        </article>
+
+
+        <article class="story">
+
+            <div class="story-number">
+                03
+            </div>
+
+            <h3 class="story-title">
+                눈이 오는 동안
+            </h3>
+
+            <div class="story-meta">
+                탐라배 곱꽹대전
+            </div>
+
+            <p class="story-text">
+                창문 밖으로 눈이 내리고 있었다.
+                아무도 서두르지 않는 밤이었다.<br><br>
+
+                우리는 그 밤을 오래 기억하기로 했다.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PHOTO
+===================================================== -->
+
+<section
+    id="photoPage"
+    class="subpage hidden"
+>
+
+    <button
+        class="back"
+        onclick="goHome()"
+    >
+        ← HOME
+    </button>
+
+
+    <div class="sub-inner">
+
+        <div class="sub-overline">
+            PHOTOGRAPHY
+        </div>
+
+        <h2 class="sub-title">
+            사진
+        </h2>
+
+        <div class="sub-line"></div>
+
+
+        <div class="photo-grid">
+
+            <div class="photo-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1765749420162-4e12f3798d84?auto=format&fit=crop&w=1400&q=85"
+                    alt=""
+                >
+
+            </div>
+
+
+            <div class="photo-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=900&q=85"
+                    alt=""
+                >
+
+            </div>
+
+
+            <div class="photo-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1548777123-e216912df7d8?auto=format&fit=crop&w=900&q=85"
+                    alt=""
+                >
+
+            </div>
+
+
+            <div class="photo-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&w=900&q=85"
+                    alt=""
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     VIDEO
+===================================================== -->
+
+<section
+    id="videoPage"
+    class="subpage hidden"
+>
+
+    <button
+        class="back"
+        onclick="goHome()"
+    >
+        ← HOME
+    </button>
+
+
+    <div class="sub-inner">
+
+        <div class="sub-overline">
+            MOVING IMAGE
+        </div>
+
+        <h2 class="sub-title">
+            영상
+        </h2>
+
+        <div class="sub-line"></div>
+
+
+        <div class="video-list">
+
+            <button
+                class="video-card"
+                onclick="fakeVideo()"
+            >
+
+                <img
+                    src="https://images.unsplash.com/photo-1765749420162-4e12f3798d84?auto=format&fit=crop&w=1200&q=85"
+                    alt=""
+                >
+
+                <div class="video-dark"></div>
+
+                <div class="play">
+                    ▶
+                </div>
+
+                <div class="video-name">
+                    겨울의 첫 장면
+                </div>
+
+            </button>
+
+
+            <button
+                class="video-card"
+                onclick="fakeVideo()"
+            >
+
+                <img
+                    src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=1200&q=85"
+                    alt=""
+                >
+
+                <div class="video-dark"></div>
+
+                <div class="play">
+                    ▶
+                </div>
+
+                <div class="video-name">
+                    눈이 내리는 동안
+                </div>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CREDITS
+===================================================== -->
+
+<section id="creditsPage">
+
+    <button
+        id="creditsClose"
+        class="credits-close"
+    >
+        CLOSE ×
+    </button>
+
+
+    <div class="credits-inner">
+
+        <div class="credits-head">
+
+            <small>
+                CONTRIBUTORS
+            </small>
+
+            <h2>
+                참여자
+            </h2>
+
+            <p>
+                탐라배 곱꽹대전을 함께 만들어준<br>
+                모든 사람들에게.
+            </p>
+
+        </div>
+
+
+        <div class="credit-line"></div>
+
+
+        <!-- 글 -->
+
+        <div class="credit-section">
+
+            <div class="credit-section-title">
+                글
+            </div>
+
+            <div class="credit-list">
+
+                <div class="credit-item">
+                    <span class="credit-name">필삼이</span>
+                    <span class="credit-work">요미꼬미 쭌뺌</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">치약이</span>
+                    <span class="credit-work">빵왕</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">개양이</span>
+                    <span class="credit-work">탠동 원구 뼈뉴 요미꼬미</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">벌벌</span>
+                    <span class="credit-work">후혜</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">스디</span>
+                    <span class="credit-work">우강훈김영우</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">청</span>
+                    <span class="credit-work">탠찬 민욱</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">영원</span>
+                    <span class="credit-work">윤손</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">SA</span>
+                    <span class="credit-work">탠찬</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">하린</span>
+                    <span class="credit-work">달별</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">동이</span>
+                    <span class="credit-work">윤손 꼬순</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">딱</span>
+                    <span class="credit-work">재롱 쭌잿</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">
+                        cuybf(상태:가능충)
+                    </span>
+                    <span class="credit-work">쩡껀</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">본</span>
+                    <span class="credit-work">창찬</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">아</span>
+                    <span class="credit-work">한훈</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">순이</span>
+                    <span class="credit-work">윤훈</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">you</span>
+                    <span class="credit-work">윤황</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">하프</span>
+                    <span class="credit-work">삐뭅 건뱅</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">궁</span>
+                    <span class="credit-work">한우</span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">킨교</span>
+                    <span class="credit-work">
+                        전준표박준현 장재영이주형
+                        김주원신재인
+                    </span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">dp</span>
+                    <span class="credit-work">
+                        렘배(안배) 읠뎡
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 그림 -->
+
+        <div class="credit-section">
+
+            <div class="credit-section-title">
+                그림
+            </div>
+
+            <div class="credit-list">
+
+                <div class="credit-item">
+                    <span class="credit-name">
+                        연쇄박음마: 일등병⭐️(히키)
+                    </span>
+                    <span class="credit-work">
+                        창찬
+                    </span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">
+                        얌빵
+                    </span>
+                    <span class="credit-work">
+                        펑뜽
+                    </span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">
+                        박진만
+                    </span>
+                    <span class="credit-work">
+                        풍뎅
+                    </span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">
+                        Ham guinea jyu
+                    </span>
+                    <span class="credit-work">
+                        한훈 뱅쬬
+                    </span>
+                </div>
+
+                <div class="credit-item">
+                    <span class="credit-name">
+                        눙
+                    </span>
+                    <span class="credit-work">
+                        쩡손
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 영상 -->
+
+        <div class="credit-section">
+
+            <div class="credit-section-title">
+                영상
+            </div>
+
+            <div class="credit-list">
+
+                <div class="credit-item">
+                    <span class="credit-name">—</span>
+                    <span class="credit-work">
+                        준비 중
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 기타 -->
+
+        <div class="credit-section">
+
+            <div class="credit-section-title">
+                기타
+            </div>
+
+            <div class="credit-list">
+
+                <div class="credit-item">
+                    <span class="credit-name">
+                        사부
+                    </span>
+                    <span class="credit-work">
+                        한훈 · 미정
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            style="
+                text-align:center;
+                padding-top:25px;
+                color:rgba(255,255,255,.22);
+                font-size:8px;
+                letter-spacing:.28em;
+            "
+        >
+            TAMRABAE · WINTER 2026
+        </div>
+
+    </div>
+
+</section>
+
 
 
 <script>
 
-/* ================= PASSWORD ================= */
+/* =====================================================
+   PASSWORD
+===================================================== */
 
-const SECRET_PASSWORD = "ohmyps";
+const PASSWORD = "ohmyps";
 
-function enterSite(){
 
-  const input =
+const passwordPage =
+    document.getElementById("passwordPage");
+
+const homePage =
+    document.getElementById("homePage");
+
+const passwordInput =
     document.getElementById("passwordInput");
 
-  const error =
+const enterButton =
+    document.getElementById("enterButton");
+
+const passwordError =
     document.getElementById("passwordError");
 
-  if(input.value === SECRET_PASSWORD){
 
-    sessionStorage.setItem(
-      "tamrabae_access",
-      "true"
-    );
-
-    document
-      .getElementById("passwordScreen")
-      .style.display = "none";
-
-    document
-      .getElementById("site")
-      .classList.add("visible");
-
-    document.body.style.overflow = "hidden";
-
-  }else{
-
-    error.classList.add("show");
-
-    input.value = "";
-
-    setTimeout(function(){
-      error.classList.remove("show");
-    },1800);
-
-  }
-}
-
-
-document
-  .getElementById("passwordInput")
-  .addEventListener(
-    "keydown",
-    function(e){
-
-      if(e.key === "Enter"){
-        enterSite();
-      }
-
-    }
-  );
-
-
-if(
-  sessionStorage.getItem("tamrabae_access")
-  === "true"
-){
-
-  document
-    .getElementById("passwordScreen")
-    .style.display = "none";
-
-  document
-    .getElementById("site")
-    .classList.add("visible");
-
-}
-
-
-/* ================= CLICK SOUND ================= */
+/* =====================================================
+   AUDIO
+===================================================== */
 
 let audioContext = null;
 
 function clickSound(){
 
-  try{
+    try{
 
-    if(!audioContext){
+        if(!audioContext){
 
-      audioContext =
-        new (
-          window.AudioContext ||
-          window.webkitAudioContext
-        )();
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+        if(
+            audioContext.state ===
+            "suspended"
+        ){
+
+            audioContext.resume();
+
+        }
+
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+
+        oscillator.type = "sine";
+
+
+        oscillator.frequency.setValueAtTime(
+            1100,
+            audioContext.currentTime
+        );
+
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+            520,
+            audioContext.currentTime + .05
+        );
+
+
+        gain.gain.setValueAtTime(
+            .0001,
+            audioContext.currentTime
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            .05,
+            audioContext.currentTime + .006
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            audioContext.currentTime + .06
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+            audioContext.destination
+        );
+
+
+        oscillator.start();
+
+        oscillator.stop(
+            audioContext.currentTime + .065
+        );
+
+    }catch(e){}
+
+}
+
+
+/* =====================================================
+   SNOW
+===================================================== */
+
+function createSnow(
+    id,
+    amount
+){
+
+    const container =
+        document.getElementById(id);
+
+    if(!container) return;
+
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        const flake =
+            document.createElement("span");
+
+
+        flake.className =
+            "snowflake";
+
+
+        const size =
+            Math.random() * 2.8 + .8;
+
+
+        flake.style.width =
+            size + "px";
+
+        flake.style.height =
+            size + "px";
+
+
+        flake.style.left =
+            Math.random() * 100 + "%";
+
+
+        flake.style.opacity =
+            Math.random() * .6 + .15;
+
+
+        flake.style.animationDuration =
+            Math.random() * 8 + 8 + "s";
+
+
+        flake.style.animationDelay =
+            Math.random() * -15 + "s";
+
+
+        flake.style.setProperty(
+            "--drift",
+            (
+                Math.random() * 120 - 60
+            ) + "px"
+        );
+
+
+        container.appendChild(flake);
 
     }
 
-    if(audioContext.state === "suspended"){
-      audioContext.resume();
+}
+
+
+createSnow(
+    "passwordSnow",
+    55
+);
+
+createSnow(
+    "homeSnow",
+    90
+);
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function enterSite(){
+
+    clickSound();
+
+
+    const value =
+        passwordInput.value.trim();
+
+
+    if(
+        value === PASSWORD
+    ){
+
+        sessionStorage.setItem(
+            "tamrabae_access",
+            "true"
+        );
+
+
+        passwordPage.style.display =
+            "none";
+
+
+        homePage.style.display =
+            "block";
+
+
+        passwordError.textContent =
+            "";
+
+
+    }else{
+
+        passwordError.textContent =
+            "비밀번호가 맞지 않습니다.";
+
+        passwordInput.value =
+            "";
+
+        passwordInput.focus();
+
     }
 
-    const osc =
-      audioContext.createOscillator();
+}
 
-    const gain =
-      audioContext.createGain();
 
-    osc.type = "sine";
+enterButton.addEventListener(
+    "click",
+    enterSite
+);
 
-    osc.frequency.setValueAtTime(
-      1150,
-      audioContext.currentTime
-    );
 
-    osc.frequency.exponentialRampToValueAtTime(
-      500,
-      audioContext.currentTime + .045
-    );
+passwordInput.addEventListener(
+    "keydown",
+    function(e){
 
-    gain.gain.setValueAtTime(
-      .0001,
-      audioContext.currentTime
-    );
+        if(e.key === "Enter"){
 
-    gain.gain.exponentialRampToValueAtTime(
-      .06,
-      audioContext.currentTime + .006
-    );
+            enterSite();
 
-    gain.gain.exponentialRampToValueAtTime(
-      .0001,
-      audioContext.currentTime + .055
-    );
+        }
 
-    osc.connect(gain);
-    gain.connect(audioContext.destination);
+    }
+);
 
-    osc.start();
 
-    osc.stop(
-      audioContext.currentTime + .06
-    );
+/* =====================================================
+   SESSION
+===================================================== */
 
-  }catch(e){}
+if(
+    sessionStorage.getItem(
+        "tamrabae_access"
+    ) === "true"
+){
+
+    passwordPage.style.display =
+        "none";
+
+    homePage.style.display =
+        "block";
 
 }
 
 
-/* ================= PAGE ================= */
+/* =====================================================
+   PAGES
+===================================================== */
 
-function openPage(id){
+const storyPage =
+    document.getElementById("storyPage");
 
-  document
-    .getElementById(id)
-    .classList.add("show");
+const photoPage =
+    document.getElementById("photoPage");
 
-}
-
-function closePage(){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(function(page){
-      page.classList.remove("show");
-    });
-
-}
+const videoPage =
+    document.getElementById("videoPage");
 
 
-/* ================= CREDITS ================= */
+function closeSubPages(){
 
-function openCredits(){
+    storyPage.classList.add(
+        "hidden"
+    );
 
-  document
-    .getElementById("credits")
-    .classList.add("show");
+    photoPage.classList.add(
+        "hidden"
+    );
 
-}
-
-function closeCredits(){
-
-  document
-    .getElementById("credits")
-    .classList.remove("show");
+    videoPage.classList.add(
+        "hidden"
+    );
 
 }
 
 
-/* ================= VIDEO ================= */
+function openPage(page){
+
+    clickSound();
+
+    homePage.style.display =
+        "none";
+
+    closeSubPages();
+
+    page.classList.remove(
+        "hidden"
+    );
+
+    page.scrollTop = 0;
+
+}
+
+
+function goHome(){
+
+    clickSound();
+
+    closeSubPages();
+
+    homePage.style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+document
+    .getElementById("storyButton")
+    .addEventListener(
+        "click",
+        function(){
+
+            openPage(
+                storyPage
+            );
+
+        }
+    );
+
+
+document
+    .getElementById("photoButton")
+    .addEventListener(
+        "click",
+        function(){
+
+            openPage(
+                photoPage
+            );
+
+        }
+    );
+
+
+document
+    .getElementById("videoButton")
+    .addEventListener(
+        "click",
+        function(){
+
+            openPage(
+                videoPage
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   CREDITS
+===================================================== */
+
+const creditsPage =
+    document.getElementById(
+        "creditsPage"
+    );
+
+
+document
+    .getElementById("creditsOpen")
+    .addEventListener(
+        "click",
+        function(){
+
+            clickSound();
+
+            creditsPage.style.display =
+                "block";
+
+            creditsPage.scrollTop =
+                0;
+
+        }
+    );
+
+
+document
+    .getElementById("creditsClose")
+    .addEventListener(
+        "click",
+        function(){
+
+            clickSound();
+
+            creditsPage.style.display =
+                "none";
+
+        }
+    );
+
+
+/* =====================================================
+   VIDEO
+===================================================== */
 
 function fakeVideo(){
 
-  alert(
-    "영상은 준비 중입니다.\n조금만 기다려주세요."
-  );
+    clickSound();
+
+    alert(
+        "영상은 준비 중입니다.\n\n조금만 기다려주세요."
+    );
 
 }
-
-
-/* ================= SNOW ================= */
-
-const snow =
-  document.getElementById("snow");
-
-for(let i=0;i<75;i++){
-
-  const flake =
-    document.createElement("span");
-
-  flake.className =
-    "snowflake";
-
-  const size =
-    Math.random()*3+1;
-
-  flake.style.width =
-    size+"px";
-
-  flake.style.height =
-    size+"px";
-
-  flake.style.left =
-    Math.random()*100+"%";
-
-  flake.style.opacity =
-    Math.random()*.65+.15;
-
-  flake.style.animationDuration =
-    (Math.random()*8+7)+"s";
-
-  flake.style.animationDelay =
-    (Math.random()*-15)+"s";
-
-  snow.appendChild(flake);
-
-}
-
-
-/* ================= ESC ================= */
-
-document.addEventListener(
-  "keydown",
-  function(e){
-
-    if(e.key === "Escape"){
-
-      closePage();
-      closeCredits();
-
-    }
-
-  }
-);
 
 </script>
 

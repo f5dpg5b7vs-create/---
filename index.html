@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#05080d">
+
 <title>탐라배 곱꽹대전</title>
 
 <style>
@@ -18,8 +19,7 @@ html,body{
   height:100%;
   overflow:hidden;
   background:#05080d;
-  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",
-  "Noto Sans KR",sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
 }
 
 button,input{
@@ -28,30 +28,34 @@ button,input{
 
 button{
   border:0;
-  padding:0;
   background:none;
+  padding:0;
 }
 
 .screen{
   position:fixed;
   inset:0;
   display:none;
-  background:#05080d;
 }
 
 .screen.active{
   display:block;
 }
 
+
 /* =========================
    PASSWORD
 ========================= */
 
 #passwordScreen{
-  display:flex;
+  background:#05080d;
+  display:none;
   align-items:center;
   justify-content:center;
-  background:#05080d;
+}
+
+#passwordScreen.active{
+  display:flex;
 }
 
 .password-photo{
@@ -61,14 +65,19 @@ button{
   height:100%;
   object-fit:cover;
   object-position:center;
-  opacity:.38;
-  filter:brightness(.55) saturate(.75);
+  filter:brightness(.48) saturate(.75);
+  opacity:.7;
 }
 
 .password-overlay{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,.34);
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.25),
+      rgba(0,0,0,.55)
+    );
 }
 
 .password-box{
@@ -80,48 +89,55 @@ button{
   color:white;
 }
 
-.title{
+.main-title{
   font-family:Georgia,"Times New Roman",serif;
   font-size:31px;
+  font-weight:400;
   letter-spacing:-1.5px;
-  margin-bottom:9px;
 }
 
 .subtitle{
-  font-size:10px;
+  margin-top:10px;
+  font-size:9px;
   letter-spacing:4px;
-  opacity:.62;
-  margin-bottom:42px;
+  opacity:.55;
 }
 
 .password-input{
   width:100%;
-  height:49px;
+  margin-top:45px;
+  height:50px;
+
   border:0;
-  border-bottom:1px solid rgba(255,255,255,.55);
+  border-bottom:1px solid rgba(255,255,255,.5);
+
+  outline:none;
   background:transparent;
+
   color:white;
   text-align:center;
-  outline:none;
-  font-size:15px;
-  letter-spacing:3px;
+
+  font-size:14px;
+  letter-spacing:4px;
 }
 
 .password-input::placeholder{
-  color:rgba(255,255,255,.42);
-  letter-spacing:2px;
+  color:rgba(255,255,255,.4);
+  letter-spacing:3px;
 }
 
 .enter-button{
-  margin-top:22px;
-  color:rgba(255,255,255,.8);
-  font-size:11px;
-  letter-spacing:3px;
+  margin-top:20px;
   padding:12px 20px;
+
+  color:rgba(255,255,255,.75);
+  font-size:10px;
+  letter-spacing:4px;
 }
 
+
 /* =========================
-   MAIN IMAGE
+   MAIN PHOTO
 ========================= */
 
 #mainScreen{
@@ -131,38 +147,46 @@ button{
 .main-photo{
   position:absolute;
   inset:0;
+
   width:100%;
   height:100%;
+
   object-fit:cover;
   object-position:center;
 }
 
-/* 어두운 영화 같은 느낌 */
 .main-shade{
   position:absolute;
   inset:0;
+
+  pointer-events:none;
+
   background:
     linear-gradient(
       to bottom,
       rgba(0,0,0,.08),
-      rgba(0,0,0,.08) 45%,
+      rgba(0,0,0,.05) 50%,
       rgba(0,0,0,.30)
     );
-  pointer-events:none;
 }
 
+
 /* =========================
-   INVISIBLE HOTSPOTS
+   INVISIBLE PHOTO HOTSPOTS
 ========================= */
 
 .hotspot{
   position:absolute;
-  z-index:5;
-  background:transparent;
+  z-index:10;
+
   border:0;
-  padding:0;
+  background:transparent;
+
+  cursor:pointer;
 }
 
+
+/* 달 */
 .moon{
   left:37.5%;
   top:10%;
@@ -171,6 +195,8 @@ button{
   border-radius:50%;
 }
 
+
+/* 책 */
 .book{
   left:8%;
   top:69%;
@@ -178,6 +204,8 @@ button{
   height:10%;
 }
 
+
+/* 우체통 */
 .mailbox{
   left:64%;
   top:56%;
@@ -185,6 +213,8 @@ button{
   height:13%;
 }
 
+
+/* 창문 1 - 아무 기능 없음 */
 .window1{
   left:1%;
   top:22%;
@@ -192,6 +222,8 @@ button{
   height:15%;
 }
 
+
+/* 창문 2 - 영상 */
 .window2{
   left:15%;
   top:32%;
@@ -199,6 +231,8 @@ button{
   height:12%;
 }
 
+
+/* 발자국 */
 .footprints{
   left:14%;
   top:60%;
@@ -206,65 +240,160 @@ button{
   height:7%;
 }
 
+
+/* =========================
+   FIRST DISCOVERY
+   글자나 아이콘 없이
+   실제 위치만 은은하게 강조
+========================= */
+
+.hotspot.guide::after{
+  content:"";
+
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  width:150%;
+  height:150%;
+
+  transform:translate(-50%,-50%) scale(.7);
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.75) 0%,
+      rgba(255,255,255,.38) 22%,
+      rgba(255,255,255,.12) 48%,
+      transparent 72%
+    );
+
+  pointer-events:none;
+
+  animation:discoveryGlow 1.35s ease-in-out 2;
+}
+
+@keyframes discoveryGlow{
+
+  0%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(.65);
+  }
+
+  30%{
+    opacity:.9;
+  }
+
+  55%{
+    opacity:.75;
+    transform:translate(-50%,-50%) scale(1.12);
+  }
+
+  100%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(1.35);
+  }
+}
+
+
 /* =========================
    RIPPLE
 ========================= */
 
 .ripple{
   position:fixed;
+
   width:18px;
   height:18px;
+
   border-radius:50%;
-  border:1px solid rgba(255,255,255,.5);
+
+  border:1px solid rgba(255,255,255,.55);
+
   pointer-events:none;
-  transform:translate(-50%,-50%) scale(1);
-  animation:ripple .42s ease-out forwards;
-  z-index:100;
+
+  transform:translate(-50%,-50%) scale(.5);
+
+  animation:rippleEffect .45s ease-out forwards;
+
+  z-index:1000;
 }
 
-@keyframes ripple{
-  from{
+@keyframes rippleEffect{
+
+  0%{
     opacity:.55;
     transform:translate(-50%,-50%) scale(.5);
   }
-  to{
+
+  100%{
     opacity:0;
     transform:translate(-50%,-50%) scale(4);
   }
 }
 
+
 /* =========================
-   CONTENT SCREENS
+   CONTENT PAGES
 ========================= */
 
 .content-screen{
   position:absolute;
   inset:0;
-  background:#080b10;
-  color:#f4f1ea;
+
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
+
+  background:#080b10;
+  color:#f3f0e9;
 }
 
 .content-inner{
-  width:100%;
   min-height:100%;
-  padding:64px 25px 50px;
+
+  padding:
+    70px
+    25px
+    60px;
+}
+
+.back{
+  position:fixed;
+
+  top:20px;
+  left:17px;
+
+  z-index:50;
+
+  padding:12px;
+
+  color:rgba(255,255,255,.65);
+
+  font-size:9px;
+  letter-spacing:3px;
 }
 
 .section-kicker{
+  margin-bottom:13px;
+
   font-size:9px;
   letter-spacing:4px;
-  opacity:.42;
-  margin-bottom:13px;
+
+  opacity:.38;
 }
 
 .section-title{
+  margin-bottom:43px;
+
   font-family:Georgia,"Times New Roman",serif;
-  font-size:34px;
+
+  font-size:35px;
   font-weight:400;
-  letter-spacing:-1px;
-  margin-bottom:45px;
+
+  letter-spacing:-1.5px;
 }
 
 .post-list{
@@ -272,45 +401,73 @@ button{
 }
 
 .post-item{
+  display:block;
+
   width:100%;
+
+  padding:
+    22px
+    2px
+    21px;
+
   text-align:left;
-  color:#f4f1ea;
-  border-bottom:1px solid rgba(255,255,255,.11);
-  padding:22px 2px;
+
+  color:#f3f0e9;
+
+  border-bottom:1px solid rgba(255,255,255,.1);
 }
 
 .post-number{
   display:block;
-  font-size:9px;
-  letter-spacing:2px;
-  opacity:.35;
+
   margin-bottom:7px;
+
+  font-size:8px;
+  letter-spacing:2px;
+
+  opacity:.35;
 }
 
 .post-title{
   display:block;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:20px;
+
   margin-bottom:7px;
+
+  font-family:Georgia,"Times New Roman",serif;
+
+  font-size:19px;
+  font-weight:400;
 }
 
 .post-author{
   display:block;
+
   font-size:10px;
-  opacity:.45;
-  letter-spacing:.3px;
+
+  line-height:1.5;
+
+  opacity:.43;
 }
 
-.back{
-  position:fixed;
-  z-index:20;
-  left:22px;
-  top:23px;
-  color:rgba(255,255,255,.65);
-  font-size:10px;
-  letter-spacing:2px;
-  padding:10px;
+
+/* =========================
+   VIDEO
+========================= */
+
+.video-empty{
+  height:65vh;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:rgba(255,255,255,.38);
+
+  font-family:Georgia,"Times New Roman",serif;
+
+  font-size:16px;
 }
+
 
 /* =========================
    CREDITS
@@ -321,15 +478,18 @@ button{
 }
 
 .credit-row{
-  padding:18px 2px;
+  padding:20px 2px;
+
   border-bottom:1px solid rgba(255,255,255,.1);
 }
 
 .credit-category{
-  font-size:9px;
+  margin-bottom:7px;
+
+  font-size:8px;
   letter-spacing:3px;
+
   opacity:.35;
-  margin-bottom:6px;
 }
 
 .credit-name{
@@ -338,103 +498,131 @@ button{
 }
 
 .credit-detail{
-  font-size:10px;
-  opacity:.43;
   margin-top:5px;
+
+  font-size:10px;
   line-height:1.6;
+
+  opacity:.42;
 }
 
+
 /* =========================
-   REVIEW
+   REVIEWS
 ========================= */
 
-.review{
+.review-list{
   border-top:1px solid rgba(255,255,255,.12);
 }
 
 .review-item{
   padding:23px 2px;
+
   border-bottom:1px solid rgba(255,255,255,.1);
 }
 
 .review-name{
-  font-size:10px;
-  letter-spacing:1px;
-  opacity:.5;
   margin-bottom:9px;
+
+  font-size:9px;
+  letter-spacing:2px;
+
+  opacity:.4;
 }
 
 .review-text{
   font-family:Georgia,"Times New Roman",serif;
+
   font-size:16px;
-  line-height:1.75;
+
+  line-height:1.8;
 }
 
+
 /* =========================
-   READING
+   READING PAGE
 ========================= */
 
 #readScreen{
   background:#f8f7f3;
   color:#111;
-  overflow-y:auto;
-}
 
-.read-inner{
-  min-height:100%;
-  padding:75px 25px 80px;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 
 .read-back{
   position:fixed;
-  z-index:30;
+
   top:20px;
-  left:20px;
-  color:#222;
-  font-size:10px;
-  letter-spacing:2px;
-  padding:10px;
+  left:17px;
+
+  z-index:50;
+
+  padding:12px;
+
+  color:#333;
+
+  font-size:9px;
+  letter-spacing:3px;
+}
+
+.read-inner{
+  min-height:100%;
+
+  padding:
+    76px
+    25px
+    90px;
 }
 
 .read-category{
+  margin-bottom:14px;
+
+  color:#999;
+
   font-size:9px;
   letter-spacing:3px;
-  color:#999;
-  margin-bottom:14px;
 }
 
 .read-title{
   font-family:Georgia,"Times New Roman",serif;
+
   font-size:31px;
-  line-height:1.25;
   font-weight:400;
-  letter-spacing:-.7px;
-  margin-bottom:12px;
+
+  line-height:1.3;
+
+  letter-spacing:-1px;
 }
 
 .read-author{
-  font-size:10px;
+  margin-top:12px;
+  margin-bottom:47px;
+
   color:#999;
-  margin-bottom:48px;
+
+  font-size:10px;
 }
 
 .read-body{
   font-family:Georgia,"Times New Roman",serif;
+
   font-size:16px;
+
   line-height:2;
+
   white-space:pre-line;
 }
 
-.hidden{
-  display:none !important;
-}
 
 /* =========================
-   TOUCH FEEDBACK
+   TOUCH
 ========================= */
 
 button{
-  cursor:pointer;
+  -webkit-user-select:none;
+  user-select:none;
 }
 
 button:active{
@@ -443,10 +631,12 @@ button:active{
 </style>
 </head>
 
+
 <body>
 
+
 <!-- =========================
-     PASSWORD SCREEN
+     PASSWORD
 ========================= -->
 
 <section id="passwordScreen" class="screen active">
@@ -461,7 +651,9 @@ button:active{
 
   <div class="password-box">
 
-    <div class="title">탐라배 곱꽹대전</div>
+    <div class="main-title">
+      탐라배 곱꽹대전
+    </div>
 
     <div class="subtitle">
       LITERARY WEBZINE
@@ -473,7 +665,6 @@ button:active{
       type="password"
       placeholder="PASSWORD"
       autocomplete="off"
-      enterkeyhint="go"
     >
 
     <button
@@ -487,6 +678,7 @@ button:active{
   </div>
 
 </section>
+
 
 
 <!-- =========================
@@ -503,12 +695,14 @@ button:active{
 
   <div class="main-shade"></div>
 
+
   <!-- 달 = 크레딧 -->
   <button
     class="hotspot moon"
     data-target="creditsScreen"
     aria-label="달"
   ></button>
+
 
   <!-- 책 = 글 -->
   <button
@@ -517,6 +711,7 @@ button:active{
     aria-label="책"
   ></button>
 
+
   <!-- 우체통 = 그림 -->
   <button
     class="hotspot mailbox"
@@ -524,11 +719,13 @@ button:active{
     aria-label="우체통"
   ></button>
 
+
   <!-- 창문 1 = 아무 기능 없음 -->
   <button
     class="hotspot window1"
     aria-label="창문"
   ></button>
+
 
   <!-- 창문 2 = 영상 -->
   <button
@@ -536,6 +733,7 @@ button:active{
     data-target="videoScreen"
     aria-label="창문"
   ></button>
+
 
   <!-- 발자국 = 참여자 후기 -->
   <button
@@ -547,23 +745,34 @@ button:active{
 </section>
 
 
+
 <!-- =========================
-     WRITING
+     글
 ========================= -->
 
 <section id="writingScreen" class="screen">
+
   <div class="content-screen">
 
-    <button class="back" data-target="mainScreen">
+    <button
+      class="back"
+      data-target="mainScreen"
+    >
       BACK
     </button>
 
     <div class="content-inner">
 
-      <div class="section-kicker">TEXT</div>
-      <div class="section-title">글</div>
+      <div class="section-kicker">
+        TEXT
+      </div>
+
+      <div class="section-title">
+        글
+      </div>
 
       <div class="post-list">
+
 
         <button class="post-item"
           data-category="글"
@@ -574,6 +783,7 @@ button:active{
           <span class="post-author">필삼이 / 요미꼬미 쭌뺌</span>
         </button>
 
+
         <button class="post-item"
           data-category="글"
           data-title="두 번째 이야기"
@@ -582,6 +792,7 @@ button:active{
           <span class="post-title">두 번째 이야기</span>
           <span class="post-author">치약이 / 빵왕</span>
         </button>
+
 
         <button class="post-item"
           data-category="글"
@@ -592,107 +803,176 @@ button:active{
           <span class="post-author">개양이 / 탠동 원구 뼈뉴 요미꼬미</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="네 번째 이야기" data-author="벌벌 / 후혜">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="네 번째 이야기"
+          data-author="벌벌 / 후혜">
           <span class="post-number">04</span>
           <span class="post-title">네 번째 이야기</span>
           <span class="post-author">벌벌 / 후혜</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="다섯 번째 이야기" data-author="스디 / 우강훈김영우">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="다섯 번째 이야기"
+          data-author="스디 / 우강훈김영우">
           <span class="post-number">05</span>
           <span class="post-title">다섯 번째 이야기</span>
           <span class="post-author">스디 / 우강훈김영우</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="여섯 번째 이야기" data-author="청 / 탠찬 민욱">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="여섯 번째 이야기"
+          data-author="청 / 탠찬 민욱">
           <span class="post-number">06</span>
           <span class="post-title">여섯 번째 이야기</span>
           <span class="post-author">청 / 탠찬 민욱</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="일곱 번째 이야기" data-author="영원 / 윤손">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="일곱 번째 이야기"
+          data-author="영원 / 윤손">
           <span class="post-number">07</span>
           <span class="post-title">일곱 번째 이야기</span>
           <span class="post-author">영원 / 윤손</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="여덟 번째 이야기" data-author="SA / 탠찬">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="여덟 번째 이야기"
+          data-author="SA / 탠찬">
           <span class="post-number">08</span>
           <span class="post-title">여덟 번째 이야기</span>
           <span class="post-author">SA / 탠찬</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="아홉 번째 이야기" data-author="하린 / 달별">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="아홉 번째 이야기"
+          data-author="하린 / 달별">
           <span class="post-number">09</span>
           <span class="post-title">아홉 번째 이야기</span>
           <span class="post-author">하린 / 달별</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열 번째 이야기" data-author="동이 / 윤손 꼬순">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열 번째 이야기"
+          data-author="동이 / 윤손 꼬순">
           <span class="post-number">10</span>
           <span class="post-title">열 번째 이야기</span>
           <span class="post-author">동이 / 윤손 꼬순</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열한 번째 이야기" data-author="딱 / 재롱 쭌잿">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열한 번째 이야기"
+          data-author="딱 / 재롱 쭌잿">
           <span class="post-number">11</span>
           <span class="post-title">열한 번째 이야기</span>
           <span class="post-author">딱 / 재롱 쭌잿</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열두 번째 이야기" data-author="cuybf(상태:가능충) / 쩡껀">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열두 번째 이야기"
+          data-author="cuybf(상태:가능충) / 쩡껀">
           <span class="post-number">12</span>
           <span class="post-title">열두 번째 이야기</span>
           <span class="post-author">cuybf(상태:가능충) / 쩡껀</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열세 번째 이야기" data-author="본 / 창찬">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열세 번째 이야기"
+          data-author="본 / 창찬">
           <span class="post-number">13</span>
           <span class="post-title">열세 번째 이야기</span>
           <span class="post-author">본 / 창찬</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열네 번째 이야기" data-author="아 / 한훈">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열네 번째 이야기"
+          data-author="아 / 한훈">
           <span class="post-number">14</span>
           <span class="post-title">열네 번째 이야기</span>
           <span class="post-author">아 / 한훈</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열다섯 번째 이야기" data-author="순이 / 윤훈">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열다섯 번째 이야기"
+          data-author="순이 / 윤훈">
           <span class="post-number">15</span>
           <span class="post-title">열다섯 번째 이야기</span>
           <span class="post-author">순이 / 윤훈</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열여섯 번째 이야기" data-author="you / 윤황">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열여섯 번째 이야기"
+          data-author="you / 윤황">
           <span class="post-number">16</span>
           <span class="post-title">열여섯 번째 이야기</span>
           <span class="post-author">you / 윤황</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열일곱 번째 이야기" data-author="하프 / 삐뭅 건뱅">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열일곱 번째 이야기"
+          data-author="하프 / 삐뭅 건뱅">
           <span class="post-number">17</span>
           <span class="post-title">열일곱 번째 이야기</span>
           <span class="post-author">하프 / 삐뭅 건뱅</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열여덟 번째 이야기" data-author="궁 / 한우">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열여덟 번째 이야기"
+          data-author="궁 / 한우">
           <span class="post-number">18</span>
           <span class="post-title">열여덟 번째 이야기</span>
           <span class="post-author">궁 / 한우</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="열아홉 번째 이야기" data-author="킨교 / 전준표박준현 장재영이주형 김주원신재인">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="열아홉 번째 이야기"
+          data-author="킨교 / 전준표박준현 장재영이주형 김주원신재인">
           <span class="post-number">19</span>
           <span class="post-title">열아홉 번째 이야기</span>
           <span class="post-author">킨교 / 전준표박준현 장재영이주형 김주원신재인</span>
         </button>
 
-        <button class="post-item" data-category="글" data-title="스무 번째 이야기" data-author="dp / 렘배(안배) 읠뎡">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="스무 번째 이야기"
+          data-author="dp / 렘배(안배) 읠뎡">
           <span class="post-number">20</span>
           <span class="post-title">스무 번째 이야기</span>
           <span class="post-author">dp / 렘배(안배) 읠뎡</span>
         </button>
+
 
       </div>
     </div>
@@ -700,32 +980,44 @@ button:active{
 </section>
 
 
+
 <!-- =========================
-     DRAWING
+     그림
 ========================= -->
 
 <section id="drawingScreen" class="screen">
+
   <div class="content-screen">
 
-    <button class="back" data-target="mainScreen">
+    <button
+      class="back"
+      data-target="mainScreen"
+    >
       BACK
     </button>
 
     <div class="content-inner">
 
-      <div class="section-kicker">VISUAL</div>
-      <div class="section-title">그림</div>
+      <div class="section-kicker">
+        VISUAL
+      </div>
+
+      <div class="section-title">
+        그림
+      </div>
 
       <div class="post-list">
+
 
         <button class="post-item"
           data-category="그림"
           data-title="일등병⭐️(히키)"
-          data-author="연쇄박음마 / 창찬">
+          data-author="연쇄박음마: 일등병⭐️(히키) / 창찬">
           <span class="post-number">01</span>
           <span class="post-title">일등병⭐️(히키)</span>
           <span class="post-author">연쇄박음마: 일등병⭐️(히키) / 창찬</span>
         </button>
+
 
         <button class="post-item"
           data-category="그림"
@@ -736,6 +1028,7 @@ button:active{
           <span class="post-author">얌빵 / 펑뜽</span>
         </button>
 
+
         <button class="post-item"
           data-category="그림"
           data-title="세 번째 작품"
@@ -744,6 +1037,7 @@ button:active{
           <span class="post-title">세 번째 작품</span>
           <span class="post-author">박진만 / 풍뎅</span>
         </button>
+
 
         <button class="post-item"
           data-category="그림"
@@ -754,6 +1048,7 @@ button:active{
           <span class="post-author">Ham guinea jyu / 한훈 뱅쬬</span>
         </button>
 
+
         <button class="post-item"
           data-category="그림"
           data-title="다섯 번째 작품"
@@ -763,36 +1058,40 @@ button:active{
           <span class="post-author">눙 / 쩡손</span>
         </button>
 
+
       </div>
     </div>
   </div>
 </section>
 
 
+
 <!-- =========================
-     VIDEO
+     영상
 ========================= -->
 
 <section id="videoScreen" class="screen">
 
   <div class="content-screen">
 
-    <button class="back" data-target="mainScreen">
+    <button
+      class="back"
+      data-target="mainScreen"
+    >
       BACK
     </button>
 
     <div class="content-inner">
 
-      <div class="section-kicker">MOVING IMAGE</div>
-      <div class="section-title">영상</div>
+      <div class="section-kicker">
+        MOVING IMAGE
+      </div>
 
-      <div style="
-        padding-top:30vh;
-        text-align:center;
-        color:rgba(255,255,255,.4);
-        font-family:Georgia,serif;
-        font-size:17px;
-      ">
+      <div class="section-title">
+        영상
+      </div>
+
+      <div class="video-empty">
         준비 중
       </div>
 
@@ -802,108 +1101,176 @@ button:active{
 </section>
 
 
+
 <!-- =========================
-     CREDITS
+     크레딧
 ========================= -->
 
 <section id="creditsScreen" class="screen">
 
   <div class="content-screen">
 
-    <button class="back" data-target="mainScreen">
+    <button
+      class="back"
+      data-target="mainScreen"
+    >
       BACK
     </button>
 
     <div class="content-inner">
 
-      <div class="section-kicker">CREDITS</div>
-      <div class="section-title">크레딧</div>
+      <div class="section-kicker">
+        CREDITS
+      </div>
+
+      <div class="section-title">
+        크레딧
+      </div>
 
       <div class="credit-list">
 
-        <div class="credit-row">
-          <div class="credit-category">WEBZINE</div>
-          <div class="credit-name">탐라배 곱꽹대전</div>
-          <div class="credit-detail">LITERARY WEBZINE</div>
-        </div>
 
         <div class="credit-row">
-          <div class="credit-category">TEXT</div>
-          <div class="credit-name">글</div>
-          <div class="credit-detail">20 works</div>
+          <div class="credit-category">
+            WEBZINE
+          </div>
+
+          <div class="credit-name">
+            탐라배 곱꽹대전
+          </div>
+
+          <div class="credit-detail">
+            LITERARY WEBZINE
+          </div>
         </div>
 
-        <div class="credit-row">
-          <div class="credit-category">VISUAL</div>
-          <div class="credit-name">그림</div>
-          <div class="credit-detail">5 works</div>
-        </div>
 
         <div class="credit-row">
-          <div class="credit-category">MOVING IMAGE</div>
-          <div class="credit-name">영상</div>
-          <div class="credit-detail">준비 중</div>
+          <div class="credit-category">
+            TEXT
+          </div>
+
+          <div class="credit-name">
+            글
+          </div>
+
+          <div class="credit-detail">
+            20 works
+          </div>
         </div>
 
+
         <div class="credit-row">
-          <div class="credit-category">DESIGN</div>
-          <div class="credit-name">탐라배 곱꽹대전</div>
+          <div class="credit-category">
+            VISUAL
+          </div>
+
+          <div class="credit-name">
+            그림
+          </div>
+
+          <div class="credit-detail">
+            5 works
+          </div>
         </div>
+
+
+        <div class="credit-row">
+          <div class="credit-category">
+            MOVING IMAGE
+          </div>
+
+          <div class="credit-name">
+            영상
+          </div>
+
+          <div class="credit-detail">
+            준비 중
+          </div>
+        </div>
+
 
       </div>
-
     </div>
   </div>
 
 </section>
 
 
+
 <!-- =========================
-     PARTICIPANT REVIEWS
+     참여자 후기
 ========================= -->
 
 <section id="reviewScreen" class="screen">
 
   <div class="content-screen">
 
-    <button class="back" data-target="mainScreen">
+    <button
+      class="back"
+      data-target="mainScreen"
+    >
       BACK
     </button>
 
     <div class="content-inner">
 
-      <div class="section-kicker">PARTICIPANT NOTES</div>
-      <div class="section-title">참여자 후기</div>
+      <div class="section-kicker">
+        PARTICIPANT NOTES
+      </div>
 
-      <div class="review">
+      <div class="section-title">
+        참여자 후기
+      </div>
+
+      <div class="review-list">
+
 
         <div class="review-item">
-          <div class="review-name">PARTICIPANT 01</div>
+
+          <div class="review-name">
+            PARTICIPANT 01
+          </div>
+
           <div class="review-text">
             작품을 만들면서 평소에는 지나쳤던 이야기들을 다시 바라보게 되었습니다.
           </div>
+
         </div>
 
+
         <div class="review-item">
-          <div class="review-name">PARTICIPANT 02</div>
+
+          <div class="review-name">
+            PARTICIPANT 02
+          </div>
+
           <div class="review-text">
             각자의 방식으로 하나의 계절을 남길 수 있어서 재미있었습니다.
           </div>
+
         </div>
 
+
         <div class="review-item">
-          <div class="review-name">PARTICIPANT 03</div>
+
+          <div class="review-name">
+            PARTICIPANT 03
+          </div>
+
           <div class="review-text">
             준비하는 동안의 순간들까지도 오래 기억에 남을 것 같습니다.
           </div>
+
         </div>
 
-      </div>
 
+      </div>
     </div>
   </div>
 
 </section>
+
 
 
 <!-- =========================
@@ -912,19 +1279,34 @@ button:active{
 
 <section id="readScreen" class="screen">
 
-  <button id="readBack" class="read-back">
+  <button
+    id="readBack"
+    class="read-back"
+  >
     BACK
   </button>
 
   <div class="read-inner">
 
-    <div id="readCategory" class="read-category"></div>
+    <div
+      id="readCategory"
+      class="read-category"
+    ></div>
 
-    <div id="readTitle" class="read-title"></div>
+    <div
+      id="readTitle"
+      class="read-title"
+    ></div>
 
-    <div id="readAuthor" class="read-author"></div>
+    <div
+      id="readAuthor"
+      class="read-author"
+    ></div>
 
-    <div id="readBody" class="read-body">
+    <div
+      id="readBody"
+      class="read-body"
+    >
       작품 내용이 이곳에 들어갑니다.
     </div>
 
@@ -933,97 +1315,87 @@ button:active{
 </section>
 
 
+
 <script>
 
 /* =========================
-   ELEMENTS
+   BASIC
 ========================= */
 
-const passwordScreen =
-  document.getElementById("passwordScreen");
+let currentCategory="mainScreen";
 
-const mainScreen =
-  document.getElementById("mainScreen");
+let audioContext=null;
 
-const passwordInput =
-  document.getElementById("passwordInput");
-
-const enterButton =
-  document.getElementById("enterButton");
-
-const readScreen =
-  document.getElementById("readScreen");
-
-const readCategory =
-  document.getElementById("readCategory");
-
-const readTitle =
-  document.getElementById("readTitle");
-
-const readAuthor =
-  document.getElementById("readAuthor");
-
-const readBody =
-  document.getElementById("readBody");
-
-let currentCategory = "mainScreen";
+let guideStarted=false;
 
 
 /* =========================
-   SIMPLE SOUND
+   CLICK SOUND
 ========================= */
-
-let audioContext = null;
 
 function tactileSound(){
 
   try{
 
     if(!audioContext){
-      audioContext =
-        new (window.AudioContext ||
-        window.webkitAudioContext)();
+
+      audioContext=
+        new(
+          window.AudioContext ||
+          window.webkitAudioContext
+        )();
+
     }
 
-    if(audioContext.state === "suspended"){
+    if(audioContext.state==="suspended"){
       audioContext.resume();
     }
 
-    const osc =
+    const osc=
       audioContext.createOscillator();
 
-    const gain =
+    const gain=
       audioContext.createGain();
 
-    osc.type = "sine";
+
+    osc.type="sine";
+
 
     osc.frequency.setValueAtTime(
       150,
       audioContext.currentTime
     );
 
+
     osc.frequency.exponentialRampToValueAtTime(
       105,
-      audioContext.currentTime + .055
+      audioContext.currentTime+.055
     );
+
 
     gain.gain.setValueAtTime(
       .0001,
       audioContext.currentTime
     );
 
+
     gain.gain.exponentialRampToValueAtTime(
       .018,
-      audioContext.currentTime + .004
+      audioContext.currentTime+.004
     );
 
+
     osc.connect(gain);
-    gain.connect(audioContext.destination);
+
+    gain.connect(
+      audioContext.destination
+    );
+
 
     osc.start();
 
     osc.stop(
-      audioContext.currentTime + .07
+      audioContext.currentTime+.07
     );
 
   }catch(e){}
@@ -1037,13 +1409,13 @@ function tactileSound(){
 
 function makeRipple(x,y){
 
-  const ripple =
+  const ripple=
     document.createElement("div");
 
-  ripple.className = "ripple";
+  ripple.className="ripple";
 
-  ripple.style.left = x + "px";
-  ripple.style.top = y + "px";
+  ripple.style.left=x+"px";
+  ripple.style.top=y+"px";
 
   document.body.appendChild(ripple);
 
@@ -1055,7 +1427,7 @@ function makeRipple(x,y){
 
 
 /* =========================
-   SHOW SCREEN
+   SCREEN
 ========================= */
 
 function showScreen(id){
@@ -1066,8 +1438,10 @@ function showScreen(id){
       screen.classList.remove("active");
     });
 
-  const target =
+
+  const target=
     document.getElementById(id);
+
 
   if(target){
     target.classList.add("active");
@@ -1082,29 +1456,50 @@ function showScreen(id){
 
 function checkPassword(){
 
-  const password =
-    passwordInput.value.trim();
+  const password=
+    document
+      .getElementById("passwordInput")
+      .value
+      .trim();
 
-  if(password === "ohmyps"){
+
+  if(password==="ohmyps"){
 
     tactileSound();
 
-    passwordInput.blur();
+    document
+      .getElementById("passwordInput")
+      .blur();
+
 
     showScreen("mainScreen");
 
-    passwordInput.value = "";
+
+    document
+      .getElementById("passwordInput")
+      .value="";
+
+
+    startDiscoveryGuide();
 
   }else{
 
-    passwordInput.value = "";
+    const input=
+      document.getElementById(
+        "passwordInput"
+      );
 
-    passwordInput.placeholder =
+    input.value="";
+
+    input.placeholder=
       "WRONG PASSWORD";
 
+
     setTimeout(()=>{
-      passwordInput.placeholder =
+
+      input.placeholder=
         "PASSWORD";
+
     },1200);
 
   }
@@ -1112,37 +1507,98 @@ function checkPassword(){
 }
 
 
-/* 버튼 */
-enterButton.addEventListener(
-  "click",
-  function(e){
+/* =========================
+   FIRST DISCOVERY GUIDE
+========================= */
+
+function startDiscoveryGuide(){
+
+  if(guideStarted){
+    return;
+  }
+
+  guideStarted=true;
+
+
+  /*
+    순서
+
+    1. 책 = 글
+    2. 우체통 = 그림
+    3. 창문 2 = 영상
+    4. 달 = 크레딧
+    5. 발자국 = 참여자 후기
+  */
+
+  const spots=[
+
+    document.querySelector(".book"),
+
+    document.querySelector(".mailbox"),
+
+    document.querySelector(".window2"),
+
+    document.querySelector(".moon"),
+
+    document.querySelector(".footprints")
+
+  ];
+
+
+  spots.forEach((spot,index)=>{
+
+    setTimeout(()=>{
+
+      spot.classList.add("guide");
+
+
+      setTimeout(()=>{
+
+        spot.classList.remove("guide");
+
+      },2300);
+
+
+    },index*850);
+
+  });
+
+}
+
+
+/* =========================
+   ENTER
+========================= */
+
+document
+  .getElementById("enterButton")
+  .addEventListener("click",event=>{
 
     makeRipple(
-      e.clientX,
-      e.clientY
+      event.clientX,
+      event.clientY
     );
 
     checkPassword();
 
-  }
-);
+  });
 
 
-/* 엔터키 */
-passwordInput.addEventListener(
-  "keydown",
-  function(e){
+document
+  .getElementById("passwordInput")
+  .addEventListener("keydown",event=>{
 
-    if(e.key === "Enter"){
+    if(event.key==="Enter"){
+
       checkPassword();
+
     }
 
-  }
-);
+  });
 
 
 /* =========================
-   HOTSPOTS
+   MAIN HOTSPOTS
 ========================= */
 
 document
@@ -1151,26 +1607,33 @@ document
 
     button.addEventListener(
       "click",
-      function(e){
+      event=>{
 
         makeRipple(
-          e.clientX,
-          e.clientY
+          event.clientX,
+          event.clientY
         );
 
         tactileSound();
 
-        const target =
+
+        const target=
           button.dataset.target;
+
+
+        /*
+          창문 1처럼 target이 없는
+          오브젝트는 아무것도 하지 않음.
+        */
 
         if(!target){
           return;
         }
 
+
         setTimeout(()=>{
 
-          currentCategory =
-            target;
+          currentCategory=target;
 
           showScreen(target);
 
@@ -1192,17 +1655,19 @@ document
 
     button.addEventListener(
       "click",
-      function(e){
+      event=>{
 
         makeRipple(
-          e.clientX,
-          e.clientY
+          event.clientX,
+          event.clientY
         );
 
         tactileSound();
 
-        const target =
+
+        const target=
           button.dataset.target;
+
 
         setTimeout(()=>{
 
@@ -1217,7 +1682,7 @@ document
 
 
 /* =========================
-   POSTS
+   POST OPEN
 ========================= */
 
 document
@@ -1226,29 +1691,43 @@ document
 
     item.addEventListener(
       "click",
-      function(e){
+      event=>{
 
         makeRipple(
-          e.clientX,
-          e.clientY
+          event.clientX,
+          event.clientY
         );
 
         tactileSound();
 
-        currentCategory =
+
+        currentCategory=
           item.closest(".screen").id;
 
-        readCategory.textContent =
-          item.dataset.category || "";
 
-        readTitle.textContent =
-          item.dataset.title || "";
+        document
+          .getElementById("readCategory")
+          .textContent=
+            item.dataset.category || "";
 
-        readAuthor.textContent =
-          item.dataset.author || "";
 
-        readBody.textContent =
-          "작품 내용이 이곳에 들어갑니다.";
+        document
+          .getElementById("readTitle")
+          .textContent=
+            item.dataset.title || "";
+
+
+        document
+          .getElementById("readAuthor")
+          .textContent=
+            item.dataset.author || "";
+
+
+        document
+          .getElementById("readBody")
+          .textContent=
+            "작품 내용이 이곳에 들어갑니다.";
+
 
         setTimeout(()=>{
 
@@ -1270,14 +1749,15 @@ document
   .getElementById("readBack")
   .addEventListener(
     "click",
-    function(e){
+    event=>{
 
       makeRipple(
-        e.clientX,
-        e.clientY
+        event.clientX,
+        event.clientY
       );
 
       tactileSound();
+
 
       setTimeout(()=>{
 
@@ -1293,20 +1773,23 @@ document
    PREVENT DOUBLE TAP ZOOM
 ========================= */
 
-let lastTouchEnd = 0;
+let lastTouchEnd=0;
 
 document.addEventListener(
   "touchend",
-  function(e){
+  event=>{
 
-    const now =
-      Date.now();
+    const now=Date.now();
 
-    if(now - lastTouchEnd <= 300){
-      e.preventDefault();
+
+    if(now-lastTouchEnd<=300){
+
+      event.preventDefault();
+
     }
 
-    lastTouchEnd = now;
+
+    lastTouchEnd=now;
 
   },
   {passive:false}

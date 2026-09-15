@@ -3,1455 +3,1039 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#050608">
-
+<meta name="theme-color" content="#05080d">
 <title>탐라배 곱꽹대전</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #050608;
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-               "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#05080d;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",
+  "Noto Sans KR",sans-serif;
 }
 
-button,
-input {
-  font: inherit;
+button,input{
+  font:inherit;
 }
 
-button {
-  border: 0;
-  background: none;
-  color: inherit;
+button{
+  border:0;
+  padding:0;
+  background:none;
 }
 
-.screen {
-  position: fixed;
-  inset: 0;
-  display: none;
-  overflow: hidden;
+.screen{
+  position:fixed;
+  inset:0;
+  display:none;
+  background:#05080d;
 }
 
-.screen.active {
-  display: block;
+.screen.active{
+  display:block;
 }
 
-
-/* =========================================
+/* =========================
    PASSWORD
-========================================= */
+========================= */
 
-#passwordScreen {
-  background: #050608;
+#passwordScreen{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#05080d;
 }
 
-.password-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  opacity: .42;
-  filter: brightness(.55) saturate(.7);
+.password-photo{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  opacity:.38;
+  filter:brightness(.55) saturate(.75);
 }
 
-.password-dark {
-  position: absolute;
-  inset: 0;
+.password-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.34);
+}
+
+.password-box{
+  position:relative;
+  z-index:2;
+  width:82%;
+  max-width:390px;
+  text-align:center;
+  color:white;
+}
+
+.title{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:31px;
+  letter-spacing:-1.5px;
+  margin-bottom:9px;
+}
+
+.subtitle{
+  font-size:10px;
+  letter-spacing:4px;
+  opacity:.62;
+  margin-bottom:42px;
+}
+
+.password-input{
+  width:100%;
+  height:49px;
+  border:0;
+  border-bottom:1px solid rgba(255,255,255,.55);
+  background:transparent;
+  color:white;
+  text-align:center;
+  outline:none;
+  font-size:15px;
+  letter-spacing:3px;
+}
+
+.password-input::placeholder{
+  color:rgba(255,255,255,.42);
+  letter-spacing:2px;
+}
+
+.enter-button{
+  margin-top:22px;
+  color:rgba(255,255,255,.8);
+  font-size:11px;
+  letter-spacing:3px;
+  padding:12px 20px;
+}
+
+/* =========================
+   MAIN IMAGE
+========================= */
+
+#mainScreen{
+  background:#05080d;
+}
+
+.main-photo{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+
+/* 어두운 영화 같은 느낌 */
+.main-shade{
+  position:absolute;
+  inset:0;
   background:
     linear-gradient(
       to bottom,
-      rgba(3,5,8,.58),
-      rgba(3,5,8,.78)
+      rgba(0,0,0,.08),
+      rgba(0,0,0,.08) 45%,
+      rgba(0,0,0,.30)
     );
+  pointer-events:none;
 }
 
-.password-content {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  text-align: center;
-  padding: 30px;
-}
-
-.eyebrow {
-  font-size: 10px;
-  letter-spacing: .32em;
-  opacity: .65;
-  margin-bottom: 18px;
-}
-
-.password-title {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(29px, 8vw, 44px);
-  font-weight: 400;
-  letter-spacing: -.04em;
-  margin-bottom: 42px;
-}
-
-.password-line {
-  width: min(260px, 72vw);
-  margin: 0 auto;
-  border-bottom: 1px solid rgba(255,255,255,.45);
-  display: flex;
-  align-items: center;
-}
-
-.password-input {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: white;
-  text-align: center;
-  padding: 13px 5px;
-  font-size: 14px;
-  letter-spacing: .18em;
-}
-
-.password-input::placeholder {
-  color: rgba(255,255,255,.35);
-}
-
-.enter-button {
-  margin-top: 25px;
-  font-size: 9px;
-  letter-spacing: .35em;
-  opacity: .62;
-  padding: 10px;
-}
-
-.password-error {
-  height: 18px;
-  margin-top: 13px;
-  font-size: 10px;
-  color: rgba(255,255,255,.55);
-}
-
-
-/* =========================================
-   MAIN PHOTO
-========================================= */
-
-#mainScreen {
-  background: #050608;
-}
-
-.main-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition:
-    transform .38s ease,
-    filter .38s ease;
-}
-
-.main-shade {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0,0,0,.12),
-      rgba(0,0,0,.04) 50%,
-      rgba(0,0,0,.24)
-    );
-}
-
-
-/* =========================================
+/* =========================
    INVISIBLE HOTSPOTS
-========================================= */
+========================= */
 
-.hotspot {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 5;
-  background: transparent;
-  border: 0;
-  outline: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
+.hotspot{
+  position:absolute;
+  z-index:5;
+  background:transparent;
+  border:0;
+  padding:0;
 }
 
-
-/* 달 → 크레딧 */
-.moon {
-  left: 50%;
-  top: 16%;
-  width: 25%;
-  height: 12%;
-  border-radius: 50%;
+.moon{
+  left:37.5%;
+  top:10%;
+  width:25%;
+  height:12%;
+  border-radius:50%;
 }
 
-
-/* 책 → 글 */
-.book {
-  left: 23%;
-  top: 73%;
-  width: 30%;
-  height: 8%;
+.book{
+  left:8%;
+  top:69%;
+  width:30%;
+  height:10%;
 }
 
-
-/* 우체통 → 그림 */
-.mailbox {
-  left: 74%;
-  top: 62%;
-  width: 20%;
-  height: 12%;
+.mailbox{
+  left:64%;
+  top:56%;
+  width:20%;
+  height:13%;
 }
 
-
-/* 창문 1 → 아무것도 없음 */
-.window1 {
-  left: 6%;
-  top: 30%;
-  width: 10%;
-  height: 15%;
+.window1{
+  left:1%;
+  top:22%;
+  width:10%;
+  height:15%;
 }
 
-
-/* 창문 2 → 영상 */
-.window2 {
-  left: 21%;
-  top: 38%;
-  width: 12%;
-  height: 10%;
+.window2{
+  left:15%;
+  top:32%;
+  width:12%;
+  height:12%;
 }
 
-
-/* 고양이 발자국 → 후기 */
-.footprints {
-  left: 18%;
-  top: 63%;
-  width: 8%;
-  height: 4%;
+.footprints{
+  left:14%;
+  top:60%;
+  width:10%;
+  height:7%;
 }
 
+/* =========================
+   RIPPLE
+========================= */
 
-/* =========================================
-   TOUCH EFFECT
-========================================= */
-
-.ripple {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 100;
-  transform: translate(-50%, -50%);
-  background: rgba(255,255,255,.5);
-  box-shadow: 0 0 18px rgba(255,255,255,.22);
-  animation: quietRipple .34s ease-out forwards;
+.ripple{
+  position:fixed;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.5);
+  pointer-events:none;
+  transform:translate(-50%,-50%) scale(1);
+  animation:ripple .42s ease-out forwards;
+  z-index:100;
 }
 
-@keyframes quietRipple {
-  0% {
-    width: 5px;
-    height: 5px;
-    opacity: .5;
+@keyframes ripple{
+  from{
+    opacity:.55;
+    transform:translate(-50%,-50%) scale(.5);
   }
-
-  100% {
-    width: 75px;
-    height: 75px;
-    opacity: 0;
+  to{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(4);
   }
 }
 
-.leaving .main-photo {
-  transform: scale(1.025);
-  filter: brightness(.75) blur(1px);
+/* =========================
+   CONTENT SCREENS
+========================= */
+
+.content-screen{
+  position:absolute;
+  inset:0;
+  background:#080b10;
+  color:#f4f1ea;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 
-
-/* =========================================
-   CATEGORY
-========================================= */
-
-.category-screen {
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      #20242b 0%,
-      #0c0e12 42%,
-      #050608 100%
-    );
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+.content-inner{
+  width:100%;
+  min-height:100%;
+  padding:64px 25px 50px;
 }
 
-.category-inner {
-  width: min(680px, 100%);
-  min-height: 100%;
-  padding: 70px 25px 80px;
-  margin: auto;
+.section-kicker{
+  font-size:9px;
+  letter-spacing:4px;
+  opacity:.42;
+  margin-bottom:13px;
 }
 
-.back {
-  font-size: 10px;
-  letter-spacing: .25em;
-  opacity: .48;
-  padding: 10px 0;
+.section-title{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:34px;
+  font-weight:400;
+  letter-spacing:-1px;
+  margin-bottom:45px;
 }
 
-.category-heading {
-  margin-top: 48px;
-  margin-bottom: 45px;
+.post-list{
+  border-top:1px solid rgba(255,255,255,.13);
 }
 
-.category-small {
-  font-size: 9px;
-  letter-spacing: .3em;
-  opacity: .4;
-  margin-bottom: 14px;
+.post-item{
+  width:100%;
+  text-align:left;
+  color:#f4f1ea;
+  border-bottom:1px solid rgba(255,255,255,.11);
+  padding:22px 2px;
 }
 
-.category-title {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 42px;
-  font-weight: 400;
-  letter-spacing: -.05em;
+.post-number{
+  display:block;
+  font-size:9px;
+  letter-spacing:2px;
+  opacity:.35;
+  margin-bottom:7px;
 }
 
-.category-description {
-  margin-top: 12px;
-  font-size: 11px;
-  opacity: .42;
+.post-title{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  margin-bottom:7px;
 }
 
-.post-list {
-  border-top: 1px solid rgba(255,255,255,.12);
+.post-author{
+  display:block;
+  font-size:10px;
+  opacity:.45;
+  letter-spacing:.3px;
 }
 
-.post-item {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 38px 1fr auto;
-  gap: 12px;
-  text-align: left;
-  padding: 23px 2px;
-  border-bottom: 1px solid rgba(255,255,255,.09);
-  -webkit-tap-highlight-color: transparent;
+.back{
+  position:fixed;
+  z-index:20;
+  left:22px;
+  top:23px;
+  color:rgba(255,255,255,.65);
+  font-size:10px;
+  letter-spacing:2px;
+  padding:10px;
 }
 
-.post-number {
-  font-family: Georgia, serif;
-  font-size: 12px;
-  opacity: .35;
+/* =========================
+   CREDITS
+========================= */
+
+.credit-list{
+  border-top:1px solid rgba(255,255,255,.12);
 }
 
-.post-author {
-  font-size: 14px;
-  line-height: 1.5;
+.credit-row{
+  padding:18px 2px;
+  border-bottom:1px solid rgba(255,255,255,.1);
 }
 
-.post-partner {
-  font-size: 10px;
-  opacity: .42;
-  margin-top: 4px;
+.credit-category{
+  font-size:9px;
+  letter-spacing:3px;
+  opacity:.35;
+  margin-bottom:6px;
 }
 
-.post-arrow {
-  font-size: 13px;
-  opacity: .3;
+.credit-name{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:17px;
 }
 
-
-/* =========================================
-   READING PAGE
-========================================= */
-
-.read-screen {
-  background: #f8f7f3;
-  color: #151515;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+.credit-detail{
+  font-size:10px;
+  opacity:.43;
+  margin-top:5px;
+  line-height:1.6;
 }
 
-.read-inner {
-  width: min(720px, 100%);
-  margin: auto;
-  padding: 38px 27px 90px;
-}
-
-.read-back {
-  color: #111;
-  opacity: .45;
-  font-size: 10px;
-  letter-spacing: .18em;
-  padding: 10px 0;
-}
-
-.read-number {
-  margin-top: 65px;
-  font-family: Georgia, serif;
-  font-size: 12px;
-  opacity: .38;
-}
-
-.read-title {
-  margin-top: 20px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(28px, 8vw, 42px);
-  font-weight: 400;
-  line-height: 1.18;
-  letter-spacing: -.04em;
-}
-
-.read-author {
-  margin-top: 17px;
-  font-size: 11px;
-  opacity: .5;
-}
-
-.read-divider {
-  width: 35px;
-  height: 1px;
-  background: #222;
-  opacity: .25;
-  margin: 55px 0 42px;
-}
-
-.read-body {
-  font-family: Georgia, "Batang", "Noto Serif KR", serif;
-  font-size: 16px;
-  line-height: 2.05;
-  word-break: keep-all;
-}
-
-.read-body p {
-  margin-bottom: 25px;
-}
-
-.read-empty {
-  font-family: Georgia, serif;
-  font-size: 15px;
-  line-height: 2;
-  opacity: .55;
-}
-
-
-/* =========================================
-   CREDIT / REVIEW
-========================================= */
-
-.info-screen {
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      #24272c 0,
-      #0b0d10 45%,
-      #050608 100%
-    );
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.info-inner {
-  width: min(680px, 100%);
-  margin: auto;
-  padding: 55px 27px 90px;
-}
-
-.info-title {
-  margin-top: 55px;
-  font-family: Georgia, serif;
-  font-size: 40px;
-  font-weight: 400;
-  letter-spacing: -.04em;
-}
-
-.info-subtitle {
-  margin-top: 10px;
-  font-size: 10px;
-  letter-spacing: .15em;
-  opacity: .4;
-}
-
-.info-section {
-  margin-top: 55px;
-}
-
-.info-section-title {
-  font-size: 10px;
-  letter-spacing: .25em;
-  opacity: .45;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255,255,255,.12);
-}
-
-.info-person {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 16px 2px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.info-person span:last-child {
-  opacity: .4;
-  text-align: right;
-}
-
-
-/* =========================================
+/* =========================
    REVIEW
-========================================= */
+========================= */
 
-.review-card {
-  margin-top: 24px;
-  padding: 25px 0;
-  border-bottom: 1px solid rgba(255,255,255,.1);
+.review{
+  border-top:1px solid rgba(255,255,255,.12);
 }
 
-.review-label {
-  font-size: 9px;
-  letter-spacing: .2em;
-  opacity: .35;
-  margin-bottom: 14px;
+.review-item{
+  padding:23px 2px;
+  border-bottom:1px solid rgba(255,255,255,.1);
 }
 
-.review-text {
-  font-family: Georgia, serif;
-  font-size: 16px;
-  line-height: 1.8;
-  opacity: .85;
+.review-name{
+  font-size:10px;
+  letter-spacing:1px;
+  opacity:.5;
+  margin-bottom:9px;
 }
 
-.review-author {
-  margin-top: 13px;
-  font-size: 10px;
-  opacity: .35;
+.review-text{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:16px;
+  line-height:1.75;
 }
 
+/* =========================
+   READING
+========================= */
 
-/* =========================================
-   VIDEO
-========================================= */
-
-.video-placeholder {
-  margin-top: 50px;
-  padding: 60px 20px;
-  border-top: 1px solid rgba(255,255,255,.1);
-  border-bottom: 1px solid rgba(255,255,255,.1);
-  text-align: center;
+#readScreen{
+  background:#f8f7f3;
+  color:#111;
+  overflow-y:auto;
 }
 
-.video-placeholder-title {
-  font-family: Georgia, serif;
-  font-size: 23px;
+.read-inner{
+  min-height:100%;
+  padding:75px 25px 80px;
 }
 
-.video-placeholder-text {
-  margin-top: 12px;
-  font-size: 10px;
-  opacity: .4;
-  letter-spacing: .08em;
+.read-back{
+  position:fixed;
+  z-index:30;
+  top:20px;
+  left:20px;
+  color:#222;
+  font-size:10px;
+  letter-spacing:2px;
+  padding:10px;
 }
 
+.read-category{
+  font-size:9px;
+  letter-spacing:3px;
+  color:#999;
+  margin-bottom:14px;
+}
 
-/* =========================================
-   DESKTOP
-========================================= */
+.read-title{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:31px;
+  line-height:1.25;
+  font-weight:400;
+  letter-spacing:-.7px;
+  margin-bottom:12px;
+}
 
-@media (min-width: 700px) {
-  .main-photo,
-  .password-photo {
-    object-position: center;
-  }
+.read-author{
+  font-size:10px;
+  color:#999;
+  margin-bottom:48px;
+}
 
-  .category-inner,
-  .info-inner,
-  .read-inner {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
+.read-body{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:16px;
+  line-height:2;
+  white-space:pre-line;
+}
+
+.hidden{
+  display:none !important;
+}
+
+/* =========================
+   TOUCH FEEDBACK
+========================= */
+
+button{
+  cursor:pointer;
+}
+
+button:active{
+  opacity:.72;
 }
 </style>
 </head>
 
-
 <body>
 
-
-<!-- ======================================
+<!-- =========================
      PASSWORD SCREEN
-====================================== -->
+========================= -->
 
 <section id="passwordScreen" class="screen active">
 
   <img
-    src="winter.jpg"
     class="password-photo"
+    src="winter.jpg.PNG"
     alt=""
   >
 
-  <div class="password-dark"></div>
+  <div class="password-overlay"></div>
 
-  <div class="password-content">
+  <div class="password-box">
 
-    <div class="eyebrow">
+    <div class="title">탐라배 곱꽹대전</div>
+
+    <div class="subtitle">
       LITERARY WEBZINE
     </div>
 
-    <h1 class="password-title">
-      탐라배 곱꽹대전
-    </h1>
-
-    <div class="password-line">
-      <input
-        id="passwordInput"
-        class="password-input"
-        type="password"
-        placeholder="PASSWORD"
-        autocomplete="off"
-      >
-    </div>
+    <input
+      id="passwordInput"
+      class="password-input"
+      type="password"
+      placeholder="PASSWORD"
+      autocomplete="off"
+      enterkeyhint="go"
+    >
 
     <button
       id="enterButton"
       class="enter-button"
+      type="button"
     >
       ENTER
     </button>
 
-    <div
-      id="passwordError"
-      class="password-error"
-    ></div>
-
   </div>
 
 </section>
 
 
-
-<!-- ======================================
-     MAIN SCREEN
-====================================== -->
+<!-- =========================
+     MAIN
+========================= -->
 
 <section id="mainScreen" class="screen">
 
   <img
-    src="winter.jpg"
     class="main-photo"
-    alt="눈 내리는 겨울밤 골목"
+    src="winter.jpg.PNG"
+    alt="겨울밤 골목"
   >
 
   <div class="main-shade"></div>
 
-
-  <!-- 달 → 크레딧 -->
+  <!-- 달 = 크레딧 -->
   <button
     class="hotspot moon"
-    aria-label="크레딧"
-    data-target="creditsScreen">
-  </button>
+    data-target="creditsScreen"
+    aria-label="달"
+  ></button>
 
-
-  <!-- 책 → 글 -->
+  <!-- 책 = 글 -->
   <button
     class="hotspot book"
-    aria-label="글"
-    data-target="writingScreen">
-  </button>
+    data-target="writingScreen"
+    aria-label="책"
+  ></button>
 
-
-  <!-- 우체통 → 그림 -->
+  <!-- 우체통 = 그림 -->
   <button
     class="hotspot mailbox"
-    aria-label="그림"
-    data-target="drawingScreen">
-  </button>
+    data-target="drawingScreen"
+    aria-label="우체통"
+  ></button>
 
-
-  <!-- 창문 1 → 아무것도 없음 -->
+  <!-- 창문 1 = 아무 기능 없음 -->
   <button
     class="hotspot window1"
-    aria-label="창문">
-  </button>
+    aria-label="창문"
+  ></button>
 
-
-  <!-- 창문 2 → 영상 -->
+  <!-- 창문 2 = 영상 -->
   <button
     class="hotspot window2"
-    aria-label="영상"
-    data-target="videoScreen">
-  </button>
+    data-target="videoScreen"
+    aria-label="창문"
+  ></button>
 
-
-  <!-- 고양이 발자국 → 참여자 후기 -->
+  <!-- 발자국 = 참여자 후기 -->
   <button
     class="hotspot footprints"
-    aria-label="참여자 후기"
-    data-target="reviewScreen">
-  </button>
+    data-target="reviewScreen"
+    aria-label="발자국"
+  ></button>
 
 </section>
 
 
+<!-- =========================
+     WRITING
+========================= -->
 
-<!-- ======================================
-     글 CATEGORY
-====================================== -->
-
-<section id="writingScreen" class="screen category-screen">
-
-  <div class="category-inner">
+<section id="writingScreen" class="screen">
+  <div class="content-screen">
 
     <button class="back" data-target="mainScreen">
-      ← BACK
+      BACK
     </button>
 
-    <div class="category-heading">
+    <div class="content-inner">
 
-      <div class="category-small">
-        LITERARY WEBZINE
+      <div class="section-kicker">TEXT</div>
+      <div class="section-title">글</div>
+
+      <div class="post-list">
+
+        <button class="post-item"
+          data-category="글"
+          data-title="첫 번째 이야기"
+          data-author="필삼이 / 요미꼬미 쭌뺌">
+          <span class="post-number">01</span>
+          <span class="post-title">첫 번째 이야기</span>
+          <span class="post-author">필삼이 / 요미꼬미 쭌뺌</span>
+        </button>
+
+        <button class="post-item"
+          data-category="글"
+          data-title="두 번째 이야기"
+          data-author="치약이 / 빵왕">
+          <span class="post-number">02</span>
+          <span class="post-title">두 번째 이야기</span>
+          <span class="post-author">치약이 / 빵왕</span>
+        </button>
+
+        <button class="post-item"
+          data-category="글"
+          data-title="세 번째 이야기"
+          data-author="개양이 / 탠동 원구 뼈뉴 요미꼬미">
+          <span class="post-number">03</span>
+          <span class="post-title">세 번째 이야기</span>
+          <span class="post-author">개양이 / 탠동 원구 뼈뉴 요미꼬미</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="네 번째 이야기" data-author="벌벌 / 후혜">
+          <span class="post-number">04</span>
+          <span class="post-title">네 번째 이야기</span>
+          <span class="post-author">벌벌 / 후혜</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="다섯 번째 이야기" data-author="스디 / 우강훈김영우">
+          <span class="post-number">05</span>
+          <span class="post-title">다섯 번째 이야기</span>
+          <span class="post-author">스디 / 우강훈김영우</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="여섯 번째 이야기" data-author="청 / 탠찬 민욱">
+          <span class="post-number">06</span>
+          <span class="post-title">여섯 번째 이야기</span>
+          <span class="post-author">청 / 탠찬 민욱</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="일곱 번째 이야기" data-author="영원 / 윤손">
+          <span class="post-number">07</span>
+          <span class="post-title">일곱 번째 이야기</span>
+          <span class="post-author">영원 / 윤손</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="여덟 번째 이야기" data-author="SA / 탠찬">
+          <span class="post-number">08</span>
+          <span class="post-title">여덟 번째 이야기</span>
+          <span class="post-author">SA / 탠찬</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="아홉 번째 이야기" data-author="하린 / 달별">
+          <span class="post-number">09</span>
+          <span class="post-title">아홉 번째 이야기</span>
+          <span class="post-author">하린 / 달별</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열 번째 이야기" data-author="동이 / 윤손 꼬순">
+          <span class="post-number">10</span>
+          <span class="post-title">열 번째 이야기</span>
+          <span class="post-author">동이 / 윤손 꼬순</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열한 번째 이야기" data-author="딱 / 재롱 쭌잿">
+          <span class="post-number">11</span>
+          <span class="post-title">열한 번째 이야기</span>
+          <span class="post-author">딱 / 재롱 쭌잿</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열두 번째 이야기" data-author="cuybf(상태:가능충) / 쩡껀">
+          <span class="post-number">12</span>
+          <span class="post-title">열두 번째 이야기</span>
+          <span class="post-author">cuybf(상태:가능충) / 쩡껀</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열세 번째 이야기" data-author="본 / 창찬">
+          <span class="post-number">13</span>
+          <span class="post-title">열세 번째 이야기</span>
+          <span class="post-author">본 / 창찬</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열네 번째 이야기" data-author="아 / 한훈">
+          <span class="post-number">14</span>
+          <span class="post-title">열네 번째 이야기</span>
+          <span class="post-author">아 / 한훈</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열다섯 번째 이야기" data-author="순이 / 윤훈">
+          <span class="post-number">15</span>
+          <span class="post-title">열다섯 번째 이야기</span>
+          <span class="post-author">순이 / 윤훈</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열여섯 번째 이야기" data-author="you / 윤황">
+          <span class="post-number">16</span>
+          <span class="post-title">열여섯 번째 이야기</span>
+          <span class="post-author">you / 윤황</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열일곱 번째 이야기" data-author="하프 / 삐뭅 건뱅">
+          <span class="post-number">17</span>
+          <span class="post-title">열일곱 번째 이야기</span>
+          <span class="post-author">하프 / 삐뭅 건뱅</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열여덟 번째 이야기" data-author="궁 / 한우">
+          <span class="post-number">18</span>
+          <span class="post-title">열여덟 번째 이야기</span>
+          <span class="post-author">궁 / 한우</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="열아홉 번째 이야기" data-author="킨교 / 전준표박준현 장재영이주형 김주원신재인">
+          <span class="post-number">19</span>
+          <span class="post-title">열아홉 번째 이야기</span>
+          <span class="post-author">킨교 / 전준표박준현 장재영이주형 김주원신재인</span>
+        </button>
+
+        <button class="post-item" data-category="글" data-title="스무 번째 이야기" data-author="dp / 렘배(안배) 읠뎡">
+          <span class="post-number">20</span>
+          <span class="post-title">스무 번째 이야기</span>
+          <span class="post-author">dp / 렘배(안배) 읠뎡</span>
+        </button>
+
       </div>
-
-      <h2 class="category-title">
-        글
-      </h2>
-
-      <div class="category-description">
-        20 pieces
-      </div>
-
     </div>
-
-
-    <div class="post-list">
-
-
-      <button
-        class="post-item"
-        data-read="1"
-        data-title="필삼이"
-        data-author="요미꼬미 쭌뺌">
-        <span class="post-number">01</span>
-        <span>
-          <span class="post-author">필삼이</span>
-          <span class="post-partner">요미꼬미 쭌뺌</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button
-        class="post-item"
-        data-read="2"
-        data-title="치약이"
-        data-author="빵왕">
-        <span class="post-number">02</span>
-        <span>
-          <span class="post-author">치약이</span>
-          <span class="post-partner">빵왕</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button
-        class="post-item"
-        data-read="3"
-        data-title="개양이"
-        data-author="탠동 원구 뼈뉴 요미꼬미">
-        <span class="post-number">03</span>
-        <span>
-          <span class="post-author">개양이</span>
-          <span class="post-partner">탠동 원구 뼈뉴 요미꼬미</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="4" data-title="벌벌" data-author="후혜">
-        <span class="post-number">04</span>
-        <span>
-          <span class="post-author">벌벌</span>
-          <span class="post-partner">후혜</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="5" data-title="스디" data-author="우강훈김영우">
-        <span class="post-number">05</span>
-        <span>
-          <span class="post-author">스디</span>
-          <span class="post-partner">우강훈김영우</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="6" data-title="청" data-author="탠찬 민욱">
-        <span class="post-number">06</span>
-        <span>
-          <span class="post-author">청</span>
-          <span class="post-partner">탠찬 민욱</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="7" data-title="영원" data-author="윤손">
-        <span class="post-number">07</span>
-        <span>
-          <span class="post-author">영원</span>
-          <span class="post-partner">윤손</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="8" data-title="SA" data-author="탠찬">
-        <span class="post-number">08</span>
-        <span>
-          <span class="post-author">SA</span>
-          <span class="post-partner">탠찬</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="9" data-title="하린" data-author="달별">
-        <span class="post-number">09</span>
-        <span>
-          <span class="post-author">하린</span>
-          <span class="post-partner">달별</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="10" data-title="동이" data-author="윤손 꼬순">
-        <span class="post-number">10</span>
-        <span>
-          <span class="post-author">동이</span>
-          <span class="post-partner">윤손 꼬순</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="11" data-title="딱" data-author="재롱 쭌잿">
-        <span class="post-number">11</span>
-        <span>
-          <span class="post-author">딱</span>
-          <span class="post-partner">재롱 쭌잿</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="12" data-title="cuybf(상태:가능충)" data-author="쩡껀">
-        <span class="post-number">12</span>
-        <span>
-          <span class="post-author">cuybf(상태:가능충)</span>
-          <span class="post-partner">쩡껀</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="13" data-title="본" data-author="창찬">
-        <span class="post-number">13</span>
-        <span>
-          <span class="post-author">본</span>
-          <span class="post-partner">창찬</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="14" data-title="아" data-author="한훈">
-        <span class="post-number">14</span>
-        <span>
-          <span class="post-author">아</span>
-          <span class="post-partner">한훈</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="15" data-title="순이" data-author="윤훈">
-        <span class="post-number">15</span>
-        <span>
-          <span class="post-author">순이</span>
-          <span class="post-partner">윤훈</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="16" data-title="you" data-author="윤황">
-        <span class="post-number">16</span>
-        <span>
-          <span class="post-author">you</span>
-          <span class="post-partner">윤황</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="17" data-title="하프" data-author="삐뭅 건뱅">
-        <span class="post-number">17</span>
-        <span>
-          <span class="post-author">하프</span>
-          <span class="post-partner">삐뭅 건뱅</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="18" data-title="궁" data-author="한우">
-        <span class="post-number">18</span>
-        <span>
-          <span class="post-author">궁</span>
-          <span class="post-partner">한우</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="19" data-title="킨교" data-author="전준표박준현 장재영이주형 김주원신재인">
-        <span class="post-number">19</span>
-        <span>
-          <span class="post-author">킨교</span>
-          <span class="post-partner">전준표박준현 장재영이주형 김주원신재인</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button class="post-item" data-read="20" data-title="dp" data-author="렘배(안배) 읠뎡">
-        <span class="post-number">20</span>
-        <span>
-          <span class="post-author">dp</span>
-          <span class="post-partner">렘배(안배) 읠뎡</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-    </div>
-
   </div>
-
 </section>
 
 
+<!-- =========================
+     DRAWING
+========================= -->
 
-<!-- ======================================
-     그림 CATEGORY
-====================================== -->
-
-<section id="drawingScreen" class="screen category-screen">
-
-  <div class="category-inner">
+<section id="drawingScreen" class="screen">
+  <div class="content-screen">
 
     <button class="back" data-target="mainScreen">
-      ← BACK
+      BACK
     </button>
 
-    <div class="category-heading">
+    <div class="content-inner">
 
-      <div class="category-small">
-        VISUAL WORKS
+      <div class="section-kicker">VISUAL</div>
+      <div class="section-title">그림</div>
+
+      <div class="post-list">
+
+        <button class="post-item"
+          data-category="그림"
+          data-title="일등병⭐️(히키)"
+          data-author="연쇄박음마 / 창찬">
+          <span class="post-number">01</span>
+          <span class="post-title">일등병⭐️(히키)</span>
+          <span class="post-author">연쇄박음마: 일등병⭐️(히키) / 창찬</span>
+        </button>
+
+        <button class="post-item"
+          data-category="그림"
+          data-title="두 번째 작품"
+          data-author="얌빵 / 펑뜽">
+          <span class="post-number">02</span>
+          <span class="post-title">두 번째 작품</span>
+          <span class="post-author">얌빵 / 펑뜽</span>
+        </button>
+
+        <button class="post-item"
+          data-category="그림"
+          data-title="세 번째 작품"
+          data-author="박진만 / 풍뎅">
+          <span class="post-number">03</span>
+          <span class="post-title">세 번째 작품</span>
+          <span class="post-author">박진만 / 풍뎅</span>
+        </button>
+
+        <button class="post-item"
+          data-category="그림"
+          data-title="네 번째 작품"
+          data-author="Ham guinea jyu / 한훈 뱅쬬">
+          <span class="post-number">04</span>
+          <span class="post-title">네 번째 작품</span>
+          <span class="post-author">Ham guinea jyu / 한훈 뱅쬬</span>
+        </button>
+
+        <button class="post-item"
+          data-category="그림"
+          data-title="다섯 번째 작품"
+          data-author="눙 / 쩡손">
+          <span class="post-number">05</span>
+          <span class="post-title">다섯 번째 작품</span>
+          <span class="post-author">눙 / 쩡손</span>
+        </button>
+
       </div>
-
-      <h2 class="category-title">
-        그림
-      </h2>
-
-      <div class="category-description">
-        5 pieces
-      </div>
-
     </div>
-
-
-    <div class="post-list">
-
-      <button
-        class="post-item"
-        data-read="draw1"
-        data-title="연쇄박음마: 일등병⭐️(히키)"
-        data-author="창찬">
-        <span class="post-number">01</span>
-        <span>
-          <span class="post-author">연쇄박음마: 일등병⭐️(히키)</span>
-          <span class="post-partner">창찬</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button
-        class="post-item"
-        data-read="draw2"
-        data-title="얌빵"
-        data-author="펑뜽">
-        <span class="post-number">02</span>
-        <span>
-          <span class="post-author">얌빵</span>
-          <span class="post-partner">펑뜽</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button
-        class="post-item"
-        data-read="draw3"
-        data-title="박진만"
-        data-author="풍뎅">
-        <span class="post-number">03</span>
-        <span>
-          <span class="post-author">박진만</span>
-          <span class="post-partner">풍뎅</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button
-        class="post-item"
-        data-read="draw4"
-        data-title="Ham guinea jyu"
-        data-author="한훈 뱅쬬">
-        <span class="post-number">04</span>
-        <span>
-          <span class="post-author">Ham guinea jyu</span>
-          <span class="post-partner">한훈 뱅쬬</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-
-      <button
-        class="post-item"
-        data-read="draw5"
-        data-title="눙"
-        data-author="쩡손">
-        <span class="post-number">05</span>
-        <span>
-          <span class="post-author">눙</span>
-          <span class="post-partner">쩡손</span>
-        </span>
-        <span class="post-arrow">→</span>
-      </button>
-
-    </div>
-
   </div>
-
 </section>
 
 
-
-<!-- ======================================
+<!-- =========================
      VIDEO
-====================================== -->
+========================= -->
 
-<section id="videoScreen" class="screen category-screen">
+<section id="videoScreen" class="screen">
 
-  <div class="category-inner">
+  <div class="content-screen">
 
     <button class="back" data-target="mainScreen">
-      ← BACK
+      BACK
     </button>
 
-    <div class="category-heading">
+    <div class="content-inner">
 
-      <div class="category-small">
-        MOVING IMAGE
-      </div>
+      <div class="section-kicker">MOVING IMAGE</div>
+      <div class="section-title">영상</div>
 
-      <h2 class="category-title">
-        영상
-      </h2>
-
-    </div>
-
-
-    <div class="video-placeholder">
-
-      <div class="video-placeholder-title">
+      <div style="
+        padding-top:30vh;
+        text-align:center;
+        color:rgba(255,255,255,.4);
+        font-family:Georgia,serif;
+        font-size:17px;
+      ">
         준비 중
       </div>
 
-      <div class="video-placeholder-text">
-        SOON
-      </div>
-
     </div>
-
   </div>
 
 </section>
 
 
+<!-- =========================
+     CREDITS
+========================= -->
 
-<!-- ======================================
-     CREDIT
-====================================== -->
+<section id="creditsScreen" class="screen">
 
-<section id="creditsScreen" class="screen info-screen">
-
-  <div class="info-inner">
+  <div class="content-screen">
 
     <button class="back" data-target="mainScreen">
-      ← BACK
+      BACK
     </button>
 
-    <h2 class="info-title">
-      Credits
-    </h2>
+    <div class="content-inner">
 
-    <div class="info-subtitle">
-      탐라배 곱꽹대전
-    </div>
+      <div class="section-kicker">CREDITS</div>
+      <div class="section-title">크레딧</div>
 
+      <div class="credit-list">
 
-    <div class="info-section">
+        <div class="credit-row">
+          <div class="credit-category">WEBZINE</div>
+          <div class="credit-name">탐라배 곱꽹대전</div>
+          <div class="credit-detail">LITERARY WEBZINE</div>
+        </div>
 
-      <div class="info-section-title">
-        글
-      </div>
+        <div class="credit-row">
+          <div class="credit-category">TEXT</div>
+          <div class="credit-name">글</div>
+          <div class="credit-detail">20 works</div>
+        </div>
 
-      <div class="info-person"><span>필삼이</span><span>요미꼬미 쭌뺌</span></div>
-      <div class="info-person"><span>치약이</span><span>빵왕</span></div>
-      <div class="info-person"><span>개양이</span><span>탠동 원구 뼈뉴 요미꼬미</span></div>
-      <div class="info-person"><span>벌벌</span><span>후혜</span></div>
-      <div class="info-person"><span>스디</span><span>우강훈김영우</span></div>
-      <div class="info-person"><span>청</span><span>탠찬 민욱</span></div>
-      <div class="info-person"><span>영원</span><span>윤손</span></div>
-      <div class="info-person"><span>SA</span><span>탠찬</span></div>
-      <div class="info-person"><span>하린</span><span>달별</span></div>
-      <div class="info-person"><span>동이</span><span>윤손 꼬순</span></div>
-      <div class="info-person"><span>딱</span><span>재롱 쭌잿</span></div>
-      <div class="info-person"><span>cuybf(상태:가능충)</span><span>쩡껀</span></div>
-      <div class="info-person"><span>본</span><span>창찬</span></div>
-      <div class="info-person"><span>아</span><span>한훈</span></div>
-      <div class="info-person"><span>순이</span><span>윤훈</span></div>
-      <div class="info-person"><span>you</span><span>윤황</span></div>
-      <div class="info-person"><span>하프</span><span>삐뭅 건뱅</span></div>
-      <div class="info-person"><span>궁</span><span>한우</span></div>
-      <div class="info-person"><span>킨교</span><span>전준표박준현 장재영이주형 김주원신재인</span></div>
-      <div class="info-person"><span>dp</span><span>렘배(안배) 읠뎡</span></div>
+        <div class="credit-row">
+          <div class="credit-category">VISUAL</div>
+          <div class="credit-name">그림</div>
+          <div class="credit-detail">5 works</div>
+        </div>
 
-    </div>
+        <div class="credit-row">
+          <div class="credit-category">MOVING IMAGE</div>
+          <div class="credit-name">영상</div>
+          <div class="credit-detail">준비 중</div>
+        </div>
 
+        <div class="credit-row">
+          <div class="credit-category">DESIGN</div>
+          <div class="credit-name">탐라배 곱꽹대전</div>
+        </div>
 
-    <div class="info-section">
-
-      <div class="info-section-title">
-        그림
-      </div>
-
-      <div class="info-person">
-        <span>연쇄박음마: 일등병⭐️(히키)</span>
-        <span>창찬</span>
-      </div>
-
-      <div class="info-person">
-        <span>얌빵</span>
-        <span>펑뜽</span>
-      </div>
-
-      <div class="info-person">
-        <span>박진만</span>
-        <span>풍뎅</span>
-      </div>
-
-      <div class="info-person">
-        <span>Ham guinea jyu</span>
-        <span>한훈 뱅쬬</span>
-      </div>
-
-      <div class="info-person">
-        <span>눙</span>
-        <span>쩡손</span>
       </div>
 
     </div>
-
-
-    <div class="info-section">
-
-      <div class="info-section-title">
-        영상
-      </div>
-
-      <div class="info-person">
-        <span>영상</span>
-        <span>준비 중</span>
-      </div>
-
-    </div>
-
-
-    <div class="info-section">
-
-      <div class="info-section-title">
-        기타
-      </div>
-
-      <div class="info-person">
-        <span>사부</span>
-        <span>한훈 · 미정</span>
-      </div>
-
-    </div>
-
   </div>
 
 </section>
 
 
+<!-- =========================
+     PARTICIPANT REVIEWS
+========================= -->
 
-<!-- ======================================
-     PARTICIPANT REVIEW
-====================================== -->
+<section id="reviewScreen" class="screen">
 
-<section id="reviewScreen" class="screen info-screen">
-
-  <div class="info-inner">
+  <div class="content-screen">
 
     <button class="back" data-target="mainScreen">
-      ← BACK
+      BACK
     </button>
 
-    <h2 class="info-title">
-      후기
-    </h2>
+    <div class="content-inner">
 
-    <div class="info-subtitle">
-      PARTICIPANT NOTES
-    </div>
+      <div class="section-kicker">PARTICIPANT NOTES</div>
+      <div class="section-title">참여자 후기</div>
 
+      <div class="review">
 
-    <div class="review-card">
+        <div class="review-item">
+          <div class="review-name">PARTICIPANT 01</div>
+          <div class="review-text">
+            작품을 만들면서 평소에는 지나쳤던 이야기들을 다시 바라보게 되었습니다.
+          </div>
+        </div>
 
-      <div class="review-label">
-        PARTICIPANT REVIEW
-      </div>
+        <div class="review-item">
+          <div class="review-name">PARTICIPANT 02</div>
+          <div class="review-text">
+            각자의 방식으로 하나의 계절을 남길 수 있어서 재미있었습니다.
+          </div>
+        </div>
 
-      <div class="review-text">
-        아직 후기가 들어오지 않았습니다.
-      </div>
+        <div class="review-item">
+          <div class="review-name">PARTICIPANT 03</div>
+          <div class="review-text">
+            준비하는 동안의 순간들까지도 오래 기억에 남을 것 같습니다.
+          </div>
+        </div>
 
-      <div class="review-author">
-        탐라배 곱꽹대전
-      </div>
-
-    </div>
-
-
-    <div class="review-card">
-
-      <div class="review-label">
-        NOTE
-      </div>
-
-      <div class="review-text">
-        이곳에는 웹진을 함께 만든 사람들이 남긴
-        짧은 이야기와 제작 후기를 담을 수 있습니다.
       </div>
 
     </div>
-
   </div>
 
 </section>
 
 
+<!-- =========================
+     READ
+========================= -->
 
-<!-- ======================================
-     READING
-====================================== -->
+<section id="readScreen" class="screen">
 
-<section id="readScreen" class="screen read-screen">
+  <button id="readBack" class="read-back">
+    BACK
+  </button>
 
   <div class="read-inner">
 
-    <button
-      id="readBack"
-      class="read-back">
-      ← BACK
-    </button>
+    <div id="readCategory" class="read-category"></div>
 
-    <div
-      id="readNumber"
-      class="read-number">
+    <div id="readTitle" class="read-title"></div>
+
+    <div id="readAuthor" class="read-author"></div>
+
+    <div id="readBody" class="read-body">
+      작품 내용이 이곳에 들어갑니다.
     </div>
-
-    <h2
-      id="readTitle"
-      class="read-title">
-    </h2>
-
-    <div
-      id="readAuthor"
-      class="read-author">
-    </div>
-
-    <div class="read-divider"></div>
-
-    <article
-      id="readBody"
-      class="read-body">
-    </article>
 
   </div>
 
 </section>
-
 
 
 <script>
 
-/* =========================================
-   SCREEN CONTROL
-========================================= */
+/* =========================
+   ELEMENTS
+========================= */
 
-const screens = document.querySelectorAll(".screen");
+const passwordScreen =
+  document.getElementById("passwordScreen");
 
-let previousScreen = "mainScreen";
-let currentCategory = "writingScreen";
+const mainScreen =
+  document.getElementById("mainScreen");
+
+const passwordInput =
+  document.getElementById("passwordInput");
+
+const enterButton =
+  document.getElementById("enterButton");
+
+const readScreen =
+  document.getElementById("readScreen");
+
+const readCategory =
+  document.getElementById("readCategory");
+
+const readTitle =
+  document.getElementById("readTitle");
+
+const readAuthor =
+  document.getElementById("readAuthor");
+
+const readBody =
+  document.getElementById("readBody");
+
+let currentCategory = "mainScreen";
 
 
-function showScreen(id) {
-
-  screens.forEach(screen => {
-    screen.classList.remove("active");
-  });
-
-  const target = document.getElementById(id);
-
-  if (target) {
-    target.classList.add("active");
-
-    if (
-      target.classList.contains("category-screen") ||
-      target.classList.contains("info-screen") ||
-      target.classList.contains("read-screen")
-    ) {
-      target.scrollTop = 0;
-    }
-  }
-}
-
-
-/* =========================================
-   QUIET CLICK SOUND
-========================================= */
+/* =========================
+   SIMPLE SOUND
+========================= */
 
 let audioContext = null;
 
+function tactileSound(){
 
-function tactileSound() {
+  try{
 
-  try {
-
-    if (!audioContext) {
+    if(!audioContext){
       audioContext =
         new (window.AudioContext ||
-             window.webkitAudioContext)();
+        window.webkitAudioContext)();
     }
 
-    if (audioContext.state === "suspended") {
+    if(audioContext.state === "suspended"){
       audioContext.resume();
     }
 
-    const now = audioContext.currentTime;
-
-    const oscillator =
+    const osc =
       audioContext.createOscillator();
 
     const gain =
       audioContext.createGain();
 
-    oscillator.type = "sine";
+    osc.type = "sine";
 
-    oscillator.frequency.setValueAtTime(
+    osc.frequency.setValueAtTime(
       150,
-      now
+      audioContext.currentTime
     );
 
-    oscillator.frequency.exponentialRampToValueAtTime(
+    osc.frequency.exponentialRampToValueAtTime(
       105,
-      now + 0.055
+      audioContext.currentTime + .055
     );
 
     gain.gain.setValueAtTime(
-      0.0001,
-      now
+      .0001,
+      audioContext.currentTime
     );
 
     gain.gain.exponentialRampToValueAtTime(
-      0.018,
-      now + 0.004
+      .018,
+      audioContext.currentTime + .004
     );
 
-    gain.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now + 0.065
-    );
-
-    oscillator.connect(gain);
+    osc.connect(gain);
     gain.connect(audioContext.destination);
 
-    oscillator.start(now);
-    oscillator.stop(now + 0.07);
+    osc.start();
 
-  } catch (error) {
-    /* sound unavailable */
-  }
+    osc.stop(
+      audioContext.currentTime + .07
+    );
+
+  }catch(e){}
+
 }
 
 
-/* =========================================
+/* =========================
    RIPPLE
-========================================= */
+========================= */
 
-function makeRipple(event) {
-
-  let x;
-  let y;
-
-  if (event.touches && event.touches[0]) {
-    x = event.touches[0].clientX;
-    y = event.touches[0].clientY;
-  } else {
-    x = event.clientX;
-    y = event.clientY;
-  }
+function makeRipple(x,y){
 
   const ripple =
     document.createElement("div");
@@ -1463,261 +1047,269 @@ function makeRipple(event) {
 
   document.body.appendChild(ripple);
 
-  setTimeout(() => {
+  setTimeout(()=>{
     ripple.remove();
-  }, 400);
+  },450);
+
 }
 
 
-/* =========================================
-   HOTSPOTS
-========================================= */
+/* =========================
+   SHOW SCREEN
+========================= */
 
-document
-  .querySelectorAll(".hotspot")
-  .forEach(button => {
+function showScreen(id){
 
-    button.addEventListener("pointerdown", function(event) {
-
-      makeRipple(event);
-
-      tactileSound();
-
-      const target =
-        this.dataset.target;
-
-      if (!target) {
-        return;
-      }
-
-      document
-        .getElementById("mainScreen")
-        .classList.add("leaving");
-
-      setTimeout(() => {
-
-        document
-          .getElementById("mainScreen")
-          .classList.remove("leaving");
-
-        showScreen(target);
-
-      }, 220);
-
+  document
+    .querySelectorAll(".screen")
+    .forEach(screen=>{
+      screen.classList.remove("active");
     });
 
-  });
+  const target =
+    document.getElementById(id);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+}
 
 
-/* =========================================
-   BACK BUTTONS
-========================================= */
-
-document
-  .querySelectorAll("[data-target]")
-  .forEach(button => {
-
-    if (button.classList.contains("hotspot")) {
-      return;
-    }
-
-    button.addEventListener("click", () => {
-
-      const target =
-        button.dataset.target;
-
-      if (target) {
-        showScreen(target);
-      }
-
-    });
-
-  });
-
-
-/* =========================================
+/* =========================
    PASSWORD
-========================================= */
+========================= */
 
-const passwordInput =
-  document.getElementById("passwordInput");
+function checkPassword(){
 
-const enterButton =
-  document.getElementById("enterButton");
+  const password =
+    passwordInput.value.trim();
 
-const passwordError =
-  document.getElementById("passwordError");
-
-
-function enterSite() {
-
-  if (passwordInput.value === "ohmyps") {
-
-    passwordError.textContent = "";
+  if(password === "ohmyps"){
 
     tactileSound();
 
+    passwordInput.blur();
+
     showScreen("mainScreen");
-
-  } else {
-
-    passwordError.textContent =
-      "PASSWORD가 맞지 않습니다.";
 
     passwordInput.value = "";
 
-    passwordInput.focus();
+  }else{
+
+    passwordInput.value = "";
+
+    passwordInput.placeholder =
+      "WRONG PASSWORD";
+
+    setTimeout(()=>{
+      passwordInput.placeholder =
+        "PASSWORD";
+    },1200);
 
   }
+
 }
 
 
+/* 버튼 */
 enterButton.addEventListener(
   "click",
-  enterSite
+  function(e){
+
+    makeRipple(
+      e.clientX,
+      e.clientY
+    );
+
+    checkPassword();
+
+  }
 );
 
 
+/* 엔터키 */
 passwordInput.addEventListener(
   "keydown",
-  event => {
+  function(e){
 
-    if (event.key === "Enter") {
-      enterSite();
+    if(e.key === "Enter"){
+      checkPassword();
     }
 
   }
 );
 
 
-/* =========================================
-   POST READING
-========================================= */
+/* =========================
+   HOTSPOTS
+========================= */
 
-const readScreen =
-  document.getElementById("readScreen");
+document
+  .querySelectorAll(".hotspot")
+  .forEach(button=>{
 
-const readNumber =
-  document.getElementById("readNumber");
+    button.addEventListener(
+      "click",
+      function(e){
 
-const readTitle =
-  document.getElementById("readTitle");
+        makeRipple(
+          e.clientX,
+          e.clientY
+        );
 
-const readAuthor =
-  document.getElementById("readAuthor");
+        tactileSound();
 
-const readBody =
-  document.getElementById("readBody");
+        const target =
+          button.dataset.target;
 
+        if(!target){
+          return;
+        }
+
+        setTimeout(()=>{
+
+          currentCategory =
+            target;
+
+          showScreen(target);
+
+        },220);
+
+      }
+    );
+
+  });
+
+
+/* =========================
+   BACK BUTTONS
+========================= */
+
+document
+  .querySelectorAll(".back")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      function(e){
+
+        makeRipple(
+          e.clientX,
+          e.clientY
+        );
+
+        tactileSound();
+
+        const target =
+          button.dataset.target;
+
+        setTimeout(()=>{
+
+          showScreen(target);
+
+        },150);
+
+      }
+    );
+
+  });
+
+
+/* =========================
+   POSTS
+========================= */
 
 document
   .querySelectorAll(".post-item")
-  .forEach(item => {
+  .forEach(item=>{
 
-    item.addEventListener("click", () => {
+    item.addEventListener(
+      "click",
+      function(e){
 
-      const number =
-        item.dataset.read;
+        makeRipple(
+          e.clientX,
+          e.clientY
+        );
 
-      const title =
-        item.dataset.title;
-
-      const author =
-        item.dataset.author;
-
-      /* 그림 */
-      if (number.startsWith("draw")) {
+        tactileSound();
 
         currentCategory =
-          "drawingScreen";
+          item.closest(".screen").id;
 
-        readNumber.textContent =
-          number.replace("draw", "")
-                .padStart(2, "0");
-
-        readTitle.textContent =
-          title;
-
-        readAuthor.textContent =
-          author;
-
-        readBody.innerHTML = `
-          <div class="read-empty">
-            작품 이미지가 들어갈 자리입니다.<br><br>
-            나중에 이 부분에 작품 이미지를
-            추가할 수 있습니다.
-          </div>
-        `;
-
-      }
-
-      /* 글 */
-      else {
-
-        currentCategory =
-          "writingScreen";
-
-        readNumber.textContent =
-          String(number).padStart(2, "0");
+        readCategory.textContent =
+          item.dataset.category || "";
 
         readTitle.textContent =
-          title;
+          item.dataset.title || "";
 
         readAuthor.textContent =
-          author;
+          item.dataset.author || "";
 
-        readBody.innerHTML = `
-          <div class="read-empty">
-            이곳에 작품의 본문을 넣으면 됩니다.
-            <br><br>
-            현재는 본문이 아직 입력되지 않은
-            상태입니다.
-          </div>
-        `;
+        readBody.textContent =
+          "작품 내용이 이곳에 들어갑니다.";
+
+        setTimeout(()=>{
+
+          showScreen("readScreen");
+
+        },220);
 
       }
-
-      showScreen("readScreen");
-
-    });
+    );
 
   });
 
 
-/* =========================================
-   READING BACK
-========================================= */
+/* =========================
+   READ BACK
+========================= */
 
 document
   .getElementById("readBack")
-  .addEventListener("click", () => {
+  .addEventListener(
+    "click",
+    function(e){
 
-    showScreen(currentCategory);
+      makeRipple(
+        e.clientX,
+        e.clientY
+      );
 
-  });
+      tactileSound();
+
+      setTimeout(()=>{
+
+        showScreen(currentCategory);
+
+      },150);
+
+    }
+  );
 
 
-/* =========================================
+/* =========================
    PREVENT DOUBLE TAP ZOOM
-========================================= */
+========================= */
 
 let lastTouchEnd = 0;
 
 document.addEventListener(
   "touchend",
-  event => {
+  function(e){
 
     const now =
       Date.now();
 
-    if (now - lastTouchEnd <= 300) {
-      event.preventDefault();
+    if(now - lastTouchEnd <= 300){
+      e.preventDefault();
     }
 
     lastTouchEnd = now;
 
   },
-  { passive: false }
+  {passive:false}
 );
 
 </script>

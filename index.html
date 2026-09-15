@@ -1,2567 +1,1153 @@
-좋아~~ 이제 이걸 배경으로 설정하고, 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               viewport-fit=cover">
-
-<meta name="theme-color" content="#05070b">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050608">
 
 <title>탐라배 곱꽹대전</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
-
-/* =====================================================
-   RESET
-===================================================== */
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    -webkit-tap-highlight-color:transparent;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,
-body{
-    width:100%;
-    height:100%;
-    background:#05070b;
-    color:#f4f1eb;
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #050608;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+               "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
 }
 
-body{
-    overflow:hidden;
-    font-family:"Noto Sans KR",sans-serif;
+button,
+input {
+  font: inherit;
 }
 
-button{
-    font:inherit;
-    color:inherit;
-    border:0;
-    background:none;
+button {
+  border: 0;
+  background: none;
+  color: inherit;
 }
 
-/* =====================================================
-   COMMON
-===================================================== */
-
-.page{
-    position:fixed;
-    inset:0;
-
-    width:100%;
-    height:100dvh;
-
-    overflow:hidden;
-
-    background:#05070b;
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  overflow: hidden;
 }
 
-.hidden{
-    display:none !important;
+.screen.active {
+  display: block;
 }
 
-/* =====================================================
-   BACKGROUND
-===================================================== */
 
-.bg-photo{
-    position:absolute;
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-    object-position:center center;
-
-    z-index:0;
-}
-
-.bg-dark{
-    position:absolute;
-    inset:0;
-
-    z-index:1;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(3,6,10,.54) 0%,
-            rgba(3,6,10,.16) 38%,
-            rgba(3,6,10,.19) 60%,
-            rgba(3,6,10,.76) 100%
-        );
-}
-
-.bg-vignette{
-    position:absolute;
-    inset:0;
-
-    z-index:2;
-
-    pointer-events:none;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 25%,
-            rgba(0,0,0,.12) 55%,
-            rgba(0,0,0,.65) 100%
-        );
-}
-
-/* =====================================================
-   SNOW
-===================================================== */
-
-.snow{
-    position:absolute;
-    inset:0;
-
-    z-index:3;
-
-    overflow:hidden;
-    pointer-events:none;
-}
-
-.snowflake{
-    position:absolute;
-
-    top:-15px;
-
-    width:2px;
-    height:2px;
-
-    border-radius:50%;
-
-    background:
-        rgba(255,255,255,.68);
-
-    animation:
-        snowFall linear infinite;
-}
-
-@keyframes snowFall{
-
-    from{
-        transform:
-            translate3d(0,-20px,0);
-    }
-
-    to{
-        transform:
-            translate3d(var(--drift),110vh,0);
-    }
-
-}
-
-/* =====================================================
+/* =========================================
    PASSWORD
-===================================================== */
+========================================= */
 
-#passwordPage{
-    display:flex;
-    align-items:center;
-    justify-content:center;
+#passwordScreen {
+  background: #050608;
 }
 
-.password-box{
-
-    position:relative;
-
-    z-index:10;
-
-    width:min(86%,400px);
-
-    text-align:center;
-
-    padding:30px 20px;
+.password-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: .42;
+  filter: brightness(.55) saturate(.7);
 }
 
-.password-small{
-
-    font-size:9px;
-
-    letter-spacing:.45em;
-    margin-left:.45em;
-
-    color:
-        rgba(255,255,255,.64);
-
-    margin-bottom:20px;
+.password-dark {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(3,5,8,.58),
+      rgba(3,5,8,.78)
+    );
 }
 
-.password-title{
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:
-        clamp(
-            34px,
-            9vw,
-            47px
-        );
-
-    font-weight:400;
-
-    letter-spacing:-.08em;
-
-    text-shadow:
-        0 4px 25px rgba(0,0,0,.82);
+.password-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  padding: 30px;
 }
 
-.password-desc{
-
-    margin-top:15px;
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:12px;
-
-    line-height:1.9;
-
-    color:
-        rgba(255,255,255,.72);
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: .32em;
+  opacity: .65;
+  margin-bottom: 18px;
 }
 
-.password-divider{
-
-    width:1px;
-    height:45px;
-
-    background:
-        rgba(255,255,255,.35);
-
-    margin:29px auto 23px;
+.password-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(29px, 8vw, 44px);
+  font-weight: 400;
+  letter-spacing: -.04em;
+  margin-bottom: 42px;
 }
 
-.password-input{
-
-    width:100%;
-    height:50px;
-
-    padding:0 15px;
-
-    text-align:center;
-
-    color:white;
-
-    background:
-        rgba(0,0,0,.28);
-
-    border:
-        1px solid
-        rgba(255,255,255,.34);
-
-    outline:none;
-
-    border-radius:2px;
-
-    letter-spacing:.25em;
-
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
+.password-line {
+  width: min(260px, 72vw);
+  margin: 0 auto;
+  border-bottom: 1px solid rgba(255,255,255,.45);
+  display: flex;
+  align-items: center;
 }
 
-.password-input::placeholder{
-
-    color:
-        rgba(255,255,255,.42);
+.password-input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: white;
+  text-align: center;
+  padding: 13px 5px;
+  font-size: 14px;
+  letter-spacing: .18em;
 }
 
-.password-input:focus{
-
-    border-color:
-        rgba(255,255,255,.7);
+.password-input::placeholder {
+  color: rgba(255,255,255,.35);
 }
 
-.enter-button{
-
-    width:100%;
-    height:50px;
-
-    margin-top:10px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.43);
-
-    background:
-        rgba(255,255,255,.055);
-
-    font-size:10px;
-
-    letter-spacing:.32em;
-    padding-left:.32em;
-
-    transition:.25s;
+.enter-button {
+  margin-top: 25px;
+  font-size: 9px;
+  letter-spacing: .35em;
+  opacity: .62;
+  padding: 10px;
 }
 
-.enter-button:active{
-
-    background:
-        rgba(255,255,255,.15);
-
-    transform:scale(.985);
+.password-error {
+  height: 18px;
+  margin-top: 13px;
+  font-size: 10px;
+  color: rgba(255,255,255,.55);
 }
 
-.password-error{
 
-    height:20px;
+/* =========================================
+   MAIN PHOTO
+========================================= */
 
-    margin-top:11px;
-
-    font-size:10px;
-
-    color:
-        rgba(255,205,205,.9);
+#mainScreen {
+  background: #050608;
 }
 
-/* =====================================================
-   HOME HEADER
-===================================================== */
-
-#homePage{
-    display:none;
+.main-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition:
+    transform .38s ease,
+    filter .38s ease;
 }
 
-.home-header{
-
-    position:absolute;
-
-    z-index:8;
-
-    top:
-        max(
-            8%,
-            env(safe-area-inset-top) + 35px
-        );
-
-    left:0;
-
-    width:100%;
-
-    text-align:center;
-
-    pointer-events:none;
+.main-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.12),
+      rgba(0,0,0,.04) 50%,
+      rgba(0,0,0,.24)
+    );
 }
 
-.home-overline{
 
-    font-size:8px;
+/* =========================================
+   INVISIBLE HOTSPOTS
+========================================= */
 
-    letter-spacing:.48em;
-    margin-left:.48em;
-
-    color:
-        rgba(255,255,255,.66);
-
-    margin-bottom:17px;
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.home-title{
 
-    font-family:"Noto Serif KR",serif;
-
-    font-weight:400;
-
-    font-size:
-        clamp(
-            35px,
-            10vw,
-            53px
-        );
-
-    letter-spacing:-.08em;
-
-    text-shadow:
-        0 4px 25px
-        rgba(0,0,0,.82);
+/* 달 → 크레딧 */
+.moon {
+  left: 50%;
+  top: 16%;
+  width: 25%;
+  height: 12%;
+  border-radius: 50%;
 }
 
-.home-desc{
 
-    margin-top:13px;
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:10px;
-
-    line-height:1.9;
-
-    color:
-        rgba(255,255,255,.68);
+/* 책 → 글 */
+.book {
+  left: 23%;
+  top: 73%;
+  width: 30%;
+  height: 8%;
 }
 
-/* =====================================================
-   CREDITS BUTTON
-===================================================== */
 
-.credits-open{
-
-    position:absolute;
-
-    z-index:20;
-
-    right:18px;
-
-    top:
-        max(
-            20px,
-            env(safe-area-inset-top)
-        );
-
-    padding:10px 3px;
-
-    font-size:9px;
-
-    letter-spacing:.24em;
-
-    color:
-        rgba(255,255,255,.68);
+/* 우체통 → 그림 */
+.mailbox {
+  left: 74%;
+  top: 62%;
+  width: 20%;
+  height: 12%;
 }
 
-.credits-open::after{
 
-    content:"";
-
-    display:block;
-
-    width:100%;
-    height:1px;
-
-    margin-top:4px;
-
-    background:
-        rgba(255,255,255,.4);
+/* 창문 1 → 아무것도 없음 */
+.window1 {
+  left: 6%;
+  top: 30%;
+  width: 10%;
+  height: 15%;
 }
 
-/* =====================================================
-   DISCOVERY SYSTEM
-===================================================== */
 
-/*
-   사진을 3개의 공간으로 나눈다.
-
-   왼쪽  : 01
-   중앙  : 02
-   오른쪽: 03
-
-   평소에는 아무것도 보이지 않는다.
-*/
-
-.discovery{
-
-    position:absolute;
-
-    z-index:12;
-
-    cursor:pointer;
-
-    background:transparent;
-
-    border:0;
-
-    transition:
-        background .45s ease;
+/* 창문 2 → 영상 */
+.window2 {
+  left: 21%;
+  top: 38%;
+  width: 12%;
+  height: 10%;
 }
 
-/* 영역 */
 
-.discovery-left{
-
-    left:0;
-    top:36%;
-
-    width:35%;
-    height:51%;
+/* 고양이 발자국 → 후기 */
+.footprints {
+  left: 18%;
+  top: 63%;
+  width: 8%;
+  height: 4%;
 }
 
-.discovery-center{
 
-    left:30%;
-    top:37%;
+/* =========================================
+   TOUCH EFFECT
+========================================= */
 
-    width:40%;
-    height:51%;
+.ripple {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,.5);
+  box-shadow: 0 0 18px rgba(255,255,255,.22);
+  animation: quietRipple .34s ease-out forwards;
 }
 
-.discovery-right{
+@keyframes quietRipple {
+  0% {
+    width: 5px;
+    height: 5px;
+    opacity: .5;
+  }
 
-    right:0;
-    top:35%;
-
-    width:35%;
-    height:52%;
+  100% {
+    width: 75px;
+    height: 75px;
+    opacity: 0;
+  }
 }
 
-/* =====================================================
-   DISCOVERY MARK
-===================================================== */
-
-.discovery-mark{
-
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:
-        translate(-50%,-50%)
-        scale(.86);
-
-    width:54px;
-    height:54px;
-
-    border-radius:50%;
-
-    border:
-        1px solid
-        rgba(255,255,255,.48);
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    opacity:0;
-
-    background:
-        rgba(8,11,16,.09);
-
-    backdrop-filter:
-        blur(2px);
-
-    -webkit-backdrop-filter:
-        blur(2px);
-
-    transition:
-        opacity .4s ease,
-        transform .5s ease,
-        background .4s ease;
+.leaving .main-photo {
+  transform: scale(1.025);
+  filter: brightness(.75) blur(1px);
 }
 
-/*
-   손가락이 닿았을 때만
-   아주 은은하게 나타남
-*/
 
-.discovery:active .discovery-mark,
-.discovery.discovered .discovery-mark{
+/* =========================================
+   CATEGORY
+========================================= */
 
-    opacity:.9;
-
-    transform:
-        translate(-50%,-50%)
-        scale(1);
-
-    background:
-        rgba(8,11,16,.22);
+.category-screen {
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      #20242b 0%,
+      #0c0e12 42%,
+      #050608 100%
+    );
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* =====================================================
-   NUMBER
-===================================================== */
-
-.discovery-number{
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:12px;
-
-    letter-spacing:.1em;
-
-    color:
-        rgba(255,255,255,.86);
+.category-inner {
+  width: min(680px, 100%);
+  min-height: 100%;
+  padding: 70px 25px 80px;
+  margin: auto;
 }
 
-/* =====================================================
-   HIDDEN NAME
-===================================================== */
-
-.discovery-name{
-
-    position:absolute;
-
-    left:50%;
-    top:calc(50% + 42px);
-
-    transform:
-        translateX(-50%)
-        translateY(5px);
-
-    white-space:nowrap;
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:10px;
-
-    letter-spacing:.18em;
-
-    color:
-        rgba(255,255,255,.82);
-
-    text-shadow:
-        0 2px 12px rgba(0,0,0,.9);
-
-    opacity:0;
-
-    transition:
-        opacity .4s ease,
-        transform .4s ease;
+.back {
+  font-size: 10px;
+  letter-spacing: .25em;
+  opacity: .48;
+  padding: 10px 0;
 }
 
-.discovery:active .discovery-name,
-.discovery.discovered .discovery-name{
-
-    opacity:.9;
-
-    transform:
-        translateX(-50%)
-        translateY(0);
+.category-heading {
+  margin-top: 48px;
+  margin-bottom: 45px;
 }
 
-/* =====================================================
-   DISCOVERY GLOW
-===================================================== */
-
-.discovery::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    width:100px;
-    height:100px;
-
-    transform:
-        translate(-50%,-50%);
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.08),
-            transparent 68%
-        );
-
-    opacity:0;
-
-    transition:
-        opacity .5s ease;
+.category-small {
+  font-size: 9px;
+  letter-spacing: .3em;
+  opacity: .4;
+  margin-bottom: 14px;
 }
 
-.discovery:active::after,
-.discovery.discovered::after{
-
-    opacity:1;
+.category-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: -.05em;
 }
 
-/* =====================================================
-   GUIDE TEXT
-===================================================== */
-
-.explore-guide{
-
-    position:absolute;
-
-    z-index:9;
-
-    left:0;
-    bottom:
-        max(
-            30px,
-            env(safe-area-inset-bottom) + 22px
-        );
-
-    width:100%;
-
-    text-align:center;
-
-    pointer-events:none;
-
-    transition:
-        opacity 1s ease;
+.category-description {
+  margin-top: 12px;
+  font-size: 11px;
+  opacity: .42;
 }
 
-.explore-guide-line{
-
-    width:1px;
-    height:23px;
-
-    margin:0 auto 9px;
-
-    background:
-        rgba(255,255,255,.4);
-
-    animation:
-        guidePulse 3s ease-in-out infinite;
+.post-list {
+  border-top: 1px solid rgba(255,255,255,.12);
 }
 
-.explore-guide p{
-
-    font-size:8px;
-
-    letter-spacing:.27em;
-
-    color:
-        rgba(255,255,255,.48);
+.post-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 38px 1fr auto;
+  gap: 12px;
+  text-align: left;
+  padding: 23px 2px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+  -webkit-tap-highlight-color: transparent;
 }
 
-@keyframes guidePulse{
-
-    0%,
-    100%{
-        opacity:.25;
-    }
-
-    50%{
-        opacity:.7;
-    }
+.post-number {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  opacity: .35;
 }
 
-.explore-guide.hidden-guide{
-    opacity:0;
+.post-author {
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-/* =====================================================
-   SUB PAGE
-===================================================== */
-
-.subpage{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:50;
-
-    background:#080b10;
-
-    overflow-y:auto;
-
-    -webkit-overflow-scrolling:touch;
+.post-partner {
+  font-size: 10px;
+  opacity: .42;
+  margin-top: 4px;
 }
 
-.sub-inner{
-
-    width:min(88%,650px);
-
-    margin:auto;
-
-    padding:
-        max(
-            82px,
-            env(safe-area-inset-top) + 60px
-        )
-        0
-        70px;
+.post-arrow {
+  font-size: 13px;
+  opacity: .3;
 }
 
-.back{
 
-    position:fixed;
+/* =========================================
+   READING PAGE
+========================================= */
 
-    z-index:60;
-
-    left:19px;
-
-    top:
-        max(
-            18px,
-            env(safe-area-inset-top)
-        );
-
-    padding:12px 3px;
-
-    font-size:9px;
-
-    letter-spacing:.22em;
-
-    color:
-        rgba(255,255,255,.68);
+.read-screen {
+  background: #f8f7f3;
+  color: #151515;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.sub-overline{
-
-    font-size:8px;
-
-    letter-spacing:.42em;
-
-    color:
-        rgba(255,255,255,.42);
-
-    margin-bottom:16px;
+.read-inner {
+  width: min(720px, 100%);
+  margin: auto;
+  padding: 38px 27px 90px;
 }
 
-.sub-title{
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:34px;
-
-    font-weight:400;
-
-    letter-spacing:-.08em;
+.read-back {
+  color: #111;
+  opacity: .45;
+  font-size: 10px;
+  letter-spacing: .18em;
+  padding: 10px 0;
 }
 
-.sub-line{
-
-    width:35px;
-    height:1px;
-
-    background:
-        rgba(255,255,255,.34);
-
-    margin:23px 0 40px;
+.read-number {
+  margin-top: 65px;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  opacity: .38;
 }
 
-/* =====================================================
-   STORY
-===================================================== */
-
-.story{
-
-    padding-bottom:48px;
-
-    margin-bottom:45px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.09);
+.read-title {
+  margin-top: 20px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 8vw, 42px);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -.04em;
 }
 
-.story-number{
-
-    font-size:9px;
-
-    letter-spacing:.25em;
-
-    color:
-        rgba(255,255,255,.32);
-
-    margin-bottom:13px;
+.read-author {
+  margin-top: 17px;
+  font-size: 11px;
+  opacity: .5;
 }
 
-.story-title{
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:23px;
-
-    line-height:1.5;
-
-    font-weight:500;
-
-    letter-spacing:-.05em;
+.read-divider {
+  width: 35px;
+  height: 1px;
+  background: #222;
+  opacity: .25;
+  margin: 55px 0 42px;
 }
 
-.story-meta{
-
-    margin-top:9px;
-
-    font-size:9px;
-
-    color:
-        rgba(255,255,255,.38);
+.read-body {
+  font-family: Georgia, "Batang", "Noto Serif KR", serif;
+  font-size: 16px;
+  line-height: 2.05;
+  word-break: keep-all;
 }
 
-.story-text{
-
-    margin-top:28px;
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:13px;
-
-    line-height:2.25;
-
-    color:
-        rgba(255,255,255,.74);
-
-    word-break:keep-all;
+.read-body p {
+  margin-bottom: 25px;
 }
 
-/* =====================================================
-   PHOTO
-===================================================== */
-
-.photo-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:8px;
+.read-empty {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 2;
+  opacity: .55;
 }
 
-.photo-card{
 
-    overflow:hidden;
+/* =========================================
+   CREDIT / REVIEW
+========================================= */
 
-    aspect-ratio:3/4;
-
-    background:#111;
+.info-screen {
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      #24272c 0,
+      #0b0d10 45%,
+      #050608 100%
+    );
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.photo-card:first-child{
-
-    grid-column:span 2;
-
-    aspect-ratio:16/10;
+.info-inner {
+  width: min(680px, 100%);
+  margin: auto;
+  padding: 55px 27px 90px;
 }
 
-.photo-card img{
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
+.info-title {
+  margin-top: 55px;
+  font-family: Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: -.04em;
 }
 
-/* =====================================================
+.info-subtitle {
+  margin-top: 10px;
+  font-size: 10px;
+  letter-spacing: .15em;
+  opacity: .4;
+}
+
+.info-section {
+  margin-top: 55px;
+}
+
+.info-section-title {
+  font-size: 10px;
+  letter-spacing: .25em;
+  opacity: .45;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.info-person {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 2px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.info-person span:last-child {
+  opacity: .4;
+  text-align: right;
+}
+
+
+/* =========================================
+   REVIEW
+========================================= */
+
+.review-card {
+  margin-top: 24px;
+  padding: 25px 0;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.review-label {
+  font-size: 9px;
+  letter-spacing: .2em;
+  opacity: .35;
+  margin-bottom: 14px;
+}
+
+.review-text {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  line-height: 1.8;
+  opacity: .85;
+}
+
+.review-author {
+  margin-top: 13px;
+  font-size: 10px;
+  opacity: .35;
+}
+
+
+/* =========================================
    VIDEO
-===================================================== */
+========================================= */
 
-.video-list{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:20px;
+.video-placeholder {
+  margin-top: 50px;
+  padding: 60px 20px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  text-align: center;
 }
 
-.video-card{
-
-    position:relative;
-
-    width:100%;
-
-    aspect-ratio:16/9;
-
-    overflow:hidden;
-
-    background:#111;
+.video-placeholder-title {
+  font-family: Georgia, serif;
+  font-size: 23px;
 }
 
-.video-card img{
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
+.video-placeholder-text {
+  margin-top: 12px;
+  font-size: 10px;
+  opacity: .4;
+  letter-spacing: .08em;
 }
 
-.video-dark{
 
-    position:absolute;
-    inset:0;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(0,0,0,.75),
-            rgba(0,0,0,.05)
-        );
-}
-
-.play{
-
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    width:55px;
-    height:55px;
-
-    transform:
-        translate(-50%,-50%);
-
-    border:
-        1px solid
-        rgba(255,255,255,.65);
-
-    border-radius:50%;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    font-size:14px;
-
-    padding-left:3px;
-}
-
-.video-name{
-
-    position:absolute;
-
-    left:15px;
-    bottom:14px;
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:13px;
-}
-
-/* =====================================================
-   CREDITS
-===================================================== */
-
-#creditsPage{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:100;
-
-    display:none;
-
-    overflow-y:auto;
-
-    background:#070a0f;
-}
-
-.credits-inner{
-
-    width:min(88%,600px);
-
-    margin:auto;
-
-    padding:
-        max(
-            90px,
-            env(safe-area-inset-top) + 65px
-        )
-        0
-        80px;
-}
-
-.credits-close{
-
-    position:fixed;
-
-    z-index:110;
-
-    right:19px;
-
-    top:
-        max(
-            18px,
-            env(safe-area-inset-top)
-        );
-
-    padding:12px 3px;
-
-    font-size:9px;
-
-    letter-spacing:.2em;
-
-    color:
-        rgba(255,255,255,.65);
-}
-
-.credits-head{
-
-    text-align:center;
-}
-
-.credits-head small{
-
-    font-size:8px;
-
-    letter-spacing:.4em;
-
-    color:
-        rgba(255,255,255,.4);
-}
-
-.credits-head h2{
-
-    margin-top:17px;
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:34px;
-
-    font-weight:400;
-
-    letter-spacing:-.08em;
-}
-
-.credits-head p{
-
-    margin-top:14px;
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:10px;
-
-    line-height:1.9;
-
-    color:
-        rgba(255,255,255,.45);
-}
-
-.credit-line{
-
-    width:35px;
-    height:1px;
-
-    background:
-        rgba(255,255,255,.3);
-
-    margin:27px auto 48px;
-}
-
-.credit-section{
-
-    margin-bottom:45px;
-}
-
-.credit-section-title{
-
-    font-size:9px;
-
-    letter-spacing:.3em;
-
-    color:
-        rgba(255,255,255,.4);
-
-    margin-bottom:19px;
-}
-
-.credit-list{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:16px;
-}
-
-.credit-item{
-
-    padding-bottom:14px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.07);
-}
-
-.credit-name{
-
-    display:block;
-
-    font-family:"Noto Serif KR",serif;
-
-    font-size:14px;
-}
-
-.credit-work{
-
-    display:block;
-
-    margin-top:4px;
-
-    font-size:9px;
-
-    line-height:1.7;
-
-    color:
-        rgba(255,255,255,.45);
-}
-
-/* =====================================================
+/* =========================================
    DESKTOP
-===================================================== */
+========================================= */
 
-@media(min-width:700px){
+@media (min-width: 700px) {
+  .main-photo,
+  .password-photo {
+    object-position: center;
+  }
 
-    .home-header{
-        top:10%;
-    }
-
-    .discovery-left{
-        width:32%;
-    }
-
-    .discovery-center{
-        left:32%;
-        width:36%;
-    }
-
-    .discovery-right{
-        width:32%;
-    }
-
+  .category-inner,
+  .info-inner,
+  .read-inner {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
 }
-
 </style>
 </head>
 
+
 <body>
 
-<!-- =====================================================
-     PASSWORD
-===================================================== -->
 
-<section
-    id="passwordPage"
-    class="page"
->
+<!-- ======================================
+     PASSWORD SCREEN
+====================================== -->
 
-    <img
-        class="bg-photo"
-        src="https://images.unsplash.com/photo-1765749420162-4e12f3798d84?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=85&w=2400"
-        alt=""
+<section id="passwordScreen" class="screen active">
+
+  <img
+    src="winter.jpg"
+    class="password-photo"
+    alt=""
+  >
+
+  <div class="password-dark"></div>
+
+  <div class="password-content">
+
+    <div class="eyebrow">
+      LITERARY WEBZINE
+    </div>
+
+    <h1 class="password-title">
+      탐라배 곱꽹대전
+    </h1>
+
+    <div class="password-line">
+      <input
+        id="passwordInput"
+        class="password-input"
+        type="password"
+        placeholder="PASSWORD"
+        autocomplete="off"
+      >
+    </div>
+
+    <button
+      id="enterButton"
+      class="enter-button"
     >
-
-    <div class="bg-dark"></div>
-    <div class="bg-vignette"></div>
+      ENTER
+    </button>
 
     <div
-        id="passwordSnow"
-        class="snow"
+      id="passwordError"
+      class="password-error"
     ></div>
 
-    <div class="password-box">
-
-        <div class="password-small">
-            LITERARY WEBZINE
-        </div>
-
-        <h1 class="password-title">
-            탐라배 곱꽹대전
-        </h1>
-
-        <p class="password-desc">
-            눈이 내리는 밤,<br>
-            우리가 남겨두고 싶은 이야기들.
-        </p>
-
-        <div class="password-divider"></div>
-
-        <input
-            id="passwordInput"
-            class="password-input"
-            type="password"
-            placeholder="PASSWORD"
-            autocomplete="off"
-        >
-
-        <button
-            id="enterButton"
-            class="enter-button"
-        >
-            ENTER
-        </button>
-
-        <div
-            id="passwordError"
-            class="password-error"
-        ></div>
-
-    </div>
+  </div>
 
 </section>
 
-<!-- =====================================================
-     HOME
-===================================================== -->
 
-<section
-    id="homePage"
-    class="page"
->
 
-    <img
-        class="bg-photo"
-        src="https://images.unsplash.com/photo-1765749420162-4e12f3798d84?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=85&w=2400"
-        alt="눈 내리는 겨울밤 거리"
-    >
+<!-- ======================================
+     MAIN SCREEN
+====================================== -->
 
-    <div class="bg-dark"></div>
-    <div class="bg-vignette"></div>
+<section id="mainScreen" class="screen">
 
-    <div
-        id="homeSnow"
-        class="snow"
-    ></div>
+  <img
+    src="winter.jpg"
+    class="main-photo"
+    alt="눈 내리는 겨울밤 골목"
+  >
 
-    <!-- CREDITS -->
+  <div class="main-shade"></div>
 
-    <button
-        id="creditsOpen"
-        class="credits-open"
-    >
-        CREDITS
-    </button>
 
-    <!-- TITLE -->
+  <!-- 달 → 크레딧 -->
+  <button
+    class="hotspot moon"
+    aria-label="크레딧"
+    data-target="creditsScreen">
+  </button>
 
-    <div class="home-header">
 
-        <div class="home-overline">
-            LITERARY WEBZINE
-        </div>
+  <!-- 책 → 글 -->
+  <button
+    class="hotspot book"
+    aria-label="글"
+    data-target="writingScreen">
+  </button>
 
-        <h1 class="home-title">
-            탐라배 곱꽹대전
-        </h1>
 
-        <p class="home-desc">
-            눈이 내리는 밤, 우리가 남겨두고 싶은 이야기들.
-        </p>
+  <!-- 우체통 → 그림 -->
+  <button
+    class="hotspot mailbox"
+    aria-label="그림"
+    data-target="drawingScreen">
+  </button>
 
-    </div>
 
-    <!-- =================================================
-         HIDDEN DISCOVERY AREAS
-    ================================================= -->
+  <!-- 창문 1 → 아무것도 없음 -->
+  <button
+    class="hotspot window1"
+    aria-label="창문">
+  </button>
 
-    <button
-        id="discoveryLeft"
-        class="discovery discovery-left"
-        aria-label="숨겨진 첫 번째 공간"
-    >
 
-        <span class="discovery-mark">
+  <!-- 창문 2 → 영상 -->
+  <button
+    class="hotspot window2"
+    aria-label="영상"
+    data-target="videoScreen">
+  </button>
 
-            <span class="discovery-number">
-                01
-            </span>
 
-        </span>
-
-        <span class="discovery-name">
-            남겨진 이야기
-        </span>
-
-    </button>
-
-    <button
-        id="discoveryCenter"
-        class="discovery discovery-center"
-        aria-label="숨겨진 두 번째 공간"
-    >
-
-        <span class="discovery-mark">
-
-            <span class="discovery-number">
-                02
-            </span>
-
-        </span>
-
-        <span class="discovery-name">
-            밤의 장면
-        </span>
-
-    </button>
-
-    <button
-        id="discoveryRight"
-        class="discovery discovery-right"
-        aria-label="숨겨진 세 번째 공간"
-    >
-
-        <span class="discovery-mark">
-
-            <span class="discovery-number">
-                03
-            </span>
-
-        </span>
-
-        <span class="discovery-name">
-            움직이는 기억
-        </span>
-
-    </button>
-
-    <!-- GUIDE -->
-
-    <div
-        id="exploreGuide"
-        class="explore-guide"
-    >
-
-        <div class="explore-guide-line"></div>
-
-        <p>
-            천천히 둘러보세요
-        </p>
-
-    </div>
+  <!-- 고양이 발자국 → 참여자 후기 -->
+  <button
+    class="hotspot footprints"
+    aria-label="참여자 후기"
+    data-target="reviewScreen">
+  </button>
 
 </section>
 
-<!-- =====================================================
-     STORY
-===================================================== -->
 
-<section
-    id="storyPage"
-    class="subpage hidden"
->
 
-    <button
-        class="back"
-        onclick="goHome()"
-    >
-        ← HOME
+<!-- ======================================
+     글 CATEGORY
+====================================== -->
+
+<section id="writingScreen" class="screen category-screen">
+
+  <div class="category-inner">
+
+    <button class="back" data-target="mainScreen">
+      ← BACK
     </button>
 
-    <div class="sub-inner">
+    <div class="category-heading">
 
-        <div class="sub-overline">
-            LITERATURE
-        </div>
+      <div class="category-small">
+        LITERARY WEBZINE
+      </div>
 
-        <h2 class="sub-title">
-            글
-        </h2>
+      <h2 class="category-title">
+        글
+      </h2>
 
-        <div class="sub-line"></div>
-
-        <article class="story">
-
-            <div class="story-number">
-                01
-            </div>
-
-            <h3 class="story-title">
-                겨울밤의 이름
-            </h3>
-
-            <div class="story-meta">
-                탐라배 곱꽹대전
-            </div>
-
-            <p class="story-text">
-                눈이 내리는 날이면 이상하게도 오래전의
-                목소리들이 생각난다.<br><br>
-
-                아주 멀리 있는 것처럼 느껴졌던 계절이
-                사실은 한 걸음밖에 떨어져 있지 않았다는
-                것을, 겨울은 조용히 알려준다.<br><br>
-
-                우리는 서로에게 아무 말도 하지 않은 채
-                같은 밤을 걷고 있었다.
-            </p>
-
-        </article>
-
-        <article class="story">
-
-            <div class="story-number">
-                02
-            </div>
-
-            <h3 class="story-title">
-                우리가 남겨둔 것들
-            </h3>
-
-            <div class="story-meta">
-                탐라배 곱꽹대전
-            </div>
-
-            <p class="story-text">
-                어떤 이야기는 끝나지 않는다.<br><br>
-
-                다만 다음 계절로 넘어가면서
-                조금씩 다른 이름을 갖게 될 뿐이다.
-            </p>
-
-        </article>
-
-        <article class="story">
-
-            <div class="story-number">
-                03
-            </div>
-
-            <h3 class="story-title">
-                눈이 오는 동안
-            </h3>
-
-            <div class="story-meta">
-                탐라배 곱꽹대전
-            </div>
-
-            <p class="story-text">
-                창문 밖으로 눈이 내리고 있었다.
-                아무도 서두르지 않는 밤이었다.<br><br>
-
-                우리는 그 밤을 오래 기억하기로 했다.
-            </p>
-
-        </article>
+      <div class="category-description">
+        20 pieces
+      </div>
 
     </div>
 
-</section>
 
-<!-- =====================================================
-     PHOTO
-===================================================== -->
+    <div class="post-list">
 
-<section
-    id="photoPage"
-    class="subpage hidden"
->
 
-    <button
-        class="back"
-        onclick="goHome()"
-    >
-        ← HOME
-    </button>
+      <button
+        class="post-item"
+        data-read="1"
+        data-title="필삼이"
+        data-author="요미꼬미 쭌뺌">
+        <span class="post-number">01</span>
+        <span>
+          <span class="post-author">필삼이</span>
+          <span class="post-partner">요미꼬미 쭌뺌</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
 
-    <div class="sub-inner">
 
-        <div class="sub-overline">
-            PHOTOGRAPHY
-        </div>
+      <button
+        class="post-item"
+        data-read="2"
+        data-title="치약이"
+        data-author="빵왕">
+        <span class="post-number">02</span>
+        <span>
+          <span class="post-author">치약이</span>
+          <span class="post-partner">빵왕</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
 
-        <h2 class="sub-title">
-            사진
-        </h2>
 
-        <div class="sub-line"></div>
+      <button
+        class="post-item"
+        data-read="3"
+        data-title="개양이"
+        data-author="탠동 원구 뼈뉴 요미꼬미">
+        <span class="post-number">03</span>
+        <span>
+          <span class="post-author">개양이</span>
+          <span class="post-partner">탠동 원구 뼈뉴 요미꼬미</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
 
-        <div class="photo-grid">
 
-            <div class="photo-card">
+      <button class="post-item" data-read="4" data-title="벌벌" data-author="후혜">
+        <span class="post-number">04</span>
+        <span>
+          <span class="post-author">벌벌</span>
+          <span class="post-partner">후혜</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
 
-                <img
-                    src="https://images.unsplash.com/photo-1765749420162-4e12f3798d84?auto=format&fit=crop&w=1400&q=85"
-                    alt=""
-                >
 
-            </div>
+      <button class="post-item" data-read="5" data-title="스디" data-author="우강훈김영우">
+        <span class="post-number">05</span>
+        <span>
+          <span class="post-author">스디</span>
+          <span class="post-partner">우강훈김영우</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
 
-            <div class="photo-card">
 
-                <img
-                    src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=900&q=85"
-                    alt=""
-                >
+      <button class="post-item" data-read="6" data-title="청" data-author="탠찬 민욱">
+        <span class="post-number">06</span>
+        <span>
+          <span class="post-author">청</span>
+          <span class="post-partner">탠찬 민욱</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
 
-            </div>
 
-            <div class="photo-card">
+      <button class="post-item" data-read="7" data-title="영원" data-author="윤손">
+        <span class="post-number">07</span>
+        <span>
+          <span class="post-author">영원</span>
+          <span class="post-partner">윤손</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
 
-                <img
-                    src="https://images.unsplash.com/photo-1548777123-e216912df7d8?auto=format&fit=crop&w=900&q=85"
-                    alt=""
-                >
 
-            </div>
+      <button class="post-item" data-read="8" data-title="SA" data-author="탠찬">
+        <span class="post-number">08</span>
+        <span>
+          <span class="post-author">SA</span>
+          <span class="post-partner">탠찬</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
 
-            <div class="photo-card">
 
-                <img
-                    src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&w=900&q=85"
-                    alt=""
-                >
+      <button class="post-item" data-read="9" data-title="하린" data-author="달별">
+        <span class="post-number">09</span>
+        <span>
+          <span class="post-author">하린</span>
+          <span class="post-partner">달별</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
 
-            </div>
 
-        </div>
+      <button class="post-item" data-read="10" data-title="동이" data-author="윤손 꼬순">
+        <span class="post-number">10</span>
+        <span>
+          <span class="post-author">동이</span>
+          <span class="post-partner">윤손 꼬순</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="11" data-title="딱" data-author="재롱 쭌잿">
+        <span class="post-number">11</span>
+        <span>
+          <span class="post-author">딱</span>
+          <span class="post-partner">재롱 쭌잿</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="12" data-title="cuybf(상태:가능충)" data-author="쩡껀">
+        <span class="post-number">12</span>
+        <span>
+          <span class="post-author">cuybf(상태:가능충)</span>
+          <span class="post-partner">쩡껀</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="13" data-title="본" data-author="창찬">
+        <span class="post-number">13</span>
+        <span>
+          <span class="post-author">본</span>
+          <span class="post-partner">창찬</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="14" data-title="아" data-author="한훈">
+        <span class="post-number">14</span>
+        <span>
+          <span class="post-author">아</span>
+          <span class="post-partner">한훈</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="15" data-title="순이" data-author="윤훈">
+        <span class="post-number">15</span>
+        <span>
+          <span class="post-author">순이</span>
+          <span class="post-partner">윤훈</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="16" data-title="you" data-author="윤황">
+        <span class="post-number">16</span>
+        <span>
+          <span class="post-author">you</span>
+          <span class="post-partner">윤황</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="17" data-title="하프" data-author="삐뭅 건뱅">
+        <span class="post-number">17</span>
+        <span>
+          <span class="post-author">하프</span>
+          <span class="post-partner">삐뭅 건뱅</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="18" data-title="궁" data-author="한우">
+        <span class="post-number">18</span>
+        <span>
+          <span class="post-author">궁</span>
+          <span class="post-partner">한우</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="19" data-title="킨교" data-author="전준표박준현 장재영이주형 김주원신재인">
+        <span class="post-number">19</span>
+        <span>
+          <span class="post-author">킨교</span>
+          <span class="post-partner">전준표박준현 장재영이주형 김주원신재인</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button class="post-item" data-read="20" data-title="dp" data-author="렘배(안배) 읠뎡">
+        <span class="post-number">20</span>
+        <span>
+          <span class="post-author">dp</span>
+          <span class="post-partner">렘배(안배) 읠뎡</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
 
     </div>
 
+  </div>
+
 </section>
 
-<!-- =====================================================
+
+
+<!-- ======================================
+     그림 CATEGORY
+====================================== -->
+
+<section id="drawingScreen" class="screen category-screen">
+
+  <div class="category-inner">
+
+    <button class="back" data-target="mainScreen">
+      ← BACK
+    </button>
+
+    <div class="category-heading">
+
+      <div class="category-small">
+        VISUAL WORKS
+      </div>
+
+      <h2 class="category-title">
+        그림
+      </h2>
+
+      <div class="category-description">
+        5 pieces
+      </div>
+
+    </div>
+
+
+    <div class="post-list">
+
+      <button
+        class="post-item"
+        data-read="draw1"
+        data-title="연쇄박음마: 일등병⭐️(히키)"
+        data-author="창찬">
+        <span class="post-number">01</span>
+        <span>
+          <span class="post-author">연쇄박음마: 일등병⭐️(히키)</span>
+          <span class="post-partner">창찬</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button
+        class="post-item"
+        data-read="draw2"
+        data-title="얌빵"
+        data-author="펑뜽">
+        <span class="post-number">02</span>
+        <span>
+          <span class="post-author">얌빵</span>
+          <span class="post-partner">펑뜽</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button
+        class="post-item"
+        data-read="draw3"
+        data-title="박진만"
+        data-author="풍뎅">
+        <span class="post-number">03</span>
+        <span>
+          <span class="post-author">박진만</span>
+          <span class="post-partner">풍뎅</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button
+        class="post-item"
+        data-read="draw4"
+        data-title="Ham guinea jyu"
+        data-author="한훈 뱅쬬">
+        <span class="post-number">04</span>
+        <span>
+          <span class="post-author">Ham guinea jyu</span>
+          <span class="post-partner">한훈 뱅쬬</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+
+      <button
+        class="post-item"
+        data-read="draw5"
+        data-title="눙"
+        data-author="쩡손">
+        <span class="post-number">05</span>
+        <span>
+          <span class="post-author">눙</span>
+          <span class="post-partner">쩡손</span>
+        </span>
+        <span class="post-arrow">→</span>
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================
      VIDEO
-===================================================== -->
+====================================== -->
 
-<section
-    id="videoPage"
-    class="subpage hidden"
->
+<section id="videoScreen" class="screen category-screen">
 
-    <button
-        class="back"
-        onclick="goHome()"
-    >
-        ← HOME
+  <div class="category-inner">
+
+    <button class="back" data-target="mainScreen">
+      ← BACK
     </button>
 
-    <div class="sub-inner">
+    <div class="category-heading">
 
-        <div class="sub-overline">
-            MOVING IMAGE
-        </div>
+      <div class="category-small">
+        MOVING IMAGE
+      </div>
 
-        <h2 class="sub-title">
-            영상
-        </h2>
-
-        <div class="sub-line"></div>
-
-        <div class="video-list">
-
-            <button
-                class="video-card"
-                onclick="fakeVideo()"
-            >
-
-                <img
-                    src="https://images.unsplash.com/photo-1765749420162-4e12f3798d84?auto=format&fit=crop&w=1200&q=85"
-                    alt=""
-                >
-
-                <div class="video-dark"></div>
-
-                <div class="play">
-                    ▶
-                </div>
-
-                <div class="video-name">
-                    겨울의 첫 장면
-                </div>
-
-            </button>
-
-            <button
-                class="video-card"
-                onclick="fakeVideo()"
-            >
-
-                <img
-                    src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=1200&q=85"
-                    alt=""
-                >
-
-                <div class="video-dark"></div>
-
-                <div class="play">
-                    ▶
-                </div>
-
-                <div class="video-name">
-                    눈이 내리는 동안
-                </div>
-
-            </button>
-
-        </div>
+      <h2 class="category-title">
+        영상
+      </h2>
 
     </div>
 
-</section>
 
-<!-- =====================================================
-     CREDITS
-===================================================== -->
+    <div class="video-placeholder">
 
-<section id="creditsPage">
+      <div class="video-placeholder-title">
+        준비 중
+      </div>
 
-    <button
-        id="creditsClose"
-        class="credits-close"
-    >
-        CLOSE ×
-    </button>
-
-    <div class="credits-inner">
-
-        <div class="credits-head">
-
-            <small>
-                CONTRIBUTORS
-            </small>
-
-            <h2>
-                참여자
-            </h2>
-
-            <p>
-                탐라배 곱꽹대전을 함께 만들어준<br>
-                모든 사람들에게.
-            </p>
-
-        </div>
-
-        <div class="credit-line"></div>
-
-        <!-- 글 -->
-
-        <div class="credit-section">
-
-            <div class="credit-section-title">
-                글
-            </div>
-
-            <div class="credit-list">
-
-                <div class="credit-item">
-                    <span class="credit-name">필삼이</span>
-                    <span class="credit-work">요미꼬미 쭌뺌</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">치약이</span>
-                    <span class="credit-work">빵왕</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">개양이</span>
-                    <span class="credit-work">탠동 원구 뼈뉴 요미꼬미</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">벌벌</span>
-                    <span class="credit-work">후혜</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">스디</span>
-                    <span class="credit-work">우강훈김영우</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">청</span>
-                    <span class="credit-work">탠찬 민욱</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">영원</span>
-                    <span class="credit-work">윤손</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">SA</span>
-                    <span class="credit-work">탠찬</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">하린</span>
-                    <span class="credit-work">달별</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">동이</span>
-                    <span class="credit-work">윤손 꼬순</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">딱</span>
-                    <span class="credit-work">재롱 쭌잿</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">
-                        cuybf(상태:가능충)
-                    </span>
-                    <span class="credit-work">쩡껀</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">본</span>
-                    <span class="credit-work">창찬</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">아</span>
-                    <span class="credit-work">한훈</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">순이</span>
-                    <span class="credit-work">윤훈</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">you</span>
-                    <span class="credit-work">윤황</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">하프</span>
-                    <span class="credit-work">삐뭅 건뱅</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">궁</span>
-                    <span class="credit-work">한우</span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">킨교</span>
-                    <span class="credit-work">
-                        전준표박준현 장재영이주형
-                        김주원신재인
-                    </span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">dp</span>
-                    <span class="credit-work">
-                        렘배(안배) 읠뎡
-                    </span>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- 그림 -->
-
-        <div class="credit-section">
-
-            <div class="credit-section-title">
-                그림
-            </div>
-
-            <div class="credit-list">
-
-                <div class="credit-item">
-                    <span class="credit-name">
-                        연쇄박음마: 일등병⭐️(히키)
-                    </span>
-                    <span class="credit-work">
-                        창찬
-                    </span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">
-                        얌빵
-                    </span>
-                    <span class="credit-work">
-                        펑뜽
-                    </span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">
-                        박진만
-                    </span>
-                    <span class="credit-work">
-                        풍뎅
-                    </span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">
-                        Ham guinea jyu
-                    </span>
-                    <span class="credit-work">
-                        한훈 뱅쬬
-                    </span>
-                </div>
-
-                <div class="credit-item">
-                    <span class="credit-name">
-                        눙
-                    </span>
-                    <span class="credit-work">
-                        쩡손
-                    </span>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- 영상 -->
-
-        <div class="credit-section">
-
-            <div class="credit-section-title">
-                영상
-            </div>
-
-            <div class="credit-list">
-
-                <div class="credit-item">
-
-                    <span class="credit-name">
-                        —
-                    </span>
-
-                    <span class="credit-work">
-                        준비 중
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- 기타 -->
-
-        <div class="credit-section">
-
-            <div class="credit-section-title">
-                기타
-            </div>
-
-            <div class="credit-list">
-
-                <div class="credit-item">
-
-                    <span class="credit-name">
-                        사부
-                    </span>
-
-                    <span class="credit-work">
-                        한훈 · 미정
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div
-            style="
-                text-align:center;
-                padding-top:25px;
-                color:rgba(255,255,255,.22);
-                font-size:8px;
-                letter-spacing:.28em;
-            "
-        >
-            TAMRABAE · WINTER 2026
-        </div>
+      <div class="video-placeholder-text">
+        SOON
+      </div>
 
     </div>
 
+  </div>
+
 </section>
 
-<script>
 
-/* =====================================================
-   PASSWORD
-===================================================== */
 
-const PASSWORD = "ohmyps";
+<!-- ======================================
+     CREDIT
+====================================== -->
 
-const passwordPage =
-    document.getElementById("passwordPage");
+<section id="creditsScreen" class="screen info-screen">
 
-const homePage =
-    document.getElementById("homePage");
+  <div class="info-inner">
 
-const passwordInput =
-    document.getElementById("passwordInput");
+    <button class="back" data-target="mainScreen">
+      ← BACK
+    </button>
 
-const enterButton =
-    document.getElementById("enterButton");
+    <h2 class="info-title">
+      Credits
+    </h2>
 
-const passwordError =
-    document.getElementById("passwordError");
+    <div class="info-subtitle">
+      탐라배 곱꽹대전
+    </div>
 
-/* =====================================================
-   NEW QUIET SOUND SYSTEM
-===================================================== */
 
-/*
-    예전의 높은 삑 소리를 완전히 제거.
+    <div class="info-section">
 
-    발견:
-    아주 낮고 짧은 "톡"
+      <div class="info-section-title">
+        글
+      </div>
 
-    이동:
-    조금 더 묵직한 "툭"
-*/
-
-let audioContext = null;
-
-function getAudio(){
-
-    if(!audioContext){
-
-        audioContext =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
-
-    }
-
-    if(
-        audioContext.state ===
-        "suspended"
-    ){
-
-        audioContext.resume();
-
-    }
-
-    return audioContext;
-}
-
-/* 발견 소리 */
-
-function discoverSound(){
-
-    try{
-
-        const ctx =
-            getAudio();
-
-        const osc =
-            ctx.createOscillator();
-
-        const gain =
-            ctx.createGain();
-
-        osc.type = "sine";
-
-        /*
-           높은 음이 아니라
-           아주 낮은 음.
-        */
-
-        osc.frequency.setValueAtTime(
-            260,
-            ctx.currentTime
-        );
-
-        osc.frequency.exponentialRampToValueAtTime(
-            170,
-            ctx.currentTime + .07
-        );
-
-        gain.gain.setValueAtTime(
-            .0001,
-            ctx.currentTime
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .025,
-            ctx.currentTime + .008
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .0001,
-            ctx.currentTime + .085
-        );
-
-        osc.connect(gain);
-
-        gain.connect(
-            ctx.destination
-        );
-
-        osc.start();
-
-        osc.stop(
-            ctx.currentTime + .09
-        );
-
-    }catch(e){}
-
-}
-
-/* 페이지 이동 소리 */
-
-function openSound(){
-
-    try{
-
-        const ctx =
-            getAudio();
-
-        const osc =
-            ctx.createOscillator();
-
-        const gain =
-            ctx.createGain();
-
-        osc.type = "triangle";
-
-        osc.frequency.setValueAtTime(
-            145,
-            ctx.currentTime
-        );
-
-        osc.frequency.exponentialRampToValueAtTime(
-            92,
-            ctx.currentTime + .12
-        );
-
-        gain.gain.setValueAtTime(
-            .0001,
-            ctx.currentTime
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .035,
-            ctx.currentTime + .012
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .0001,
-            ctx.currentTime + .14
-        );
-
-        osc.connect(gain);
-
-        gain.connect(
-            ctx.destination
-        );
-
-        osc.start();
-
-        osc.stop(
-            ctx.currentTime + .15
-        );
-
-    }catch(e){}
-
-}
-
-/* =====================================================
-   SNOW
-===================================================== */
-
-function createSnow(
-    id,
-    amount
-){
-
-    const container =
-        document.getElementById(id);
-
-    if(!container) return;
-
-    for(
-        let i=0;
-        i<amount;
-        i++
-    ){
-
-        const flake =
-            document.createElement("span");
-
-        flake.className =
-            "snowflake";
-
-        const size =
-            Math.random() * 2.8 + .7;
-
-        flake.style.width =
-            size + "px";
-
-        flake.style.height =
-            size + "px";
-
-        flake.style.left =
-            Math.random() * 100 + "%";
-
-        flake.style.opacity =
-            Math.random() * .55 + .15;
-
-        flake.style.animationDuration =
-            Math.random() * 9 + 8 + "s";
-
-        flake.style.animationDelay =
-            Math.random() * -16 + "s";
-
-        flake.style.setProperty(
-            "--drift",
-            (
-                Math.random() * 120 - 60
-            ) + "px"
-        );
-
-        container.appendChild(
-            flake
-        );
-
-    }
-
-}
-
-createSnow(
-    "passwordSnow",
-    55
-);
-
-createSnow(
-    "homeSnow",
-    85
-);
-
-/* =====================================================
-   PASSWORD
-===================================================== */
-
-function enterSite(){
-
-    getAudio();
-
-    const value =
-        passwordInput.value.trim();
-
-    if(
-        value === PASSWORD
-    ){
-
-        openSound();
-
-        sessionStorage.setItem(
-            "tamrabae_access",
-            "true"
-        );
-
-        passwordPage.style.display =
-            "none";
-
-        homePage.style.display =
-            "block";
-
-        passwordError.textContent =
-            "";
-
-    }else{
-
-        passwordError.textContent =
-            "비밀번호가 맞지 않습니다.";
-
-        passwordInput.value =
-            "";
-
-        passwordInput.focus();
-
-    }
-
-}
-
-enterButton.addEventListener(
-    "click",
-    enterSite
-);
-
-passwordInput.addEventListener(
-    "keydown",
-    function(e){
-
-        if(e.key === "Enter"){
-
-            enterSite();
-
-        }
-
-    }
-);
-
-/* =====================================================
-   SESSION
-===================================================== */
-
-if(
-    sessionStorage.getItem(
-        "tamrabae_access"
-    ) === "true"
-){
-
-    passwordPage.style.display =
-        "none";
-
-    homePage.style.display =
-        "block";
-
-}
-
-/* =====================================================
-   DISCOVERY
-===================================================== */
-
-const discoveries = [
-
-    {
-        element:
-            document.getElementById(
-                "discoveryLeft"
-            ),
-
-        page:
-            "story",
-
-        soundPlayed:false
-    },
-
-    {
-        element:
-            document.getElementById(
-                "discoveryCenter"
-            ),
-
-        page:
-            "photo",
-
-        soundPlayed:false
-    },
-
-    {
-        element:
-            document.getElementById(
-                "discoveryRight"
-            ),
-
-        page:
-            "video",
-
-        soundPlayed:false
-    }
-
-];
-
-/*
-   사용자가 해당 영역을 처음 건드리면
-   "발견" 상태가 된다.
-
-   바로 페이지가 열리지 않는다.
-*/
-
-discoveries.forEach(
-    function(item){
-
-        item.element.addEventListener(
-            "pointerdown",
-            function(){
-
-                if(
-                    !item.element.classList.contains(
-                        "discovered"
-                    )
-                ){
-
-                    item.element.classList.add(
-                        "discovered"
-                    );
-
-                    discoverSound();
-
-                    item.soundPlayed =
-                        true;
-
-                    /*
-                       안내문을 조금씩 숨긴다.
-                    */
-
-                    document
-                        .getElementById(
-                            "exploreGuide"
-                        )
-                        .classList.add(
-                            "hidden-guide"
-                        );
-
-                }
-
-            }
-        );
-
-        /*
-           두 번째 클릭 = 실제 이동
-        */
-
-        item.element.addEventListener(
-            "click",
-            function(){
-
-                if(
-                    item.soundPlayed
-                ){
-
-                    openDiscoveredPage(
-                        item.page
-                    );
-
-                }
-
-            }
-        );
-
-    }
-);
-
-/* =====================================================
-   PAGE ELEMENTS
-===================================================== */
-
-const storyPage =
-    document.getElementById(
-        "storyPage"
-    );
-
-const photoPage =
-    document.getElementById(
-        "photoPage"
-    );
-
-const videoPage =
-    document.getElementById(
-        "videoPage"
-    );
-
-function closeSubPages(){
-
-    storyPage.classList.add(
-        "hidden"
-    );
-
-    photoPage.classList.add(
-        "hidden"
-    );
-
-    videoPage.classList.add(
-        "hidden"
-    );
-
-}
-
-function openDiscoveredPage(
-    type
-){
-
-    openSound();
-
-    closeSubPages();
-
-    homePage.style.display =
-        "none";
-
-    if(type === "story"){
-
-        storyPage.classList.remove(
-            "hidden"
-        );
-
-        storyPage.scrollTop = 0;
-
-    }
-
-    if(type === "photo"){
-
-        photoPage.classList.remove(
-            "hidden"
-        );
-
-        photoPage.scrollTop = 0;
-
-    }
-
-    if(type === "video"){
-
-        videoPage.classList.remove(
-            "hidden"
-        );
-
-        videoPage.scrollTop = 0;
-
-    }
-
-}
-
-/* =====================================================
-   HOME
-===================================================== */
-
-function goHome(){
-
-    openSound();
-
-    closeSubPages();
-
-    homePage.style.display =
-        "block";
-
-}
-
-/* =====================================================
-   CREDITS
-===================================================== */
-
-const creditsPage =
-    document.getElementById(
-        "creditsPage"
-    );
-
-document
-    .getElementById(
-        "creditsOpen"
-    )
-    .addEventListener(
-        "click",
-        function(){
-
-            openSound();
-
-            creditsPage.style.display =
-                "block";
-
-            creditsPage.scrollTop =
-                0;
-
-        }
-    );
-
-document
-    .getElementById(
-        "creditsClose"
-    )
-    .addEventListener(
-        "click",
-        function(){
-
-            openSound();
-
-            creditsPage.style.display =
-                "none";
-
-        }
-    );
-
-/* =====================================================
-   VIDEO
-===================================================== */
-
-function fakeVideo(){
-
-    openSound();
-
-    alert(
-        "영상은 준비 중입니다.\n\n조금만 기다려주세요."
-    );
-
-}
-
-</script>
-
-</body>
-</html>
+      <div class="info-person"><span>필삼이</span><span>요미꼬미 쭌뺌</span></div>
+      <div class="info-person"><span>치약이</span><span>빵왕</span></div>
+      <div class="info-person"><span>개양이</span><span>탠동 원구 뼈뉴 요미꼬미</span></div>
+      <div class="info-person"><span>벌벌</span><span>후혜</span></div>
+      <div class="info-person"><span>스디</span><span>우강훈김영우</span></div>
+      <div class="info-person"><span>청</span><span>탠찬 민욱</span></div>
+      <div class="info-person"><span>영원</span><span>윤손</span></

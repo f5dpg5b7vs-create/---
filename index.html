@@ -1150,4 +1150,577 @@ button {
       <div class="info-person"><span>벌벌</span><span>후혜</span></div>
       <div class="info-person"><span>스디</span><span>우강훈김영우</span></div>
       <div class="info-person"><span>청</span><span>탠찬 민욱</span></div>
-      <div class="info-person"><span>영원</span><span>윤손</span></
+      <div class="info-person"><span>영원</span><span>윤손</span></div>
+      <div class="info-person"><span>SA</span><span>탠찬</span></div>
+      <div class="info-person"><span>하린</span><span>달별</span></div>
+      <div class="info-person"><span>동이</span><span>윤손 꼬순</span></div>
+      <div class="info-person"><span>딱</span><span>재롱 쭌잿</span></div>
+      <div class="info-person"><span>cuybf(상태:가능충)</span><span>쩡껀</span></div>
+      <div class="info-person"><span>본</span><span>창찬</span></div>
+      <div class="info-person"><span>아</span><span>한훈</span></div>
+      <div class="info-person"><span>순이</span><span>윤훈</span></div>
+      <div class="info-person"><span>you</span><span>윤황</span></div>
+      <div class="info-person"><span>하프</span><span>삐뭅 건뱅</span></div>
+      <div class="info-person"><span>궁</span><span>한우</span></div>
+      <div class="info-person"><span>킨교</span><span>전준표박준현 장재영이주형 김주원신재인</span></div>
+      <div class="info-person"><span>dp</span><span>렘배(안배) 읠뎡</span></div>
+
+    </div>
+
+
+    <div class="info-section">
+
+      <div class="info-section-title">
+        그림
+      </div>
+
+      <div class="info-person">
+        <span>연쇄박음마: 일등병⭐️(히키)</span>
+        <span>창찬</span>
+      </div>
+
+      <div class="info-person">
+        <span>얌빵</span>
+        <span>펑뜽</span>
+      </div>
+
+      <div class="info-person">
+        <span>박진만</span>
+        <span>풍뎅</span>
+      </div>
+
+      <div class="info-person">
+        <span>Ham guinea jyu</span>
+        <span>한훈 뱅쬬</span>
+      </div>
+
+      <div class="info-person">
+        <span>눙</span>
+        <span>쩡손</span>
+      </div>
+
+    </div>
+
+
+    <div class="info-section">
+
+      <div class="info-section-title">
+        영상
+      </div>
+
+      <div class="info-person">
+        <span>영상</span>
+        <span>준비 중</span>
+      </div>
+
+    </div>
+
+
+    <div class="info-section">
+
+      <div class="info-section-title">
+        기타
+      </div>
+
+      <div class="info-person">
+        <span>사부</span>
+        <span>한훈 · 미정</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================
+     PARTICIPANT REVIEW
+====================================== -->
+
+<section id="reviewScreen" class="screen info-screen">
+
+  <div class="info-inner">
+
+    <button class="back" data-target="mainScreen">
+      ← BACK
+    </button>
+
+    <h2 class="info-title">
+      후기
+    </h2>
+
+    <div class="info-subtitle">
+      PARTICIPANT NOTES
+    </div>
+
+
+    <div class="review-card">
+
+      <div class="review-label">
+        PARTICIPANT REVIEW
+      </div>
+
+      <div class="review-text">
+        아직 후기가 들어오지 않았습니다.
+      </div>
+
+      <div class="review-author">
+        탐라배 곱꽹대전
+      </div>
+
+    </div>
+
+
+    <div class="review-card">
+
+      <div class="review-label">
+        NOTE
+      </div>
+
+      <div class="review-text">
+        이곳에는 웹진을 함께 만든 사람들이 남긴
+        짧은 이야기와 제작 후기를 담을 수 있습니다.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================
+     READING
+====================================== -->
+
+<section id="readScreen" class="screen read-screen">
+
+  <div class="read-inner">
+
+    <button
+      id="readBack"
+      class="read-back">
+      ← BACK
+    </button>
+
+    <div
+      id="readNumber"
+      class="read-number">
+    </div>
+
+    <h2
+      id="readTitle"
+      class="read-title">
+    </h2>
+
+    <div
+      id="readAuthor"
+      class="read-author">
+    </div>
+
+    <div class="read-divider"></div>
+
+    <article
+      id="readBody"
+      class="read-body">
+    </article>
+
+  </div>
+
+</section>
+
+
+
+<script>
+
+/* =========================================
+   SCREEN CONTROL
+========================================= */
+
+const screens = document.querySelectorAll(".screen");
+
+let previousScreen = "mainScreen";
+let currentCategory = "writingScreen";
+
+
+function showScreen(id) {
+
+  screens.forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  const target = document.getElementById(id);
+
+  if (target) {
+    target.classList.add("active");
+
+    if (
+      target.classList.contains("category-screen") ||
+      target.classList.contains("info-screen") ||
+      target.classList.contains("read-screen")
+    ) {
+      target.scrollTop = 0;
+    }
+  }
+}
+
+
+/* =========================================
+   QUIET CLICK SOUND
+========================================= */
+
+let audioContext = null;
+
+
+function tactileSound() {
+
+  try {
+
+    if (!audioContext) {
+      audioContext =
+        new (window.AudioContext ||
+             window.webkitAudioContext)();
+    }
+
+    if (audioContext.state === "suspended") {
+      audioContext.resume();
+    }
+
+    const now = audioContext.currentTime;
+
+    const oscillator =
+      audioContext.createOscillator();
+
+    const gain =
+      audioContext.createGain();
+
+    oscillator.type = "sine";
+
+    oscillator.frequency.setValueAtTime(
+      150,
+      now
+    );
+
+    oscillator.frequency.exponentialRampToValueAtTime(
+      105,
+      now + 0.055
+    );
+
+    gain.gain.setValueAtTime(
+      0.0001,
+      now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.018,
+      now + 0.004
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      now + 0.065
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start(now);
+    oscillator.stop(now + 0.07);
+
+  } catch (error) {
+    /* sound unavailable */
+  }
+}
+
+
+/* =========================================
+   RIPPLE
+========================================= */
+
+function makeRipple(event) {
+
+  let x;
+  let y;
+
+  if (event.touches && event.touches[0]) {
+    x = event.touches[0].clientX;
+    y = event.touches[0].clientY;
+  } else {
+    x = event.clientX;
+    y = event.clientY;
+  }
+
+  const ripple =
+    document.createElement("div");
+
+  ripple.className = "ripple";
+
+  ripple.style.left = x + "px";
+  ripple.style.top = y + "px";
+
+  document.body.appendChild(ripple);
+
+  setTimeout(() => {
+    ripple.remove();
+  }, 400);
+}
+
+
+/* =========================================
+   HOTSPOTS
+========================================= */
+
+document
+  .querySelectorAll(".hotspot")
+  .forEach(button => {
+
+    button.addEventListener("pointerdown", function(event) {
+
+      makeRipple(event);
+
+      tactileSound();
+
+      const target =
+        this.dataset.target;
+
+      if (!target) {
+        return;
+      }
+
+      document
+        .getElementById("mainScreen")
+        .classList.add("leaving");
+
+      setTimeout(() => {
+
+        document
+          .getElementById("mainScreen")
+          .classList.remove("leaving");
+
+        showScreen(target);
+
+      }, 220);
+
+    });
+
+  });
+
+
+/* =========================================
+   BACK BUTTONS
+========================================= */
+
+document
+  .querySelectorAll("[data-target]")
+  .forEach(button => {
+
+    if (button.classList.contains("hotspot")) {
+      return;
+    }
+
+    button.addEventListener("click", () => {
+
+      const target =
+        button.dataset.target;
+
+      if (target) {
+        showScreen(target);
+      }
+
+    });
+
+  });
+
+
+/* =========================================
+   PASSWORD
+========================================= */
+
+const passwordInput =
+  document.getElementById("passwordInput");
+
+const enterButton =
+  document.getElementById("enterButton");
+
+const passwordError =
+  document.getElementById("passwordError");
+
+
+function enterSite() {
+
+  if (passwordInput.value === "ohmyps") {
+
+    passwordError.textContent = "";
+
+    tactileSound();
+
+    showScreen("mainScreen");
+
+  } else {
+
+    passwordError.textContent =
+      "PASSWORD가 맞지 않습니다.";
+
+    passwordInput.value = "";
+
+    passwordInput.focus();
+
+  }
+}
+
+
+enterButton.addEventListener(
+  "click",
+  enterSite
+);
+
+
+passwordInput.addEventListener(
+  "keydown",
+  event => {
+
+    if (event.key === "Enter") {
+      enterSite();
+    }
+
+  }
+);
+
+
+/* =========================================
+   POST READING
+========================================= */
+
+const readScreen =
+  document.getElementById("readScreen");
+
+const readNumber =
+  document.getElementById("readNumber");
+
+const readTitle =
+  document.getElementById("readTitle");
+
+const readAuthor =
+  document.getElementById("readAuthor");
+
+const readBody =
+  document.getElementById("readBody");
+
+
+document
+  .querySelectorAll(".post-item")
+  .forEach(item => {
+
+    item.addEventListener("click", () => {
+
+      const number =
+        item.dataset.read;
+
+      const title =
+        item.dataset.title;
+
+      const author =
+        item.dataset.author;
+
+      /* 그림 */
+      if (number.startsWith("draw")) {
+
+        currentCategory =
+          "drawingScreen";
+
+        readNumber.textContent =
+          number.replace("draw", "")
+                .padStart(2, "0");
+
+        readTitle.textContent =
+          title;
+
+        readAuthor.textContent =
+          author;
+
+        readBody.innerHTML = `
+          <div class="read-empty">
+            작품 이미지가 들어갈 자리입니다.<br><br>
+            나중에 이 부분에 작품 이미지를
+            추가할 수 있습니다.
+          </div>
+        `;
+
+      }
+
+      /* 글 */
+      else {
+
+        currentCategory =
+          "writingScreen";
+
+        readNumber.textContent =
+          String(number).padStart(2, "0");
+
+        readTitle.textContent =
+          title;
+
+        readAuthor.textContent =
+          author;
+
+        readBody.innerHTML = `
+          <div class="read-empty">
+            이곳에 작품의 본문을 넣으면 됩니다.
+            <br><br>
+            현재는 본문이 아직 입력되지 않은
+            상태입니다.
+          </div>
+        `;
+
+      }
+
+      showScreen("readScreen");
+
+    });
+
+  });
+
+
+/* =========================================
+   READING BACK
+========================================= */
+
+document
+  .getElementById("readBack")
+  .addEventListener("click", () => {
+
+    showScreen(currentCategory);
+
+  });
+
+
+/* =========================================
+   PREVENT DOUBLE TAP ZOOM
+========================================= */
+
+let lastTouchEnd = 0;
+
+document.addEventListener(
+  "touchend",
+  event => {
+
+    const now =
+      Date.now();
+
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+
+    lastTouchEnd = now;
+
+  },
+  { passive: false }
+);
+
+</script>
+
+</body>
+</html>
